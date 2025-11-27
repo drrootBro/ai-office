@@ -1,1 +1,304 @@
-testing
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Privacy Policy · RootBro AI-Draft</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Privacy policy for RootBro AI-Draft, an AI writing assistant for Microsoft Word."
+  />
+  <style>
+    :root {
+      --primary: #0078d4;
+      --bg: #f9fafb;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 18px 60px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .logo-mark {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, #0078d4, #38bdf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    nav {
+      font-size: 13px;
+      display: flex;
+      gap: 16px;
+      color: var(--muted);
+    }
+
+    nav a {
+      color: var(--muted);
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 15px;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    li + li {
+      margin-top: 4px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 18px;
+      border-top: 1px solid #e5e7eb;
+      font-size: 12px;
+      color: #9ca3af;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <div class="logo-mark">R</div>
+        <span>RootBro AI-Draft</span>
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="install.html">Install</a>
+        <a href="support.html">Support</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Privacy Policy</h1>
+      <p class="subtitle">Last updated: <span id="date"></span></p>
+
+      <p>
+        This Privacy Policy describes how <strong>RootBro AI-Draft</strong>
+        (“we”, “us”, or “our”) handles information when you use our add-in for
+        Microsoft Word.
+      </p>
+
+      <h2>1. What is RootBro AI-Draft?</h2>
+      <p>
+        RootBro AI-Draft is an AI writing assistant that runs as an Office
+        Add-in inside Microsoft Word. It allows you to draft, rewrite,
+        summarize, and translate text by connecting to third-party AI model
+        providers using your own API keys.
+      </p>
+
+      <h2>2. Data we do not collect</h2>
+      <p>We do <strong>not</strong>:</p>
+      <ul>
+        <li>store the contents of your Word documents on our servers;</li>
+        <li>sell or share your content with advertisers;</li>
+        <li>use your document text to train our own models;</li>
+        <li>track your activity across other websites or applications.</li>
+      </ul>
+
+      <h2>3. Document content</h2>
+      <p>
+        When you interact with RootBro AI-Draft (for example, to draft or
+        rewrite text), portions of your selected content or prompt may be sent
+        from your device directly to the AI model providers that you configure
+        (such as OpenAI, Google, or Anthropic), using your own API keys.
+      </p>
+      <p>
+        This communication occurs between the add-in running in Word and the
+        third-party providers. Your document text is not stored or logged by
+        RootBro on our own servers beyond what is technically necessary for
+        short-term processing (if any).
+      </p>
+
+      <h2>4. API keys and model providers</h2>
+      <p>
+        RootBro AI-Draft follows a “Bring Your Own Keys” (BYOK) model. You
+        provide your own API keys for AI providers. These keys are stored in
+        Word’s add-in settings on your device or within your Microsoft 365
+        environment, not on RootBro-operated servers.
+      </p>
+      <p>
+        We use these keys only to send your requests to the AI providers you
+        choose. You are responsible for reviewing and agreeing to the privacy
+        policies and terms of those providers.
+      </p>
+
+      <h2>5. License and billing information</h2>
+      <p>
+        If you purchase a license through Lemon Squeezy or a similar
+        third-party payment processor, that provider may collect billing and
+        contact information (such as your email address and payment method)
+        in accordance with their own privacy policy.
+      </p>
+      <p>
+        RootBro may receive limited information necessary to manage your
+        license status (e.g., your email address and license state), but we do
+        not process or store your full payment details.
+      </p>
+
+      <h2>6. Analytics and logs</h2>
+      <p>
+        We may collect basic, anonymized technical information (for example,
+        error logs or aggregate usage counts) to improve the reliability of
+        the add-in. These logs do not include the full content of your Word
+        documents.
+      </p>
+
+      <h2>7. Data security</h2>
+      <p>
+        We take reasonable technical and organizational measures to protect
+        data related to license verification and error reporting. However, no
+        system can be perfectly secure, and we encourage you to follow best
+        practices for securing your accounts and API keys.
+      </p>
+
+      <h2>8. Your rights</h2>
+      <p>
+        If you would like to access, correct, or delete information we hold
+        about you that is directly associated with your license (such as your
+        contact email), please contact us using the email address below.
+      </p>
+
+      <h2>9. Third-party services</h2>
+      <p>
+        RootBro AI-Draft may interact with third-party services such as AI
+        model providers and payment processors. Their use of your data is
+        governed by their respective privacy policies, which we recommend you
+        review carefully.
+      </p>
+
+      <h2>10. Contact</h2>
+      <p>
+        If you have any questions about this Privacy Policy or how RootBro
+        AI-Draft handles data, please contact us at:
+      </p>
+      <p><strong>Email:</strong> support@rootbro.com</p>
+
+      <h2>11. Changes to this policy</h2>
+      <p>
+        We may update this Privacy Policy from time to time. When we do, we
+        will update the “Last updated” date at the top of this page. Your
+        continued use of RootBro AI-Draft after changes are posted indicates
+        your acceptance of the revised policy.
+      </p>
+
+      <p class="note">
+        By using RootBro AI-Draft, you agree to this Privacy Policy and any
+        applicable terms of use provided with the add-in.
+      </p>
+    </main>
+
+    <footer>
+      <div>© <span id="year"></span> RootBro. All rights reserved.</div>
+      <div>
+        <a href="index.html">Home</a> ·
+        <a href="install.html">Install</a> ·
+        <a href="support.html">Support</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const d = new Date();
+    document.getElementById("year").textContent = d.getFullYear().toString();
+    document.getElementById("date").textContent = d.toLocaleDateString(
+      "en-US",
+      { year: "numeric", month: "short", day: "2-digit" }
+    );
+  </script>
+</body>
+</html>
