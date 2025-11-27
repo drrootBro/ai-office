@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Support · RootBro AI-Draft</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Support, troubleshooting, and contact information for RootBro AI-Draft."
+  />
+  <style>
+    :root {
+      --primary: #0078d4;
+      --bg: #f9fafb;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 18px 60px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .logo-mark {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, #0078d4, #38bdf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    nav {
+      font-size: 13px;
+      display: flex;
+      gap: 16px;
+      color: var(--muted);
+    }
+
+    nav a {
+      color: var(--muted);
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      font-size: 15px;
+      margin-top: 16px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    li + li {
+      margin-top: 4px;
+    }
+
+    .faq-item {
+      margin-bottom: 12px;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .highlight {
+      background: #eff6ff;
+      border-radius: 8px;
+      border: 1px solid #bfdbfe;
+      padding: 10px 12px;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .email {
+      font-weight: 600;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 18px;
+      border-top: 1px solid #e5e7eb;
+      font-size: 12px;
+      color: #9ca3af;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <div class="logo-mark">R</div>
+        <span>RootBro AI-Draft</span>
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="install.html">Install</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Support</h1>
+      <p class="subtitle">
+        Having trouble with RootBro AI-Draft? Start with the common issues
+        below. If you still need help, email us and we’ll do our best to get
+        you unstuck.
+      </p>
+
+      <div class="highlight">
+        <strong>Contact email:</strong>
+        <span class="email">support@rootbro.com</span><br />
+        Please include your Word version, operating system, and a short
+        description (or screenshot) of the issue.
+      </div>
+
+      <h2>Common issues & quick checks</h2>
+
+      <div class="faq-item">
+        <div class="faq-q">AI-Draft sidebar does not appear</div>
+        <p>
+          Make sure the add-in is installed and enabled in Word:
+        </p>
+        <ul>
+          <li>
+            Go to <strong>Insert → Add-ins</strong> or
+            <strong>Insert → My Add-ins</strong>.
+          </li>
+          <li>
+            Confirm that <strong>RootBro AI-Draft</strong> is listed and
+            enabled.
+          </li>
+          <li>
+            If needed, remove and re-add the add-in from the manifest file or
+            Office Store.
+          </li>
+        </ul>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Buttons don’t respond when I click “Generate”</div>
+        <p>Please check the following:</p>
+        <ul>
+          <li>Ensure your internet connection is working.</li>
+          <li>
+            Confirm that your API keys are valid and not expired in the
+            <strong>Settings</strong> tab.
+          </li>
+          <li>
+            Try switching to another model provider (e.g. OpenAI → Gemini) to
+            see if the issue is provider-specific.
+          </li>
+        </ul>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">License not recognized after purchase</div>
+        <p>
+          If you bought a lifetime license but AI-Draft still shows you as on a
+          trial:
+        </p>
+        <ul>
+          <li>
+            Make sure you are using the same email address you used during
+            purchase.
+          </li>
+          <li>
+            In the AI-Draft sidebar, open the <strong>License</strong> section
+            and click <strong>“Check license”</strong> again.
+          </li>
+          <li>
+            If the issue persists, contact
+            <span class="email">support@rootbro.com</span> with your receipt
+            from Lemon Squeezy.
+          </li>
+        </ul>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">API key invalid or not working</div>
+        <p>
+          If you see errors about invalid or missing API keys:
+        </p>
+        <ul>
+          <li>Double-check that the key was copied correctly.</li>
+          <li>
+            Confirm the key has the correct permissions in your provider
+            dashboard (OpenAI, Google, Anthropic, etc.).
+          </li>
+          <li>
+            Make sure you are selecting a model that exists for your account.
+          </li>
+        </ul>
+      </div>
+
+      <h2>When you contact support</h2>
+      <p>
+        To help us help you faster, please include:
+      </p>
+      <ul>
+        <li>Your operating system (Windows / macOS / Web / Other).</li>
+        <li>Your Microsoft Word version (e.g. Word for Microsoft 365).</li>
+        <li>A short description of what you were doing.</li>
+        <li>Any error messages visible in the add-in.</li>
+        <li>
+          (Optional) A screenshot of the AI-Draft sidebar and your document.
+        </li>
+      </ul>
+
+      <h2>Updates and roadmap</h2>
+      <p>
+        RootBro AI-Draft is under active development. We plan to add more model
+        options, presets for common writing tasks, and deeper integration with
+        the academic-focused <strong>Scholar-Draft</strong> line in the future.
+      </p>
+      <p>
+        For feature requests or feedback, you can also reach us at
+        <span class="email">support@rootbro.com</span>.
+      </p>
+    </main>
+
+    <footer>
+      <div>© <span id="year"></span> RootBro. All rights reserved.</div>
+      <div>
+        <a href="index.html">Home</a> ·
+        <a href="install.html">Install</a> ·
+        <a href="privacy.html">Privacy</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear().toString();
+  </script>
+</body>
+</html>
