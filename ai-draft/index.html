@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RootBro AI-Draft – AI Writing Assistant for Word</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="RootBro AI-Draft is a no-subscription AI writing assistant for Microsoft Word. Draft, rewrite, summarize, and translate up to 10× faster with your own API keys."
+  />
+  <style>
+    :root {
+      --primary: #0078d4; /* Microsoft blue */
+      --primary-dark: #005a9e;
+      --bg: #f3f4f6;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --radius-lg: 14px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top left, #e0f2fe, #f9fafb 45%);
+      min-height: 100vh;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .logo-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #0078d4, #38bdf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 14px;
+    }
+
+    nav a {
+      color: var(--muted);
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .btn-outline {
+      border-radius: 999px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: white;
+    }
+
+    .btn-outline span {
+      font-size: 16px;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+      background: rgba(219, 234, 254, 0.7);
+      color: #1d4ed8;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    h1 {
+      font-size: clamp(30px, 4vw, 40px);
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    h1 span {
+      color: var(--primary);
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #4b5563;
+      margin-bottom: 22px;
+    }
+
+    .meta strong {
+      font-weight: 600;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .btn-primary {
+      border-radius: 999px;
+      padding: 10px 22px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      font-size: 14px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 16px 35px rgba(37, 99, 235, 0.35);
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 9px 18px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--border);
+      font-size: 13px;
+      color: #374151;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .btn-ghost span {
+      font-size: 16px;
+    }
+
+    .note {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .note strong {
+      font-weight: 600;
+      color: #4b5563;
+    }
+
+    .hero-card {
+      background: white;
+      border-radius: 22px;
+      padding: 22px 22px 20px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .hero-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #4b5563;
+    }
+
+    .hero-pill {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .hero-editor {
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      padding: 14px 14px 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-toolbar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: white;
+      font-size: 11px;
+      color: #4b5563;
+    }
+
+    .pill.primary {
+      background: #2563eb;
+      border-color: #1d4ed8;
+      color: white;
+    }
+
+    .hero-text-block {
+      font-size: 12px;
+      background: white;
+      border-radius: 10px;
+      padding: 10px 11px;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .hero-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .hero-text-block strong {
+      font-weight: 600;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      margin-top: 6px;
+      color: #6b7280;
+    }
+
+    .hero-badge-row span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot-green {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .section {
+      margin-top: 52px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 18px;
+      max-width: 640px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 16px;
+      padding: 14px 14px 12px;
+      border: 1px solid #e5e7eb;
+      font-size: 13px;
+    }
+
+    .feature-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .feature-body {
+      color: #6b7280;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .feature-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #93c5fd;
+      margin-bottom: 4px;
+    }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .how-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .how-step {
+      font-size: 12px;
+      color: #4b5563;
+      background: white;
+      border-radius: 14px;
+      padding: 12px 12px 10px;
+      border: 1px dashed #cbd5f5;
+    }
+
+    .how-step strong {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 3px 7px;
+      font-size: 10px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      margin-bottom: 4px;
+    }
+
+    .faq-list {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #4b5563;
+      display: grid;
+      gap: 10px;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+      font-size: 12px;
+      color: #9ca3af;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    footer a {
+      color: #6b7280;
+    }
+
+    footer a:hover {
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <div class="logo-mark">R</div>
+        <span>RootBro AI-Draft</span>
+      </div>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="install.html" class="btn-outline">
+          <span>⬇</span> Install guide
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Left: hero copy -->
+      <section>
+        <div class="badge">
+          <div class="badge-dot"></div>
+          AI writing assistant for Microsoft Word · No subscription
+        </div>
+        <h1>
+          Draft <span>10× faster</span> in Word<br />
+          with your own AI keys.
+        </h1>
+        <p class="subtitle">
+          RootBro AI-Draft is a lightweight AI writing assistant that lives
+          inside Microsoft Word. Draft, rewrite, summarize, and translate
+          without leaving your document—using your own OpenAI, Gemini, Claude,
+          and other API keys.
+        </p>
+        <p class="meta">
+          <strong>Lifetime license.</strong> No monthly fee. You stay in
+          control of your models and costs.
+        </p>
+
+        <div class="cta-row">
+          <a
+            class="btn-primary"
+            href="https://YOUR-LEMONSQUEEZY-CHECKOUT-URL"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>⚡ Buy lifetime license – $19.90</span>
+          </a>
+          <a class="btn-ghost" href="install.html">
+            <span>📄</span> View install & setup guide
+          </a>
+        </div>
+        <p class="note">
+          <strong>BYOK (Bring Your Own Keys):</strong> Connect your own AI
+          provider accounts. AI-Draft never stores or resells your tokens.
+        </p>
+      </section>
+
+      <!-- Right: hero "mock UI" card -->
+      <section>
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="hero-title">AI-Draft · Word sidebar preview</div>
+            <div class="hero-pill">Inside Microsoft Word</div>
+          </div>
+          <div class="hero-editor">
+            <div class="hero-toolbar">
+              <div class="pill primary">Draft</div>
+              <div class="pill">Rewrite</div>
+              <div class="pill">Summarize</div>
+              <div class="pill">Translate</div>
+              <div class="pill">Format</div>
+            </div>
+            <div class="hero-label">Prompt</div>
+            <div class="hero-text-block">
+              Turn these bullet points into a clear, friendly opening
+              paragraph for my report.
+            </div>
+
+            <div class="hero-label">AI-Draft output</div>
+            <div class="hero-text-block">
+              <strong>Suggested paragraph:</strong><br />
+              With AI-Draft, you can move from a blank Word page to a polished
+              first draft in minutes. Simply describe what you want to say, and
+              the assistant will help you draft, rewrite, and refine your
+              content while you stay in full control of tone, structure, and
+              length.
+            </div>
+
+            <div class="hero-badge-row">
+              <span><span class="dot-green"></span> Ready to insert</span>
+              <span>Model: GPT-4 / Gemini / Claude (BYOK)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Features section -->
+    <section id="features" class="section">
+      <h2 class="section-title">What AI-Draft can do for you</h2>
+      <p class="section-subtitle">
+        Designed for students, professionals, and creators who live in Word but
+        don’t want another subscription. AI-Draft keeps the interface simple,
+        the controls clear, and the power in your hands.
+      </p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-tag">Draft</div>
+          <div class="feature-title">Generate new content inside Word</div>
+          <p class="feature-body">
+            Turn outlines, bullet points, or short notes into complete
+            paragraphs, sections, or entire drafts without leaving your
+            document.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-tag">Rewrite</div>
+          <div class="feature-title">Rewrite & refine instantly</div>
+          <p class="feature-body">
+            Make unclear sentences sharper, change tone (formal, casual,
+            neutral, academic), or shorten/expand text while preserving your
+            core message.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-tag">Summarize</div>
+          <div class="feature-title">Summarize long sections</div>
+          <p class="feature-body">
+            Turn long passages into concise summaries or bullet points that are
+            easy to read, paste into slides, or share with your team.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-tag">Translate</div>
+          <div class="feature-title">Translate & adjust tone</div>
+          <p class="feature-body">
+            Translate content between languages and instantly adjust the tone to
+            match emails, reports, academic work, or casual messages.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-tag">Control</div>
+          <div class="feature-title">Bring your own API keys</div>
+          <p class="feature-body">
+            Connect your own OpenAI, Gemini, Claude and other models. You
+            control which models you use and pay only their raw API cost.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-tag">Pricing</div>
+          <div class="feature-title">Lifetime license, no subscription</div>
+          <p class="feature-body">
+            Pay once for AI-Draft and use it as long as you like. No monthly
+            fees, no upsells, no locked-in AI provider.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how" class="section">
+      <h2 class="section-title">How AI-Draft works</h2>
+      <p class="section-subtitle">
+        AI-Draft focuses on one thing: making your writing workflow in Word
+        dramatically faster, without taking control away from you.
+      </p>
+
+      <div class="how-grid">
+        <div class="how-step">
+          <span class="tag">Step 1</span>
+          <strong>Install the add-in in Word</strong>
+          Use the Office Add-ins dialog to install AI-Draft, then open it in
+          the right-hand sidebar. The assistant lives where you write.
+        </div>
+        <div class="how-step">
+          <span class="tag">Step 2</span>
+          <strong>Connect your API keys</strong>
+          Paste your own API keys (OpenAI, Gemini, Claude, etc.). Keys are
+          stored locally in Word’s settings and used only to call those
+          providers on your behalf.
+        </div>
+        <div class="how-step">
+          <span class="tag">Step 3</span>
+          <strong>Draft, rewrite, refine</strong>
+          Select text or type a prompt, choose an action (Draft, Rewrite,
+          Summarize, Translate, Format), review the result, then insert
+          directly into your document.
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <h2 class="section-title">FAQ</h2>
+      <div class="faq-list">
+        <div>
+          <div class="faq-q">Do I need a subscription to use AI-Draft?</div>
+          <div>
+            No. AI-Draft itself is a one-time lifetime license. You only pay
+            the cloud providers (OpenAI, Google, Anthropic, etc.) for actual
+            API usage with your own keys.
+          </div>
+        </div>
+        <div>
+          <div class="faq-q">Where are my API keys stored?</div>
+          <div>
+            Your keys are stored inside Word’s add-in settings on your device.
+            They are used only to call the AI providers you configure.
+          </div>
+        </div>
+        <div>
+          <div class="faq-q">Which models does AI-Draft support?</div>
+          <div>
+            AI-Draft is designed to work with major providers such as OpenAI,
+            Google Gemini, and Anthropic Claude, with more coming over time.
+          </div>
+        </div>
+        <div>
+          <div class="faq-q">Can I use AI-Draft at work or in school?</div>
+          <div>
+            Yes. AI-Draft is ideal for professionals and students who spend
+            most of their day in Word and want AI to speed up drafting, not
+            replace their thinking.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> RootBro. All rights reserved.</div>
+      <div>
+        <a href="support.html">Support</a> ·
+        <a href="privacy.html">Privacy</a> ·
+        <a href="install.html">Install guide</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear().toString();
+  </script>
+</body>
+</html>
