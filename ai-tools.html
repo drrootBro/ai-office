@@ -1,93 +1,417 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Tools Hub – RootBro</title>
+  <meta charset="UTF-8">
+  <title>AI Tools Hub – RootBro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 你现有的全站样式 -->
+  <link rel="stylesheet" href="/assets/style.css">
 
-<link rel="stylesheet" href="/assets/style.css">
-<script defer src="/assets/tools.js"></script>
+  <style>
+    /* 这里是工具页额外样式，后面可以搬进 style.css */
 
+    .hero-small {
+      max-width: 1100px;
+      margin: 40px auto 10px;
+      padding: 24px 20px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #0f6fff, #4b9dff);
+      color: #fff;
+    }
+
+    .hero-small h1 {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    .hero-small p {
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    .tools-grid {
+      max-width: 1100px;
+      margin: 20px auto 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .tool-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 16px 16px 14px;
+      box-shadow: 0 4px 14px rgba(15, 25, 40, 0.06);
+      display: flex;
+      flex-direction: column;
+      min-height: 230px;
+    }
+
+    .tool-card h3 {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .tool-card p {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .tool-input,
+    .tool-output {
+      width: 100%;
+      min-height: 80px;
+      margin: 6px 0;
+      padding: 8px 10px;
+      font-family: inherit;
+      font-size: 13px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+
+    .tool-output {
+      background: #fdfcf7;
+    }
+
+    .tool-actions {
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+
+    .tool-actions button {
+      padding: 7px 12px;
+      font-size: 12px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    .btn-primary {
+      background: #0f6fff;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #eef3ff;
+      color: #26407d;
+    }
+
+    .engine-status {
+      max-width: 1100px;
+      margin: 10px auto 0;
+      font-size: 13px;
+      color: #26407d;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #e8f1ff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .engine-status span.progress {
+      font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+      .hero-small {
+        margin: 20px 12px 10px;
+        padding: 18px 14px;
+      }
+      .tools-grid {
+        margin: 16px 12px 30px;
+      }
+      .engine-status {
+        margin: 10px 12px 0;
+      }
+    }
+  </style>
 </head>
 <body>
 
+<!-- 顶部导航（按你自己的 index 对齐） -->
 <header>
-    <div class="logo">
-        <a href="/"><img src="/assets/rootbro-logo.svg" height="32"></a>
-    </div>
-
-    <nav>
-        <a href="/ai-draft">AI Draft</a>
-        <a href="/doc-ai">Docs Assistant</a>
-        <a href="/ai-tools" class="active">AI Tools</a>
-        <a href="#" id="contactBtn">Contact</a>
-    </nav>
+  <div class="logo">
+    <a href="/"><img src="/assets/rootbro-logo.svg" alt="RootBro" height="32"></a>
+  </div>
+  <nav>
+    <a href="/ai-draft">AI Draft</a>
+    <a href="https://drrootbro.github.io/google-ai-assistant/" target="_blank" rel="noopener">Docs AI</a>
+    <a href="/ai-tools" class="active">AI Tools</a>
+  </nav>
 </header>
 
-<div class="hero" style="background-image:url('https://images.pexels.com/photos/3182759/pexels-photo-3182759.jpeg');">
-    <h1>AI Tools Hub</h1>
-    <p>Free browser-based utilities for everyday writing.</p>
+<section class="hero-small">
+  <h1>RootBro AI Tools Hub</h1>
+  <p>
+    Lightweight, free browser tools powered by local Phi + WebLLM.
+    No server, no keys – perfect for quick writing tasks and trying AI before installing our add-ins.
+  </p>
+</section>
+
+<div class="engine-status" id="engineStatus">
+  <div>Model: <strong>Phi mini (via WebLLM)</strong></div>
+  <div>Status: <span class="progress">Idle</span></div>
 </div>
 
+<!-- AI 工具区 -->
 <section class="section">
-    <h2>Available Tools</h2>
+  <h2 style="max-width:1100px;margin:24px auto 8px;font-size:18px;">AI Writing Helpers</h2>
+  <div class="tools-grid">
 
-    <div class="products">
-
-        <!-- Text Cleaner -->
-        <div class="card">
-            <h3>Text Cleaner</h3>
-            <p>Remove line breaks, extra spaces, and unwanted characters.</p>
-            <textarea id="cleanerInput" class="tool-input" placeholder="Paste text here..."></textarea>
-            <button class="button-primary" onclick="cleanText()">Clean Text</button>
-            <textarea id="cleanerOutput" class="tool-output" placeholder="Result will appear here..."></textarea>
-        </div>
-
-        <!-- Summarizer -->
-        <div class="card">
-            <h3>Summarizer (Lite)</h3>
-            <p>Create a simple summary using local TF-IDF extraction.</p>
-            <textarea id="sumInput" class="tool-input" placeholder="Paste text to summarize..."></textarea>
-            <button class="button-primary" onclick="summarizeText()">Summarize</button>
-            <textarea id="sumOutput" class="tool-output"></textarea>
-        </div>
-
-        <!-- Paraphraser -->
-        <div class="card">
-            <h3>Paraphraser (Lite)</h3>
-            <p>Rewrite text using a local synonym dictionary.</p>
-            <textarea id="paraInput" class="tool-input" placeholder="Paste text here..."></textarea>
-            <button class="button-primary" onclick="paraphrase()">Paraphrase</button>
-            <textarea id="paraOutput" class="tool-output"></textarea>
-        </div>
-
-        <!-- Case Converter -->
-        <div class="card">
-            <h3>Case Converter</h3>
-            <p>Uppercase, lowercase, title case, and sentence case.</p>
-            <textarea id="caseInput" class="tool-input"></textarea>
-            <button class="button-primary" onclick="convertCase('upper')">UPPERCASE</button>
-            <button class="button-primary" onclick="convertCase('lower')">lowercase</button>
-            <button class="button-primary" onclick="convertCase('title')">Title Case</button>
-            <button class="button-primary" onclick="convertCase('sentence')">Sentence case</button>
-            <textarea id="caseOutput" class="tool-output"></textarea>
-        </div>
-
-        <!-- Word Counter -->
-        <div class="card">
-            <h3>Word Counter</h3>
-            <p>Count words, characters, and frequency.</p>
-            <textarea id="wcInput" class="tool-input"></textarea>
-            <button class="button-primary" onclick="countWords()">Count</button>
-            <textarea id="wcOutput" class="tool-output"></textarea>
-        </div>
-
+    <!-- Summarizer -->
+    <div class="tool-card">
+      <h3>AI Summarizer</h3>
+      <p>Generate a short, clear summary (3–5 bullet points or a short paragraph).</p>
+      <textarea id="sumInput" class="tool-input" placeholder="Paste text to summarize..."></textarea>
+      <div class="tool-actions">
+        <button class="btn-primary" data-tool="summarize">Summarize</button>
+      </div>
+      <textarea id="sumOutput" class="tool-output" placeholder="Summary appears here..."></textarea>
     </div>
+
+    <!-- Paraphraser -->
+    <div class="tool-card">
+      <h3>AI Paraphraser</h3>
+      <p>Rewrite to be clearer and more natural while keeping the original meaning.</p>
+      <textarea id="paraInput" class="tool-input" placeholder="Paste text to rewrite..."></textarea>
+      <div class="tool-actions">
+        <button class="btn-primary" data-tool="paraphrase">Paraphrase</button>
+      </div>
+      <textarea id="paraOutput" class="tool-output" placeholder="Rewritten text appears here..."></textarea>
+    </div>
+
+    <!-- Translate -->
+    <div class="tool-card">
+      <h3>AI Translate (EN ⇄ 中文)</h3>
+      <p>Auto-detect English or Simplified Chinese and translate to the other.</p>
+      <textarea id="transInput" class="tool-input" placeholder="Paste English or 中文内容..."></textarea>
+      <div class="tool-actions">
+        <button class="btn-primary" data-tool="translate">Translate</button>
+      </div>
+      <textarea id="transOutput" class="tool-output" placeholder="Translation appears here..."></textarea>
+    </div>
+
+    <!-- Explain / Simplify -->
+    <div class="tool-card">
+      <h3>AI Explain / Simplify</h3>
+      <p>Explain a complex paragraph in simpler language, friendly for readers and students.</p>
+      <textarea id="explainInput" class="tool-input" placeholder="Paste complex text or a concept..."></textarea>
+      <div class="tool-actions">
+        <button class="btn-primary" data-tool="explain">Explain</button>
+      </div>
+      <textarea id="explainOutput" class="tool-output" placeholder="Simplified explanation appears here..."></textarea>
+    </div>
+
+    <!-- Q&A -->
+    <div class="tool-card">
+      <h3>AI Q&A</h3>
+      <p>Ask a question about the text you provide (short passages work best).</p>
+      <textarea id="qaInput" class="tool-input" placeholder="Paste your text, then ask a question about it..."></textarea>
+      <div class="tool-actions">
+        <button class="btn-primary" data-tool="qa">Answer Question</button>
+      </div>
+      <textarea id="qaOutput" class="tool-output" placeholder="Answer appears here..."></textarea>
+    </div>
+
+    <!-- Resume Polisher -->
+    <div class="tool-card">
+      <h3>Resume Polisher</h3>
+      <p>Turn rough experience into strong, concise resume bullets in American English.</p>
+      <textarea id="resumeInput" class="tool-input" placeholder="Paste one or more resume bullets or experience description..."></textarea>
+      <div class="tool-actions">
+        <button class="btn-primary" data-tool="resume">Polish Resume</button>
+      </div>
+      <textarea id="resumeOutput" class="tool-output" placeholder="Improved resume bullet(s) appear here..."></textarea>
+    </div>
+
+  </div>
+</section>
+
+<!-- 本地工具：Case Converter -->
+<section class="section">
+  <h2 style="max-width:1100px;margin:0 auto 8px;font-size:18px;">Quick Local Tools</h2>
+  <div class="tools-grid">
+
+    <div class="tool-card">
+      <h3>Case Converter</h3>
+      <p>Convert selected text to <strong>UPPERCASE</strong> or <strong>Title Case</strong>.</p>
+      <textarea id="caseInput" class="tool-input" placeholder="Enter text to convert..."></textarea>
+      <div class="tool-actions">
+        <button class="btn-secondary" id="btnUpper">UPPERCASE</button>
+        <button class="btn-secondary" id="btnTitle">Title Case</button>
+      </div>
+      <textarea id="caseOutput" class="tool-output" placeholder="Converted text appears here..."></textarea>
+    </div>
+
+  </div>
 </section>
 
 <footer>
-    <p>© 2025 RootBro. All rights reserved.</p>
+  <p>© 2025 RootBro. Contact: <a href="mailto:support@rootbro.com">support@rootbro.com</a></p>
 </footer>
+
+<!-- WebLLM + Phi 集成脚本 -->
+<script type="module">
+  // 采用 WebLLM 的 ESM CDN
+  import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
+
+  // 选择一个已经支持的 Phi 系列小模型
+  const SELECTED_MODEL = "Phi-3-mini-4k-instruct-q4f16_1-MLC";
+
+  let engine = null;
+  let engineInitPromise = null;
+
+  const statusEl = document.getElementById("engineStatus")?.querySelector(".progress");
+
+  function setStatus(text) {
+    if (statusEl) statusEl.textContent = text;
+  }
+
+  async function getEngine() {
+    if (engine) return engine;
+    if (!engineInitPromise) {
+      setStatus("Loading model…");
+      engineInitPromise = (async () => {
+        try {
+          const eng = await CreateMLCEngine(SELECTED_MODEL, {
+            initProgressCallback: (report) => {
+              // report.progress: 0~1
+              if (report && typeof report.progress === "number") {
+                const pct = Math.round(report.progress * 100);
+                setStatus(pct >= 100 ? "Model ready" : `Downloading… ${pct}%`);
+              } else if (report && report.text) {
+                setStatus(report.text);
+              }
+            }
+          });
+          setStatus("Model ready");
+          return eng;
+        } catch (err) {
+          console.error("Engine init failed:", err);
+          setStatus("Error: WebGPU / model load failed");
+          throw err;
+        }
+      })();
+    }
+    engine = await engineInitPromise;
+    return engine;
+  }
+
+  // 根据工具类型生成 system prompt
+  function buildSystemPrompt(kind) {
+    switch (kind) {
+      case "summarize":
+        return "You are a concise writing assistant. Summarize the user text into 3–7 short bullet points or 1–2 short paragraphs. Preserve key facts and main ideas. Keep the same language.";
+      case "paraphrase":
+        return "You are a rewriting assistant. Rewrite the user text to be clearer, more natural, and easy to read, while preserving the original meaning and language.";
+      case "translate":
+        return "You are a bilingual translator between English and Simplified Chinese. If the user text is mainly English, translate into natural Simplified Chinese. If it is mainly Chinese, translate into natural American English. Return only the translation.";
+      case "explain":
+        return "You are a patient teacher. Explain the user's text in simpler language, using short, clear sentences. Keep the same language as the user whenever possible.";
+      case "qa":
+        return "You are a helpful assistant. The user may paste some context and also ask a question. Read the context carefully and then answer the question in a short, direct way. If the answer is unclear, say so.";
+      case "resume":
+        return "You are a professional resume editor for the North American job market. Rewrite the user's content into strong, concise resume bullet points in American English. Use clear action verbs, show impact or results when possible, and avoid personal pronouns.";
+      default:
+        return "You are a helpful writing assistant.";
+    }
+  }
+
+  // 统一的 AI 调用函数
+  async function runAiTool(kind) {
+    let inputEl, outputEl;
+
+    switch (kind) {
+      case "summarize":
+        inputEl = document.getElementById("sumInput");
+        outputEl = document.getElementById("sumOutput");
+        break;
+      case "paraphrase":
+        inputEl = document.getElementById("paraInput");
+        outputEl = document.getElementById("paraOutput");
+        break;
+      case "translate":
+        inputEl = document.getElementById("transInput");
+        outputEl = document.getElementById("transOutput");
+        break;
+      case "explain":
+        inputEl = document.getElementById("explainInput");
+        outputEl = document.getElementById("explainOutput");
+        break;
+      case "qa":
+        inputEl = document.getElementById("qaInput");
+        outputEl = document.getElementById("qaOutput");
+        break;
+      case "resume":
+        inputEl = document.getElementById("resumeInput");
+        outputEl = document.getElementById("resumeOutput");
+        break;
+      default:
+        return;
+    }
+
+    const text = (inputEl?.value || "").trim();
+    if (!text) {
+      alert("Please enter some text first.");
+      return;
+    }
+
+    // 简单防炸机：截断到 2000 字符
+    const clipped = text.length > 2000 ? text.slice(0, 2000) : text;
+
+    try {
+      setStatus("Running…");
+      if (outputEl) outputEl.value = "Thinking…";
+
+      const eng = await getEngine();
+
+      const messages = [
+        { role: "system", content: buildSystemPrompt(kind) },
+        { role: "user", content: clipped }
+      ];
+
+      const reply = await eng.chat.completions.create({ messages, temperature: 0.7 });
+      const content = reply.choices?.[0]?.message?.content || "(No content returned)";
+      if (outputEl) outputEl.value = content.trim();
+      setStatus("Model ready");
+    } catch (err) {
+      console.error(err);
+      if (outputEl) outputEl.value = "Error running local model. Check console for details.";
+      setStatus("Error");
+    }
+  }
+
+  // 绑定所有 AI 按钮
+  document.querySelectorAll("button[data-tool]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const kind = btn.getAttribute("data-tool");
+      runAiTool(kind);
+    });
+  });
+
+  // 本地 Case Converter
+  const caseInput = document.getElementById("caseInput");
+  const caseOutput = document.getElementById("caseOutput");
+
+  document.getElementById("btnUpper")?.addEventListener("click", () => {
+    const text = (caseInput?.value || "");
+    caseOutput.value = text.toUpperCase();
+  });
+
+  document.getElementById("btnTitle")?.addEventListener("click", () => {
+    const text = (caseInput?.value || "");
+    // 简单英文 Title Case：以空格分词
+    const converted = text.replace(/\w\S*/g, w => w[0].toUpperCase() + w.slice(1).toLowerCase());
+    caseOutput.value = converted;
+  });
+</script>
 
 </body>
 </html>
