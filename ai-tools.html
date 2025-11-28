@@ -3,24 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Tools – rootbro</title>
+<title>AI Tools Hub – RootBro</title>
 
 <link rel="stylesheet" href="/assets/style.css">
-
-<style>
-.tool-card {
-    background: #fafafa;
-    border: 1px solid #eee;
-    padding: 25px;
-    border-radius: 10px;
-    transition: 0.25s;
-    text-align: left;
-}
-.tool-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-}
-</style>
+<script defer src="/assets/tools.js"></script>
 
 </head>
 <body>
@@ -29,64 +15,78 @@
     <div class="logo">
         <a href="/"><img src="/assets/rootbro-logo.svg" height="32"></a>
     </div>
+
     <nav>
         <a href="/ai-draft">AI Draft</a>
         <a href="/doc-ai">Docs Assistant</a>
         <a href="/ai-tools" class="active">AI Tools</a>
-        <a href="/contact">Contact</a>
+        <a href="#" id="contactBtn">Contact</a>
     </nav>
 </header>
 
-<div class="hero hero-tools">
-    <h1>Free AI Tools Hub</h1>
-    <p>Lightweight tools that run instantly in your browser.</p>
+<div class="hero" style="background-image:url('https://images.pexels.com/photos/3182759/pexels-photo-3182759.jpeg');">
+    <h1>AI Tools Hub</h1>
+    <p>Free browser-based utilities for everyday writing.</p>
 </div>
 
 <section class="section">
+    <h2>Available Tools</h2>
+
     <div class="products">
 
-        <div class="tool-card">
+        <!-- Text Cleaner -->
+        <div class="card">
             <h3>Text Cleaner</h3>
-            <p>Remove line breaks, fix spacing, strip formatting.</p>
-            <a href="#cleaner">Open →</a>
+            <p>Remove line breaks, extra spaces, and unwanted characters.</p>
+            <textarea id="cleanerInput" class="tool-input" placeholder="Paste text here..."></textarea>
+            <button class="button-primary" onclick="cleanText()">Clean Text</button>
+            <textarea id="cleanerOutput" class="tool-output" placeholder="Result will appear here..."></textarea>
         </div>
 
-        <div class="tool-card">
+        <!-- Summarizer -->
+        <div class="card">
             <h3>Summarizer (Lite)</h3>
-            <p>Quick summarization without any AI API.</p>
-            <a href="#summarizer">Open →</a>
+            <p>Create a simple summary using local TF-IDF extraction.</p>
+            <textarea id="sumInput" class="tool-input" placeholder="Paste text to summarize..."></textarea>
+            <button class="button-primary" onclick="summarizeText()">Summarize</button>
+            <textarea id="sumOutput" class="tool-output"></textarea>
         </div>
 
-        <div class="tool-card">
+        <!-- Paraphraser -->
+        <div class="card">
             <h3>Paraphraser (Lite)</h3>
-            <p>Rewrite text using a smart transformation library.</p>
-            <a href="#paraphrase">Open →</a>
+            <p>Rewrite text using a local synonym dictionary.</p>
+            <textarea id="paraInput" class="tool-input" placeholder="Paste text here..."></textarea>
+            <button class="button-primary" onclick="paraphrase()">Paraphrase</button>
+            <textarea id="paraOutput" class="tool-output"></textarea>
         </div>
 
-        <div class="tool-card">
+        <!-- Case Converter -->
+        <div class="card">
             <h3>Case Converter</h3>
-            <p>UPPER / lower / Title Case conversion.</p>
-            <a href="#case">Open →</a>
+            <p>Uppercase, lowercase, title case, and sentence case.</p>
+            <textarea id="caseInput" class="tool-input"></textarea>
+            <button class="button-primary" onclick="convertCase('upper')">UPPERCASE</button>
+            <button class="button-primary" onclick="convertCase('lower')">lowercase</button>
+            <button class="button-primary" onclick="convertCase('title')">Title Case</button>
+            <button class="button-primary" onclick="convertCase('sentence')">Sentence case</button>
+            <textarea id="caseOutput" class="tool-output"></textarea>
         </div>
 
-        <div class="tool-card">
+        <!-- Word Counter -->
+        <div class="card">
             <h3>Word Counter</h3>
             <p>Count words, characters, and frequency.</p>
-            <a href="#counter">Open →</a>
-        </div>
-
-        <div class="tool-card">
-            <h3>Emoji Adder</h3>
-            <p>Add emotion and style using smart emoji enhancement.</p>
-            <a href="#emoji">Open →</a>
+            <textarea id="wcInput" class="tool-input"></textarea>
+            <button class="button-primary" onclick="countWords()">Count</button>
+            <textarea id="wcOutput" class="tool-output"></textarea>
         </div>
 
     </div>
 </section>
 
 <footer>
-    <p>© 2025 rootbro. All rights reserved.</p>
-    <p>Contact: <a href="mailto:support@rootbro.com">support@rootbro.com</a></p>
+    <p>© 2025 RootBro. All rights reserved.</p>
 </footer>
 
 </body>
