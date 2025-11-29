@@ -15,7 +15,7 @@
 
 /* 全局调整 – 更松的间距 */
 body {
-  background: #fafbfe;
+  background: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #222;
 }
@@ -341,7 +341,7 @@ body {
 <script type="module">
 import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
 
-/* Model */
+/* 使用的 Phi 模型 ID */
 const MODEL_ID = "Phi-3-mini-4k-instruct-q4f16_1-MLC";
 
 let engine = null;
@@ -351,53 +351,68 @@ const statusText = document.querySelector(".engine-status .progress");
 const modal = document.getElementById("loadingModal");
 const progressInner = document.getElementById("progressInner");
 
-/* 显示 Modal */
-function showModal() { modal.style.display = "flex"; }
-/* 隐藏 Modal */
-function hideModal() { modal.style.display = "none"; }
+/* 显示 / 隐藏 Modal（白底提示框） */
+function showModal() {
+  if (modal) modal.style.display = "flex";
+}
+function hideModal() {
+  if (modal) modal.style.display = "none";
+}
 
-/* 是否缓存过模型？ */
+/* 是否已经成功加载过模型（仅用于文案提示，不再控制 Modal 行为） */
 const wasCached = localStorage.getItem("rootbro_phi_cached") === "1";
-
-/* 首次加载显示 Modal */
-if (!wasCached) {
-  showModal();
-} else {
+if (wasCached && statusText) {
   statusText.textContent = "Cached locally — ready";
 }
 
-/* 初始化引擎 */
+/* 初始化引擎：仅在第一次真正需要时触发 */
 async function getEngine() {
   if (engine) return engine;
+
   if (!initPromise) {
+    // 用户第一次点 AI 功能 -> 这里才弹出提示 + 进度
+    showModal();
+    if (statusText) statusText.textContent = "Loading model…";
+
     initPromise = (async () => {
-      statusText.textContent = "Loading model…";
-
-      const eng = await CreateMLCEngine(MODEL_ID, {
-        initProgressCallback: (report) => {
-          if (report.progress !== undefined) {
-            const pct = Math.round(report.progress * 100);
-            progressInner.style.width = pct + "%";
-            statusText.textContent = pct >= 100 ? "Model ready" : `Loading… ${pct}%`;
+      try {
+        const eng = await CreateMLCEngine(MODEL_ID, {
+          initProgressCallback: (report) => {
+            if (report && typeof report.progress === "number") {
+              const pct = Math.round(report.progress * 100);
+              if (progressInner) progressInner.style.width = pct + "%";
+              if (statusText) {
+                statusText.textContent = pct >= 100
+                  ? "Model ready"
+                  : `Loading… ${pct}%`;
+              }
+            }
+            if (report && report.text && statusText) {
+              statusText.textContent = report.text;
+            }
           }
-          if (report.text) {
-            statusText.textContent = report.text;
-          }
-        }
-      });
+        });
 
-      /* 缓存标记 */
-      localStorage.setItem("rootbro_phi_cached", "1");
-
-      hideModal();
-      return eng;
+        // 标记“已经成功加载过一次”，下次只是文案提示
+        localStorage.setItem("rootbro_phi_cached", "1");
+        hideModal();
+        if (statusText) statusText.textContent = "Ready";
+        return eng;
+      } catch (err) {
+        console.error("Engine init failed:", err);
+        hideModal();
+        if (statusText) statusText.textContent = "Error loading model";
+        alert("Your browser may not support WebGPU or model loading failed.");
+        throw err;
+      }
     })();
   }
+
   engine = await initPromise;
   return engine;
 }
 
-/* system prompts */
+/* 各工具的 system prompt */
 function buildPrompt(kind) {
   switch (kind) {
     case "summarize":
@@ -417,54 +432,63 @@ function buildPrompt(kind) {
   }
 }
 
-/* 统一 AI 执行调用 */
+/* 统一 AI 执行入口：在这里才触发 getEngine() */
 async function runTool(kind) {
-  let input, output;
+  let inputEl, outputEl;
 
   switch (kind) {
     case "summarize":
-      input = sumInput; output = sumOutput; break;
+      inputEl = sumInput; outputEl = sumOutput; break;
     case "paraphrase":
-      input = paraInput; output = paraOutput; break;
+      inputEl = paraInput; outputEl = paraOutput; break;
     case "translate":
-      input = transInput; output = transOutput; break;
+      inputEl = transInput; outputEl = transOutput; break;
     case "explain":
-      input = explainInput; output = explainOutput; break;
+      inputEl = explainInput; outputEl = explainOutput; break;
     case "qa":
-      input = qaInput; output = qaOutput; break;
+      inputEl = qaInput; outputEl = qaOutput; break;
     case "resume":
-      input = resumeInput; output = resumeOutput; break;
+      inputEl = resumeInput; outputEl = resumeOutput; break;
+    default:
+      return;
   }
 
-  if (!input.value.trim()) {
-    alert("Please enter text first.");
+  const text = (inputEl?.value || "").trim();
+  if (!text) {
+    alert("Please enter some text first.");
     return;
   }
 
-  const text = input.value.slice(0, 2000);  // 避免浏览器炸机
+  const clipped = text.length > 2000 ? text.slice(0, 2000) : text;
 
-  const eng = await getEngine();
-  statusText.textContent = "Thinking…";
+  try {
+    if (statusText) statusText.textContent = "Thinking…";
+    if (outputEl) outputEl.value = "Thinking…";
 
-  output.value = "Thinking…";
+    const eng = await getEngine();
 
-  const reply = await eng.chat.completions.create({
-    messages: [
-      { role: "system", content: buildPrompt(kind) },
-      { role: "user", content: text }
-    ],
-    temperature: 0.7
-  });
+    const reply = await eng.chat.completions.create({
+      messages: [
+        { role: "system", content: buildPrompt(kind) },
+        { role: "user", content: clipped }
+      ],
+      temperature: 0.7
+    });
 
-  const res = reply.choices?.[0]?.message?.content || "(No output)";
-  output.value = res.trim();
-  statusText.textContent = "Ready";
+    const content = reply.choices?.[0]?.message?.content || "(No output)";
+    if (outputEl) outputEl.value = content.trim();
+    if (statusText) statusText.textContent = "Ready";
+  } catch (err) {
+    console.error(err);
+    if (outputEl) outputEl.value = "Error running local model. Check console.";
+  }
 }
 
-/* 绑定按钮 */
+/* 绑定所有 AI 按钮 */
 document.querySelectorAll("button[data-tool]").forEach(btn => {
   btn.addEventListener("click", () => {
-    runTool(btn.dataset.tool);
+    const kind = btn.getAttribute("data-tool");
+    runTool(kind);
   });
 });
 
@@ -478,20 +502,21 @@ btnTitle.addEventListener("click", () => {
   );
 });
 
-/* Tooltip 控制 */
+/* Tooltip 提示 */
 const tip = document.getElementById("infoTip");
 const tipBox = document.getElementById("tipBox");
 
-tip.addEventListener("mouseenter", () => {
-  const rect = tip.getBoundingClientRect();
-  tipBox.style.left = (rect.left - 220) + "px";
-  tipBox.style.top = (rect.bottom + 6) + "px";
-  tipBox.style.display = "block";
-});
-
-tip.addEventListener("mouseleave", () => {
-  tipBox.style.display = "none";
-});
+if (tip && tipBox) {
+  tip.addEventListener("mouseenter", () => {
+    const rect = tip.getBoundingClientRect();
+    tipBox.style.left = (rect.left - 220) + "px";
+    tipBox.style.top = (rect.bottom + 6) + "px";
+    tipBox.style.display = "block";
+  });
+  tip.addEventListener("mouseleave", () => {
+    tipBox.style.display = "none";
+  });
+}
 </script>
 
 </body>
