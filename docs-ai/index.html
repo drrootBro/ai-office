@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Docs AI Assistant – AI Writing for Google Docs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="AI Writing Assistant for Google Docs. Generate, rewrite, and summarize text using your own Gemini or OpenAI API key. No subscription, lifetime use."
+  />
+  <!-- Tailwind CDN for quick styling -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <!-- 如果以后有小图标，可以放这里 -->
+        <span class="text-xl font-bold text-blue-600">Docs AI Assistant</span>
+      </div>
+      <nav class="hidden md:flex items-center space-x-4 text-sm">
+        <a href="#features" class="hover:text-blue-600">Features</a>
+        <a href="#how-it-works" class="hover:text-blue-600">How it works</a>
+        <a href="#pricing" class="hover:text-blue-600">Pricing</a>
+        <a href="#faq" class="hover:text-blue-600">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-4 py-12 md:py-16 grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h1 class="text-3xl md:text-4xl font-bold mb-4">
+        AI Writing Assistant for Google Docs
+      </h1>
+      <p class="text-lg text-gray-700 mb-4">
+        Generate, rewrite, and summarize text directly inside Google Docs using
+        your own <span class="font-semibold">Gemini</span> or
+        <span class="font-semibold">OpenAI</span> API key.
+      </p>
+      <p class="text-gray-700 mb-6">
+        No subscription. One-time purchase, lifetime use. Multi-language support
+        for English, Chinese, Japanese, Spanish, and more.
+      </p>
+      <div class="flex flex-wrap items-center gap-3">
+        <!-- TODO: 替换为你真正的 Marketplace URL -->
+        <a
+          href="TODO_REPLACE_WITH_MARKETPLACE_URL"
+          class="bg-blue-600 text-white px-5 py-3 rounded-lg shadow hover:bg-blue-700"
+        >
+          Install from Google Workspace Marketplace
+        </a>
+        <span class="text-sm text-gray-600">
+          2-day free trial · Then one-time payment · No monthly fees
+        </span>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-4">
+      <!-- TODO: 换成你最终选的 banner 或 screenshot -->
+      <p class="text-sm text-gray-500 mb-2">In-product preview</p>
+      <img
+        src="banner_220x140.png"
+        alt="Docs AI Assistant preview"
+        class="w-full rounded-lg border border-gray-200"
+      />
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="bg-white py-10 md:py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-6">✨ Key Features</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
+          <h3 class="font-semibold mb-2">Generate content</h3>
+          <p class="text-sm text-gray-700">
+            Turn short prompts into full paragraphs, stories, blog posts, emails,
+            or outlines. Insert directly at the cursor position in Google Docs.
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
+          <h3 class="font-semibold mb-2">Rewrite & improve</h3>
+          <p class="text-sm text-gray-700">
+            Select any text and use <strong>Rewrite</strong>, <strong>Expand</strong>,
+            <strong>Summarize</strong>, or <strong>Format</strong> to instantly
+            polish your writing.
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
+          <h3 class="font-semibold mb-2">Multi-language support</h3>
+          <p class="text-sm text-gray-700">
+            Works in many languages including English, Chinese, Japanese, Korean,
+            Spanish, French and more. The output language follows your input.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 mt-8">
+        <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
+          <h3 class="font-semibold mb-2">Bring Your Own API Key (BYOK)</h3>
+          <p class="text-sm text-gray-700 mb-2">
+            You use your own API keys. Your keys are stored via Google Apps
+            Script properties and are never sent to the developer.
+          </p>
+          <ul class="text-sm text-gray-700 list-disc list-inside space-y-1">
+            <li>Use <strong>Google Gemini</strong> for a generous free tier</li>
+            <li>Use <strong>OpenAI</strong> for GPT-style outputs</li>
+            <li>Switch providers anytime if you don’t like the result</li>
+          </ul>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
+          <h3 class="font-semibold mb-2">Privacy by design</h3>
+          <p class="text-sm text-gray-700">
+            Your document content stays in Google Docs. The add-on does not
+            store your text on any external server. AI requests are sent directly
+            to Gemini or OpenAI using your API key.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how-it-works" class="py-10 md:py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-6">🚀 How it works</h2>
+      <ol class="space-y-3 text-gray-800 text-sm md:text-base">
+        <li>1. Install the add-on from Google Workspace Marketplace.</li>
+        <li>2. Open any Google Doc and go to <strong>Extensions → Docs AI Assistant</strong>.</li>
+        <li>3. In the sidebar, enter your <strong>Gemini</strong> or <strong>OpenAI</strong> API key.</li>
+        <li>4. Type a prompt or select text and choose <em>Generate, Rewrite, Summarize, Expand, or Format</em>.</li>
+        <li>5. Review the output and insert it directly into your document.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="bg-white py-10 md:py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-6">💳 Pricing</h2>
+      <div class="bg-gray-50 border border-gray-100 rounded-lg p-6 max-w-xl">
+        <p class="text-lg font-semibold mb-2">$9.95 – One-time purchase</p>
+        <ul class="text-sm text-gray-800 space-y-1 mb-3">
+          <li>• 2-day free trial</li>
+          <li>• Lifetime access to the add-on</li>
+          <li>• No monthly subscription</li>
+          <li>• You control Gemini / OpenAI costs via your own API keys</li>
+        </ul>
+        <!-- TODO: 替换为 Stripe / 购买说明页面 -->
+        <p class="text-xs text-gray-500">
+          Billing is handled via Google Workspace Marketplace or a separate checkout page.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-10 md:py-12">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-6">❓ FAQ</h2>
+      <div class="space-y-4 text-sm md:text-base text-gray-800">
+        <div>
+          <p class="font-semibold">Do you store my documents or API keys?</p>
+          <p>
+            No. Your text stays in Google Docs. API keys are stored via Google
+            Apps Script properties and are never sent to the developer.
+          </p>
+        </div>
+        <div>
+          <p class="font-semibold">Can I switch between Gemini and OpenAI?</p>
+          <p>
+            Yes. You can choose Gemini for free usage and switch to OpenAI when
+            you want a different style of output.
+          </p>
+        </div>
+        <div>
+          <p class="font-semibold">Which languages are supported?</p>
+          <p>
+            Any language supported by the AI model you choose, including English,
+            Chinese, Japanese, Korean, Spanish, French, and more.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 mt-8">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-xs text-gray-600 flex flex-wrap items-center justify-between gap-2">
+      <span>© 2025 Docs AI Assistant. All rights reserved.</span>
+      <div class="space-x-3">
+        <!-- TODO: 替换为实际 GitHub Pages 路径 -->
+        <a href="privacy.html" class="hover:text-blue-600">Privacy Policy</a>
+        <a href="terms.html" class="hover:text-blue-600">Terms of Service</a>
+        <a href="support.html" class="hover:text-blue-600">Support</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
