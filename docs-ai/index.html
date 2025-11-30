@@ -44,7 +44,7 @@
       </p>
 
       <p class="text-gray-700 mt-3">
-        Works with your own API key (Gemini or OpenAI).
+        Works with your own API key (Gemini or OpenAI).  
         Your key stays private and is never shared with us.
       </p>
 
@@ -58,25 +58,39 @@
       </div>
     </div>
 
-    <!-- RIGHT SIDE: YOUTUBE -->
+    <!-- RIGHT SIDE: THREE IMAGE PREVIEW -->
     <div class="bg-white rounded-xl shadow p-4">
-      <p class="text-sm text-gray-500 mb-2">In-product demo</p>
+      <p class="text-sm text-gray-500 mb-2">In-product preview</p>
 
       <div class="relative w-full" style="padding-top:56.25%;">
-        <iframe
-          class="absolute top-0 left-0 w-full h-full rounded-lg border border-gray-200"
-          src="https://www.youtube.com/embed/l3OBzWPAU8o?si=c0u4n8AD5pHFPPyw&rel=0"
-          title="Docs AI Assistant Demo"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
+        <div class="absolute top-0 left-0 w-full h-full grid grid-cols-3 gap-2 p-2 bg-gray-100 rounded-lg">
+
+          <!-- Screenshot 1 -->
+          <img
+            src="/docs-ai/images/screen1.png"
+            alt="AI Draft Screenshot 1"
+            class="w-full h-full object-cover rounded-md border border-gray-200"
+          />
+
+          <!-- Screenshot 2 -->
+          <img
+            src="/docs-ai/images/screen2.png"
+            alt="AI Draft Screenshot 2"
+            class="w-full h-full object-cover rounded-md border border-gray-200"
+          />
+
+          <!-- Screenshot 3 -->
+          <img
+            src="/docs-ai/images/screen3.png"
+            alt="AI Draft Screenshot 3"
+            class="w-full h-full object-cover rounded-md border border-gray-200"
+          />
+
+        </div>
       </div>
     </div>
 
   </section>
-
 
   <!-- Features -->
   <section id="features" class="bg-white py-12">
@@ -96,7 +110,7 @@
         <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
           <h3 class="font-semibold mb-2">Rewrite & improve</h3>
           <p class="text-sm text-gray-700">
-            Select text and instantly rewrite, expand, shorten, summarize, or polish.
+            Select any text and instantly rewrite, expand, shorten, or summarize it.
           </p>
         </div>
 
@@ -111,7 +125,7 @@
       <div class="grid md:grid-cols-2 gap-6 mt-8">
 
         <div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
-          <h3 class="font-semibold mb-2">Use your own API key</h3>
+          <h3 class="font-semibold mb-2">Use your own API key (BYOK)</h3>
           <p class="text-sm text-gray-700">
             Bring your own Gemini or OpenAI API key.  
             Your key stays private and under your control at all times.
@@ -129,6 +143,31 @@
     </div>
   </section>
 
+  <!-- Pricing -->
+  <section id="pricing" class="bg-white py-12">
+    <div class="max-w-6xl mx-auto px-4">
+
+      <h2 class="text-2xl font-bold mb-6">💳 Pricing</h2>
+
+      <div class="bg-gray-50 border border-gray-100 rounded-lg p-6 max-w-xl">
+
+        <p class="text-lg font-semibold mb-2">$9.95 — One-time purchase</p>
+
+        <ul class="text-sm text-gray-800 space-y-1 mb-3">
+          <li>• Lifetime access</li>
+          <li>• No monthly subscription</li>
+          <li>• Bring your own API key (Gemini or OpenAI)</li>
+          <li>• Your key stays private — never collected by us</li>
+        </ul>
+
+        <p class="text-xs text-gray-500">
+          Billing is handled securely through our website after installation.
+        </p>
+
+      </div>
+
+    </div>
+  </section>
 
   <!-- How it works -->
   <section id="how-it-works" class="py-12">
@@ -139,14 +178,13 @@
       <ol class="space-y-3 text-gray-800 text-sm md:text-base">
         <li>1. Install the add-on from the Google Workspace Marketplace.</li>
         <li>2. Open any document → <strong>Extensions → AI Draft for Google Docs™</strong>.</li>
-        <li>3. Enter your own API key (Gemini or OpenAI).</li>
-        <li>4. Select text or type a prompt.</li>
-        <li>5. Generate or rewrite instantly.</li>
+        <li>3. Enter your Gemini or OpenAI API key.</li>
+        <li>4. Select text or type a prompt in the sidebar.</li>
+        <li>5. Generate, rewrite, summarize, or expand instantly.</li>
       </ol>
 
     </div>
   </section>
-
 
   <!-- Footer -->
   <footer class="border-t border-gray-200 mt-8">
