@@ -59,16 +59,16 @@
       </div>
     </div>
 
-    <!-- RIGHT: Hero main screenshot in fixed 16:9 frame -->
+    <!-- RIGHT: BIG 16:9 MAIN SCREENSHOT -->
     <div class="bg-white rounded-xl shadow p-4">
       <p class="text-sm text-gray-500 mb-2">In-product preview</p>
-    
-      <!-- Fixed 16:9 frame -->
+
       <div class="relative w-full rounded-lg overflow-hidden bg-gray-100" style="padding-top:56.25%;">
         <img
           src="/docs-ai/images/mainpic.png"
           alt="AI Draft main screenshot"
-          class="absolute inset-0 w-full h-full object-cover"
+          class="absolute inset-0 w-full h-full object-cover cursor-pointer"
+          onclick="openLightbox('/docs-ai/images/mainpic.png')"
         />
       </div>
     </div>
@@ -126,42 +126,38 @@
     </div>
   </section>
 
-  <!-- Screenshots Section: 其他两张图按功能安放 -->
+  <!-- Screenshots Section -->
   <section id="screenshots" class="bg-gray-50 py-12">
     <div class="max-w-6xl mx-auto px-4">
-      <h2 class="text-2xl font-bold mb-6">📷 In-product screenshots</h2>
+      <h2 class="text-2xl font-bold mb-6">📷 More screenshots</h2>
 
       <div class="grid md:grid-cols-2 gap-8">
 
-        <!-- Screenshot 2: Generation / Edit area -->
+        <!-- Screenshot 2 -->
         <div>
-          <h3 class="font-semibold mb-2">AI generation & editing tools</h3>
-          <p class="text-sm text-gray-700 mb-3">
-            See how prompts, Generate, and editing actions appear in the sidebar.
-          </p>
+          <h3 class="font-semibold mb-2">AI generation tools</h3>
           <div class="rounded-xl overflow-hidden bg-white shadow">
             <div class="relative w-full" style="padding-top:56.25%;">
               <img
                 src="/docs-ai/images/editing.png"
-                alt="AI Draft generation screenshot"
-                class="absolute inset-0 w-full h-full object-contain"
+                alt="AI Draft screenshot 2"
+                class="absolute inset-0 w-full h-full object-contain cursor-pointer"
+                onclick="openLightbox('/docs-ai/images/editing.png')"
               />
             </div>
           </div>
         </div>
 
-        <!-- Screenshot 3: BYOK / API key area -->
+        <!-- Screenshot 3 -->
         <div>
-          <h3 class="font-semibold mb-2">Bring Your Own API Key (BYOK)</h3>
-          <p class="text-sm text-gray-700 mb-3">
-            The sidebar makes it easy to connect Gemini or OpenAI with your own API key.
-          </p>
+          <h3 class="font-semibold mb-2">BYOK / API key section</h3>
           <div class="rounded-xl overflow-hidden bg-white shadow">
             <div class="relative w-full" style="padding-top:56.25%;">
               <img
                 src="/docs-ai/images/main-byok.png"
-                alt="AI Draft API key screenshot"
-                class="absolute inset-0 w-full h-full object-contain"
+                alt="AI Draft screenshot 3"
+                class="absolute inset-0 w-full h-full object-contain cursor-pointer"
+                onclick="openLightbox('/docs-ai/images/main-byok.png')"
               />
             </div>
           </div>
@@ -178,20 +174,16 @@
       <h2 class="text-2xl font-bold mb-6">💳 Pricing</h2>
 
       <div class="bg-gray-50 border border-gray-100 rounded-lg p-6 max-w-xl">
-
         <p class="text-lg font-semibold mb-2">$9.95 — One-time purchase</p>
-
         <ul class="text-sm text-gray-800 space-y-1 mb-3">
           <li>• Lifetime access</li>
           <li>• No monthly subscription</li>
           <li>• Bring your own API key (Gemini or OpenAI)</li>
           <li>• Your key stays private — never collected by us</li>
         </ul>
-
         <p class="text-xs text-gray-500">
           Billing is handled securely through our website after installation.
         </p>
-
       </div>
 
     </div>
@@ -225,6 +217,31 @@
       </div>
     </div>
   </footer>
+
+
+  <!-- CLICK-TO-ZOOM LIGHTBOX -->
+  <div id="lightbox"
+       class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50 p-4">
+    
+    <img id="lightbox-img"
+         src=""
+         class="max-w-full max-h-full rounded shadow-xl" />
+
+    <button onclick="closeLightbox()"
+            class="absolute top-5 right-5 text-white text-3xl font-bold">&times;</button>
+  </div>
+
+  <script>
+    function openLightbox(src) {
+      document.getElementById("lightbox-img").src = src;
+      document.getElementById("lightbox").classList.remove("hidden");
+      document.getElementById("lightbox").classList.add("flex");
+    }
+    function closeLightbox() {
+      document.getElementById("lightbox").classList.add("hidden");
+      document.getElementById("lightbox").classList.remove("flex");
+    }
+  </script>
 
 </body>
 </html>
