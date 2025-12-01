@@ -58,33 +58,42 @@
       </div>
     </div>
 
-    <!-- RIGHT SIDE: THREE IMAGE PREVIEW -->
+    <!-- RIGHT SIDE: FIXED 16:9 FRAME WITH 3 IMAGES -->
     <div class="bg-white rounded-xl shadow p-4">
       <p class="text-sm text-gray-500 mb-2">In-product preview</p>
 
-      <div class="relative w-full" style="padding-top:56.25%;">
-        <div class="absolute top-0 left-0 w-full h-full grid grid-cols-3 gap-2 p-2 bg-gray-100 rounded-lg">
+      <!-- Fixed aspect ratio (16:9) -->
+      <div class="relative w-full rounded-lg overflow-hidden" style="padding-top:56.25%;">
+
+        <!-- Grid of 3 images -->
+        <div class="absolute inset-0 grid grid-cols-3 gap-2 p-2 bg-gray-100">
 
           <!-- Screenshot 1 -->
-          <img
-            src="/docs-ai/images/screen1.png"
-            alt="AI Draft Screenshot 1"
-            class="w-full h-full object-cover rounded-md border border-gray-200"
-          />
+          <div class="relative">
+            <img
+              src="/docs-ai/images/screen1.png"
+              alt="AI Draft Screenshot 1"
+              class="absolute inset-0 w-full h-full object-cover rounded-md border border-gray-200"
+            />
+          </div>
 
           <!-- Screenshot 2 -->
-          <img
-            src="/docs-ai/images/screen2.png"
-            alt="AI Draft Screenshot 2"
-            class="w-full h-full object-cover rounded-md border border-gray-200"
-          />
+          <div class="relative">
+            <img
+              src="/docs-ai/images/screen2.png"
+              alt="AI Draft Screenshot 2"
+              class="absolute inset-0 w-full h-full object-cover rounded-md border border-gray-200"
+            />
+          </div>
 
           <!-- Screenshot 3 -->
-          <img
-            src="/docs-ai/images/screen3.png"
-            alt="AI Draft Screenshot 3"
-            class="w-full h-full object-cover rounded-md border border-gray-200"
-          />
+          <div class="relative">
+            <img
+              src="/docs-ai/images/screen3.png"
+              alt="AI Draft Screenshot 3"
+              class="absolute inset-0 w-full h-full object-cover rounded-md border border-gray-200"
+            />
+          </div>
 
         </div>
       </div>
