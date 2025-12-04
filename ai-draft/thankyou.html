@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You – AI-Draft Activation</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Celebration Script -->
+  <script>
+    // Burst confetti on load
+    window.onload = function () {
+      confetti({
+        particleCount: 180,
+        spread: 80,
+        origin: { y: 0.4 }
+      });
+
+      // second burst after delay
+      setTimeout(() => {
+        confetti({
+          particleCount: 120,
+          spread: 100,
+          origin: { y: 0.2 }
+        });
+      }, 1000);
+    };
+  </script>
+
+  <!-- Content Card -->
+  <div class="max-w-2xl mx-auto p-6 mt-10 bg-white shadow-md rounded-xl">
+
+    <h1 class="text-3xl font-bold text-center text-purple-600 mb-4">
+      🎉 Thank You for Your Purchase!
+    </h1>
+
+    <p class="text-center text-lg mb-6">
+      Your AI-Draft lifetime license is now active.
+    </p>
+
+    <hr class="my-6">
+
+    <h2 class="text-xl font-semibold mb-3">➡️ How to Activate in Word</h2>
+
+    <p class="mb-4">
+      Activation is automatic. Simply return to Microsoft Word and reopen the AI-Draft Add-in panel.
+    </p>
+
+    <!-- Replace with your real icon -->
+    <div class="flex justify-center mb-4">
+      <img src="aidraft.png" alt="AI-Draft Icon" class="w-20 h-20 rounded-xl shadow">
+    </div>
+
+    <ol class="list-decimal list-inside space-y-2 mb-6">
+      <li>Open <strong>Microsoft Word</strong></li>
+      <li>Go to <strong>Home → Add-ins → AI-Draft</strong></li>
+      <li>Click the AI-Draft icon once to reopen the panel</li>
+      <li>Your Pro license will display as <strong>Activated</strong></li>
+    </ol>
+
+    <div class="p-4 bg-purple-50 border border-purple-200 rounded-lg mb-6">
+      <p class="font-medium text-purple-700">If Pro does not appear immediately:</p>
+      <ul class="list-disc list-inside text-purple-700 mt-2">
+        <li>Close and reopen the taskpane</li>
+        <li>Or click “Refresh License” inside AI-Draft Settings</li>
+      </ul>
+    </div>
+
+    <p class="text-center text-sm text-gray-500">
+      Need help? Contact: support@rootbro.com
+    </p>
+
+  </div>
+
+  <div class="text-center text-gray-400 text-xs mt-6 mb-4">
+    © 2025 RootBro Software Studio
+  </div>
+
+</body>
+</html>
