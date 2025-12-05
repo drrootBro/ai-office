@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You – AI-Draft Activation</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    body {
+      background: linear-gradient(180deg, #fafafa, #f0f0ff);
+    }
+  </style>
+</head>
+
+<body class="text-gray-800">
+
+  <!-- Container -->
+  <div class="max-w-2xl mx-auto p-6 mt-10 bg-white shadow-lg rounded-2xl relative">
+
+    <h1 class="text-3xl font-extrabold text-center text-purple-600 mb-4">
+      🎉 Thank You for Your Purchase!
+    </h1>
+
+    <p class="text-center text-lg mb-6">
+      Your AI-Draft lifetime license is now active.
+    </p>
+
+    <hr class="my-6">
+
+    <h2 class="text-xl font-semibold mb-3">➡️ How to Activate in Word</h2>
+
+    <p class="mb-4">
+      Activation is automatic. Return to Microsoft Word and reopen the AI-Draft Add-in panel.
+    </p>
+
+    <!-- Placeholder icon -->
+    <div class="flex justify-center mb-4">
+      <img src="https://rootbro.com/assets/aidraft.png" alt="AI-Draft Icon" class="w-20 h-20 rounded-xl shadow">
+    </div>
+
+    <ol class="list-decimal list-inside space-y-2 mb-6">
+      <li>Open <strong>Microsoft Word</strong></li>
+      <li>Go to <strong>Home → Add-ins → AI-Draft</strong></li>
+      <li>Click the AI-Draft icon once to reopen the panel</li>
+      <li>Your Pro license will show as <strong>Activated</strong></li>
+    </ol>
+
+    <div class="p-4 bg-purple-50 border border-purple-200 rounded-xl mb-6">
+      <p class="font-medium text-purple-700">
+        If Pro does not appear immediately:
+      </p>
+      <ul class="list-disc list-inside text-purple-700 mt-2">
+        <li>Close and reopen the taskpane</li>
+        <li>Or click “Refresh License” inside AI-Draft Settings</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="text-center text-gray-400 text-xs mt-6 mb-4">
+    © 2025 RootBro Software 
+  </div>
+
+  <!-- Confetti trigger -->
+  <script>
+    // Burst once on load
+    confetti({
+      particleCount: 180,
+      spread: 70,
+      origin: { y: 0.3 }
+    });
+
+    // Light celebration every second for 3 seconds
+    let count = 0;
+    const interval = setInterval(() => {
+      confetti({
+        particleCount: 50,
+        spread: 55,
+        origin: { y: 0.3 }
+      });
+      count++;
+      if (count > 2) clearInterval(interval);
+    }, 1000);
+  </script>
+
+</body>
+</html>
