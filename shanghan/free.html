@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>伤寒论六经辨证</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  :root {
+    --ink:#0f1923; --ink2:#3a4a5a;
+    --paper:#f0f4f0; --paper2:#e8ede8;
+    --blue:#1a3a5c; --blue2:#2a5298; --blue3:#4a7ec8;
+    --red:#8b1a1a; --gold:#b8860b; --border:#b8c8b8;
+    --shadow:rgba(15,25,15,0.10);
+    --ty:#c0392b; --ym:#c07020; --sy:#27ae60;
+    --ti:#8e44ad; --sn:#2980b9; --jy:#445588;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Noto Sans SC',sans-serif;
+    background:var(--paper); color:var(--ink); min-height:100vh;
+    background-image:
+      radial-gradient(ellipse at 10% 0%,rgba(139,26,26,.05) 0%,transparent 50%),
+      radial-gradient(ellipse at 90% 100%,rgba(26,58,92,.05) 0%,transparent 50%);
+  }
+
+  /* HEADER */
+  header{
+    background:var(--blue); padding:18px 32px;
+    display:flex; align-items:center; gap:14px;
+    border-bottom:3px solid var(--blue3);
+  }
+  .seal{
+    width:48px;height:48px;background:var(--red);border-radius:6px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Noto Serif SC',serif;color:white;font-size:17px;
+    letter-spacing:-2px;flex-shrink:0;box-shadow:2px 2px 0 rgba(0,0,0,.3);
+  }
+  header h1{font-family:'Noto Serif SC',serif;color:#e8f0fa;font-size:19px;letter-spacing:3px;}
+  header p{color:var(--blue3);font-size:11px;letter-spacing:1px;margin-top:3px;}
+  .hdr-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+  .version{background:rgba(74,126,200,.3);color:#a8c8f0;font-size:10px;
+    padding:3px 9px;border-radius:10px;border:1px solid rgba(74,126,200,.4);}
+
+  /* MERIDIAN TABS */
+  .m-bar{
+    background:var(--blue);padding:0 32px;
+    display:flex;border-bottom:1px solid rgba(74,126,200,.25);
+    overflow-x:auto;
+  }
+  .m-tab{
+    padding:10px 16px;font-size:12px;color:#6888aa;cursor:pointer;
+    border-bottom:3px solid transparent;transition:all .2s;
+    display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;
+  }
+  .m-tab:hover{color:#a8c8f0;}
+  .m-tab.active{color:white;border-bottom-color:var(--active-color,white);}
+  .m-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+
+  /* LAYOUT */
+  .container{max-width:1120px;margin:0 auto;padding:20px;}
+  .disclaimer{
+    background:#e8f0e8;border-left:4px solid var(--blue3);
+    padding:9px 13px;border-radius:0 6px 6px 0;
+    font-size:11px;color:var(--ink2);margin-bottom:18px;line-height:1.6;
+  }
+  .layout{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start;}
+
+  /* LEFT - TREE */
+  .tree-panel{background:white;border:1px solid var(--border);border-radius:8px;
+    overflow:hidden;box-shadow:0 2px 10px var(--shadow);}
+  .panel-hd{background:var(--blue);padding:12px 18px;display:flex;align-items:center;gap:8px;}
+  .panel-hd .hdot{width:7px;height:7px;background:var(--blue3);border-radius:50%;}
+  .panel-hd h2{font-family:'Noto Serif SC',serif;color:#e8f0fa;font-size:13px;letter-spacing:2px;}
+  .panel-bd{padding:18px;}
+
+  /* MERIDIAN INTRO */
+  .m-intro{
+    padding:11px 13px;border-radius:6px;border-left:3px solid;
+    margin-bottom:16px;
+  }
+  .m-intro-name{font-family:'Noto Serif SC',serif;font-size:14px;font-weight:700;}
+  .m-intro-desc{font-size:11px;color:var(--ink2);margin-top:3px;line-height:1.6;}
+
+  /* RESET BTN */
+  .reset-row{margin-bottom:14px;}
+  .btn-reset{
+    padding:6px 14px;background:white;border:1px solid var(--border);
+    border-radius:5px;font-size:11px;color:var(--ink2);cursor:pointer;transition:all .15s;
+  }
+  .btn-reset:hover{border-color:var(--red);color:var(--red);}
+
+  /* TREE NODES */
+  .tree-root{display:flex;flex-direction:column;gap:0;}
+
+  .tree-level{
+    display:flex;flex-direction:column;gap:0;
+    animation:slideDown .2s ease;
+  }
+  @keyframes slideDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+
+  .level-question{
+    font-size:13px;font-weight:600;color:var(--blue);
+    padding:8px 0 6px;line-height:1.5;
+  }
+
+  .opt-row{
+    display:flex;align-items:flex-start;gap:0;
+    border-radius:6px;overflow:hidden;
+    margin-bottom:2px;
+  }
+
+  /* the clickable option button */
+  .opt-btn{
+    flex:1;padding:9px 12px;background:var(--paper);
+    border:1.5px solid var(--border);border-radius:6px;
+    font-size:12px;color:var(--ink);cursor:pointer;
+    text-align:left;transition:all .15s;line-height:1.5;
+    display:flex;align-items:center;gap:8px;
+  }
+  .opt-btn:hover{border-color:var(--blue2);background:#eef4ff;}
+  .opt-btn.selected{
+    background:#e8f0fb;border-color:var(--blue2);color:var(--blue);
+    font-weight:500;
+  }
+  .opt-btn.result-selected{
+    background:#e8f8e8;border-color:var(--sy);color:#1a5a1a;font-weight:500;
+  }
+  .opt-radio{
+    width:14px;height:14px;border-radius:50%;border:2px solid var(--border);
+    flex-shrink:0;transition:all .15s;display:flex;align-items:center;justify-content:center;
+  }
+  .opt-btn.selected .opt-radio{border-color:var(--blue2);background:var(--blue2);}
+  .opt-btn.selected .opt-radio::after{content:'';width:5px;height:5px;border-radius:50%;background:white;}
+  .opt-btn.result-selected .opt-radio{border-color:var(--sy);background:var(--sy);}
+  .opt-btn.result-selected .opt-radio::after{content:'';width:5px;height:5px;border-radius:50%;background:white;}
+  .opt-label-wrap{flex:1;}
+  .opt-main{display:block;}
+  .opt-sub{display:block;font-size:10px;color:var(--ink2);margin-top:1px;}
+
+  /* children indent */
+  .opt-children{
+    margin-left:24px;padding-left:12px;
+    border-left:2px solid #d8e8d8;
+    margin-top:4px;margin-bottom:6px;
+  }
+
+  /* RIGHT - RESULT */
+  .result-panel{
+    background:white;border:1px solid var(--border);border-radius:8px;
+    overflow:hidden;box-shadow:0 2px 10px var(--shadow);
+    position:sticky;top:16px;
+  }
+  .empty-state{
+    display:flex;flex-direction:column;align-items:center;
+    justify-content:center;padding:50px 20px;text-align:center;color:var(--ink2);
+  }
+  .empty-icon{font-size:40px;margin-bottom:12px;opacity:.3;}
+  .empty-state p{font-size:12px;line-height:1.9;}
+
+  /* result content */
+  .rc-header{
+    padding:16px 18px;display:flex;align-items:center;gap:13px;
+    border-bottom:2px solid var(--paper2);
+  }
+  .rc-badge{
+    width:46px;height:46px;border-radius:7px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Noto Serif SC',serif;color:white;font-size:13px;
+    flex-shrink:0;box-shadow:2px 2px 0 rgba(0,0,0,.2);
+  }
+  .rc-name{font-family:'Noto Serif SC',serif;font-size:20px;letter-spacing:1px;}
+  .rc-modern{font-size:11px;color:var(--ink2);margin-top:3px;line-height:1.5;}
+  .rc-pill{
+    display:inline-block;font-size:10px;padding:2px 7px;
+    border-radius:8px;color:white;margin-top:4px;
+  }
+
+  .rc-body{padding:14px 18px;}
+  .sec{margin-bottom:14px;}
+  .sec-lbl{
+    font-size:10px;color:var(--gold);letter-spacing:2px;font-weight:700;
+    margin-bottom:6px;display:flex;align-items:center;gap:5px;
+  }
+  .sec-lbl::before{content:'';display:inline-block;width:12px;height:2px;background:var(--gold);}
+
+  .herb-grid{display:flex;flex-wrap:wrap;gap:5px;}
+  .herb-tag{
+    background:var(--paper);border:1px solid var(--border);
+    border-radius:5px;padding:5px 8px;font-size:11px;
+  }
+  .herb-tag b{display:block;font-size:12px;}
+  .herb-tag span{color:var(--ink2);font-size:10px;}
+
+  .prep-box{
+    background:#f0f6ff;border:1px solid #b8d0f0;border-radius:5px;
+    padding:10px 12px;font-size:12px;line-height:1.8;
+  }
+  .classic-box{
+    background:var(--blue);border-radius:5px;padding:10px 12px;
+    font-family:'Noto Serif SC',serif;font-size:11px;color:#a8c8f0;line-height:1.9;
+  }
+  .classic-src{font-size:10px;color:#6898c0;margin-top:5px;}
+  .warn-box{
+    background:#fff8f0;border:1px solid #f0c890;border-radius:5px;
+    padding:9px 11px;font-size:11px;color:#7a4010;line-height:1.7;
+  }
+
+  @media(max-width:800px){
+    .layout{grid-template-columns:1fr;}
+    .result-panel{position:static;}
+    .m-bar{padding:0 12px;}
+    .container{padding:12px;}
+    header{padding:14px 16px;}
+  }
+
+  /* PAYWALL */
+  .m-tab.locked{ color:#5a6a7a; opacity:.6; cursor:pointer; }
+  .m-tab.locked:hover{ opacity:.9; }
+  .m-tab.locked .lock-icon{ font-size:10px; margin-left:2px; }
+
+  .sym-card.locked{
+    background:#f4f4f4; border-color:#d0d0d0; cursor:pointer;
+    filter:grayscale(0.3); opacity:.7;
+  }
+  .sym-card.locked:hover{ opacity:.9; transform:none; box-shadow:none; border-color:#aaa; }
+  .sym-card.locked .sym-icon{ filter:grayscale(1); }
+  .sym-card.locked .sym-name{ color:#888; }
+  .sym-card.locked .sym-desc{ color:#aaa; }
+  .sym-card.locked .lock-badge{
+    display:inline-block; font-size:9px; background:#888;
+    color:white; padding:1px 5px; border-radius:8px; margin-top:3px;
+  }
+
+  /* MODAL */
+  .modal-overlay{
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,.5); z-index:1000;
+    align-items:center; justify-content:center; padding:20px;
+  }
+  .modal-overlay.show{ display:flex; }
+  .modal{
+    background:white; border-radius:12px; max-width:400px; width:100%;
+    padding:32px 28px; box-shadow:0 8px 40px rgba(0,0,0,.3);
+    animation:fadeIn .2s ease;
+  }
+  .modal-icon{ font-size:36px; text-align:center; margin-bottom:12px; }
+  .modal-title{
+    font-family:'Noto Serif SC',serif; font-size:18px; color:var(--ink);
+    text-align:center; margin-bottom:6px; letter-spacing:1px;
+  }
+  .modal-sub{ font-size:12px; color:var(--ink2); text-align:center; margin-bottom:20px; line-height:1.6; }
+  .modal-features{ background:var(--paper); border-radius:8px; padding:14px; margin-bottom:20px; }
+  .modal-feature{ font-size:12px; color:var(--ink2); margin-bottom:6px; display:flex; gap:8px; }
+  .modal-feature:last-child{ margin-bottom:0; }
+  .modal-btns{ display:flex; flex-direction:column; gap:8px; }
+  .modal-btn-buy{
+    padding:12px; background:var(--red); color:white; border:none;
+    border-radius:7px; font-size:14px; font-family:'Noto Serif SC',serif;
+    letter-spacing:1px; cursor:pointer; text-align:center;
+    text-decoration:none; display:block; transition:background .2s;
+  }
+  .modal-btn-buy:hover{ background:#a02020; }
+  .modal-btn-key{
+    padding:11px; background:white; color:var(--blue2);
+    border:1.5px solid var(--blue2); border-radius:7px;
+    font-size:13px; cursor:pointer; transition:all .2s;
+  }
+  .modal-btn-key:hover{ background:#eef4ff; }
+  .modal-btn-close{
+    padding:9px; background:white; color:var(--ink2);
+    border:1px solid var(--border); border-radius:7px;
+    font-size:12px; cursor:pointer;
+  }
+
+  /* KEY INPUT IN MODAL */
+  .modal-key-input{
+    width:100%; padding:11px; border:1.5px solid var(--border);
+    border-radius:7px; font-size:14px; text-align:center;
+    letter-spacing:2px; margin-bottom:8px; text-transform:uppercase;
+    font-family:'Noto Sans SC',sans-serif;
+  }
+  .modal-key-input:focus{ outline:none; border-color:var(--blue2); }
+  .modal-key-error{ font-size:11px; color:var(--red); min-height:16px; margin-bottom:8px; text-align:center; }
+  .modal-key-loading{ font-size:11px; color:var(--ink2); text-align:center; margin-bottom:8px; display:none; }
+  .mode-bar{
+    background:#e8ede8; border-bottom:1px solid var(--border);
+    display:flex; justify-content:center; padding:10px 20px; gap:8px;
+  }
+  .mode-btn{
+    padding:8px 28px; border-radius:20px; font-size:13px; cursor:pointer;
+    border:1.5px solid var(--border); background:white; color:var(--ink2);
+    transition:all .2s; font-family:'Noto Sans SC',sans-serif;
+    display:flex; align-items:center; gap:6px;
+  }
+  .mode-btn.active{
+    background:var(--blue); color:white; border-color:var(--blue);
+    box-shadow:0 2px 8px rgba(26,58,92,.25);
+  }
+  .mode-btn:hover:not(.active){ border-color:var(--blue2); color:var(--blue2); }
+
+  /* SYMPTOM GRID for modern mode */
+  .symptom-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px;
+    margin-bottom:4px;
+  }
+  .sym-card{
+    background:white; border:1.5px solid var(--border); border-radius:8px;
+    padding:14px 12px; cursor:pointer; transition:all .2s; text-align:center;
+  }
+  .sym-card:hover{ border-color:var(--blue2); transform:translateY(-2px); box-shadow:0 4px 12px var(--shadow); }
+  .sym-card.active{ border-color:var(--blue2); background:#eef4ff; }
+  .sym-icon{ font-size:26px; margin-bottom:6px; }
+  .sym-name{ font-size:13px; font-weight:500; color:var(--ink); }
+  .sym-desc{ font-size:10px; color:var(--ink2); margin-top:2px; line-height:1.4; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="seal">伤寒</div>
+  <div>
+    <h1>伤寒论经方辨证</h1>
+    <p>张仲景 · 六经辨证 · 按经或按症状查方</p>
+  </div>
+  <div class="hdr-right">
+    <div class="version">免费版 · 太阳+阳明</div>
+  </div>
+</header>
+
+<!-- 付费墙弹窗 -->
+<div class="modal-overlay" id="paywallModal">
+  <div class="modal">
+    <div id="modalContent1">
+      <div class="modal-icon">🔒</div>
+      <div class="modal-title">此内容需要完整版</div>
+      <div class="modal-sub" id="modalSubText">完整版包含六经全部内容</div>
+      <div class="modal-features">
+        <div class="modal-feature"><span>✅</span>六经完整辨证（57首方剂）</div>
+        <div class="modal-feature"><span>✅</span>按症状查方（16个现代分类）</div>
+        <div class="modal-feature"><span>✅</span>完整原文、煎法、禁忌</div>
+        <div class="modal-feature"><span>✅</span>一次购买，永久使用</div>
+      </div>
+      <div class="modal-btns">
+        <a class="modal-btn-buy" href="https://rootbro.lemonsqueezy.com" target="_blank">立即购买 $9.99</a>
+        <button class="modal-btn-key" onclick="showKeyInput()">已有Key？点此解锁</button>
+        <button class="modal-btn-close" onclick="closeModal()">暂不，继续使用免费版</button>
+      </div>
+    </div>
+    <div id="modalContent2" style="display:none">
+      <div class="modal-icon">🔑</div>
+      <div class="modal-title">输入License Key</div>
+      <div class="modal-sub">输入购买后收到的Key解锁完整版</div>
+      <input class="modal-key-input" id="modalKeyInput" type="text"
+        placeholder="SHHL-XXXX-XXXX-XXXX" maxlength="20"
+        oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9-]/g,'')"
+      />
+      <div class="modal-key-error" id="modalKeyError"></div>
+      <div class="modal-key-loading" id="modalKeyLoading">⏳ 验证中...</div>
+      <div class="modal-btns">
+        <button class="modal-btn-buy" onclick="doModalUnlock()" style="background:var(--blue)">验证并解锁</button>
+        <button class="modal-btn-close" onclick="showModalMain()">← 返回</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 模式切换 -->
+<div class="mode-bar">
+  <button class="mode-btn active" id="modeJing" onclick="setMode('jing')">
+    📚 六经辨证（专业）
+  </button>
+  <button class="mode-btn" id="modeZheng" onclick="setMode('zheng')">
+    🔍 按症状查（普通）
+  </button>
+</div>
+
+<!-- 六经模式 -->
+<div id="jingMode">
+  <div class="m-bar" id="mBar"></div>
+</div>
+
+<div class="container">
+  <div class="disclaimer">⚕️ <strong>重要提示：</strong>本系统仅供学习参考，不构成医疗建议。请在专业中医师指导下使用。</div>
+  <div class="layout">
+    <div class="tree-panel">
+      <div class="panel-hd"><div class="hdot"></div><h2 id="panelTitle">辨证问诊</h2></div>
+      <div class="panel-bd" id="treeBody"></div>
+    </div>
+    <div class="result-panel">
+      <div class="panel-hd"><div class="hdot"></div><h2>推荐方剂</h2></div>
+      <div id="resultBody">
+        <div class="empty-state">
+          <div class="empty-icon">📖</div>
+          <p>请在左侧<br><strong>逐步选择症状</strong><br>系统自动推荐方剂</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────
+// 方剂库
+// ─────────────────────────────────────────
+const F = {
+  桂枝汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉浮缓",
+    modern:"感冒（有汗型）、体虚感冒、产后感冒",
+    pattern:"太阳中风，营卫不和",
+    source:"《伤寒论》第12条",
+    original:"太阳中风，阳浮而阴弱，啬啬恶寒，翕翕发热，鼻鸣干呕者，桂枝汤主之。",
+    herbs:[{n:"桂枝",a:"9g",p:"去皮"},{n:"白芍",a:"9g"},{n:"炙甘草",a:"6g"},{n:"生姜",a:"9g",p:"切"},{n:"大枣",a:"12枚",p:"擘"}],
+    prep:"水煎服，服后喝热粥一碗，盖被微微出汗，不可大汗淋漓。汗出病愈则止。",
+    contra:"无汗体壮者禁用；酒客禁用。服后忌生冷油腻。"
+  },
+  桂枝加葛根汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉浮缓",
+    modern:"感冒有汗伴颈肩酸痛",
+    pattern:"太阳中风兼项背不舒",
+    source:"《伤寒论》第14条",
+    original:"太阳病，项背强几几，反汗出恶风者，桂枝加葛根汤主之。",
+    herbs:[{n:"葛根",a:"12g"},{n:"桂枝",a:"9g",p:"去皮"},{n:"白芍",a:"9g"},{n:"炙甘草",a:"6g"},{n:"生姜",a:"9g",p:"切"},{n:"大枣",a:"12枚",p:"擘"}],
+    prep:"水煎服，服后微汗。",
+    contra:"无汗者改用葛根汤；体虚者减量。"
+  },
+  麻黄汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉浮紧",
+    modern:"流感（无汗型）、急性上呼吸道感染",
+    pattern:"太阳伤寒，寒邪束表",
+    source:"《伤寒论》第35条",
+    original:"太阳病，头痛发热，身疼腰痛，骨节疼痛，恶风无汗而喘者，麻黄汤主之。",
+    herbs:[{n:"麻黄",a:"9g",p:"去节"},{n:"桂枝",a:"6g",p:"去皮"},{n:"杏仁",a:"12g",p:"去皮尖"},{n:"炙甘草",a:"3g"}],
+    prep:"先煎麻黄去上沫，再入余药同煎。服后盖被微汗即止，不可大汗。",
+    contra:"⚠️ 发汗力强，体虚、老人、孕妇慎用。有汗者绝对禁用。心脏病、高血压慎用。"
+  },
+  葛根汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉浮紧",
+    modern:"感冒颈肩僵硬、颈椎病急性期伴感冒",
+    pattern:"太阳病，项背强几几，无汗恶风",
+    source:"《伤寒论》第31条",
+    original:"太阳病，项背强几几，无汗恶风，葛根汤主之。",
+    herbs:[{n:"葛根",a:"12g"},{n:"麻黄",a:"9g",p:"去节"},{n:"桂枝",a:"6g",p:"去皮"},{n:"白芍",a:"6g"},{n:"炙甘草",a:"6g"},{n:"生姜",a:"9g",p:"切"},{n:"大枣",a:"12枚",p:"擘"}],
+    prep:"先煎麻黄葛根去上沫，再入余药，服后微汗。",
+    contra:"体虚多汗者慎用。有汗颈痛者改用桂枝加葛根汤。"
+  },
+  大青龙汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉浮紧",
+    modern:"流感高烧无汗伴烦躁、急性肺炎初期",
+    pattern:"表寒里热，内外俱实",
+    source:"《伤寒论》第38条",
+    original:"太阳中风，脉浮紧，发热恶寒，身疼痛，不汗出而烦躁者，大青龙汤主之。",
+    herbs:[{n:"麻黄",a:"12g",p:"去节"},{n:"桂枝",a:"6g",p:"去皮"},{n:"炙甘草",a:"6g"},{n:"杏仁",a:"9g",p:"去皮尖"},{n:"生姜",a:"9g",p:"切"},{n:"大枣",a:"10枚",p:"擘"},{n:"石膏",a:"30g",p:"碎"}],
+    prep:"先煎麻黄去上沫，入余药再煎，温服，取微似汗。汗出过多者用温粉扑身止汗。",
+    contra:"⚠️ 发汗力极强，体虚者绝对禁用。脉微弱、有汗者禁用，误用亡阳。"
+  },
+  小青龙汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉浮紧或弦",
+    modern:"过敏性鼻炎、支气管哮喘、寒性支气管炎",
+    pattern:"外寒内饮，肺气不宣",
+    source:"《伤寒论》第40条",
+    original:"伤寒表不解，心下有水气，干呕发热而咳，小青龙汤主之。",
+    herbs:[{n:"麻黄",a:"9g",p:"去节"},{n:"白芍",a:"9g"},{n:"细辛",a:"3g"},{n:"干姜",a:"9g"},{n:"炙甘草",a:"6g"},{n:"桂枝",a:"9g",p:"去皮"},{n:"五味子",a:"6g"},{n:"半夏",a:"9g",p:"洗"}],
+    prep:"水煎，分两次温服。症状改善即减量，不宜久服。",
+    contra:"痰黄者禁用；阴虚燥热咳嗽禁用。干咳无痰者改麦门冬汤。"
+  },
+  麻杏甘石汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉滑数",
+    modern:"肺炎初期、急性支气管炎、热性咳喘、感冒后黄痰",
+    pattern:"表邪化热，热壅肺气",
+    source:"《伤寒论》第63条",
+    original:"发汗后，汗出而喘，无大热者，可与麻黄杏仁甘草石膏汤。",
+    herbs:[{n:"麻黄",a:"6g",p:"去节"},{n:"杏仁",a:"9g",p:"去皮尖"},{n:"炙甘草",a:"6g"},{n:"石膏",a:"18g",p:"碎"}],
+    prep:"先煎麻黄去上沫，入余药再煎，温服。",
+    contra:"虚寒咳喘禁用；痰白清稀者改用小青龙汤。"
+  },
+  桂枝加厚朴杏子汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉浮缓",
+    modern:"感冒有汗伴咳喘、体虚感冒咳嗽",
+    pattern:"太阳中风兼肺气不降",
+    source:"《伤寒论》第18条",
+    original:"喘家作，桂枝汤加厚朴杏子佳。",
+    herbs:[{n:"桂枝",a:"9g",p:"去皮"},{n:"白芍",a:"9g"},{n:"炙甘草",a:"6g"},{n:"生姜",a:"9g",p:"切"},{n:"大枣",a:"12枚",p:"擘"},{n:"厚朴",a:"6g",p:"炙"},{n:"杏仁",a:"6g",p:"去皮尖"}],
+    prep:"水煎服，服后微汗。",
+    contra:"无汗者禁用；痰黄口渴者改用麻杏甘石汤。"
+  },
+  小柴胡汤:{
+    mc:"var(--sy)", meridian:"少阳病", pulse:"脉弦细",
+    modern:"反复感冒、胆囊炎、慢性肝炎、更年期、月经期感冒",
+    pattern:"少阳枢机不利，热入血室",
+    source:"《伤寒论》第96、144条",
+    original:"往来寒热，胸胁苦满，嘿嘿不欲饮食，心烦喜呕者，小柴胡汤主之。妇人中风，经水适来，热入血室，小柴胡汤主之。",
+    herbs:[{n:"柴胡",a:"12g"},{n:"黄芩",a:"9g"},{n:"半夏",a:"9g",p:"洗"},{n:"人参",a:"6g"},{n:"炙甘草",a:"6g"},{n:"生姜",a:"9g",p:"切"},{n:"大枣",a:"12枚",p:"擘"}],
+    prep:"水煎，去渣再煎，温服，一日三服。",
+    contra:"阴虚火旺者慎用。月经期感冒首选，不论症状轻重。"
+  },
+  五苓散:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉浮",
+    modern:"急性胃肠炎、水肿、膀胱炎、宿醉、上吐下泻",
+    pattern:"太阳蓄水，气化不利",
+    source:"《伤寒论》第71条",
+    original:"脉浮，小便不利，微热消渴者，五苓散主之。",
+    herbs:[{n:"猪苓",a:"9g"},{n:"泽泻",a:"15g"},{n:"白术",a:"9g"},{n:"茯苓",a:"9g"},{n:"桂枝",a:"6g",p:"去皮"}],
+    prep:"水煎服，服后多饮温水，出微汗更佳。",
+    contra:"阴虚津亏口渴者慎用。"
+  },
+  麦门冬汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉虚数",
+    modern:"感冒后干咳、慢性咽炎、支气管炎恢复期",
+    pattern:"肺胃阴虚，虚火上炎",
+    source:"《金匮要略》肺痿肺痈篇",
+    original:"大逆上气，咽喉不利，止逆下气者，麦门冬汤主之。",
+    herbs:[{n:"麦冬",a:"30g"},{n:"半夏",a:"6g"},{n:"人参",a:"6g"},{n:"炙甘草",a:"6g"},{n:"粳米",a:"6g"},{n:"大枣",a:"12枚",p:"擘"}],
+    prep:"水煎，分三次温服。",
+    contra:"痰多湿重者慎用；寒性咳嗽禁用。"
+  },
+  桔梗汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉数",
+    modern:"急慢性咽炎、扁桃体炎、感冒后咽痛",
+    pattern:"热毒壅肺，咽喉肿痛",
+    source:"《伤寒论》第311条",
+    original:"少阴病，咽痛者，可与甘草汤；不差者，与桔梗汤。",
+    herbs:[{n:"桔梗",a:"6g"},{n:"甘草",a:"6g",p:"生用"}],
+    prep:"水煎，缓缓含咽，每日多次少量服。",
+    contra:"虚寒咽痛禁用（声音低微、咽不红、不口渴）。"
+  },
+  竹叶石膏汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉虚数",
+    modern:"感冒后低热不退、病后体虚口渴",
+    pattern:"余热未清，气阴两伤",
+    source:"《伤寒论》第397条",
+    original:"伤寒解后，虚羸少气，气逆欲吐，竹叶石膏汤主之。",
+    herbs:[{n:"竹叶",a:"6g"},{n:"石膏",a:"30g"},{n:"半夏",a:"9g",p:"洗"},{n:"麦冬",a:"20g",p:"去心"},{n:"人参",a:"6g"},{n:"炙甘草",a:"6g"},{n:"粳米",a:"9g"}],
+    prep:"水煎至米熟汤成，去渣温服。",
+    contra:"脾胃虚寒者慎用；无余热者不宜。"
+  },
+  炙甘草汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉结代",
+    modern:"心律不齐、房颤、心动过缓",
+    pattern:"心阴阳两虚，气血不足",
+    source:"《伤寒论》第177条",
+    original:"伤寒脉结代，心动悸，炙甘草汤主之。",
+    herbs:[{n:"炙甘草",a:"12g"},{n:"生姜",a:"9g"},{n:"人参",a:"6g"},{n:"生地黄",a:"30g"},{n:"桂枝",a:"9g",p:"去皮"},{n:"阿胶",a:"6g",p:"烊化"},{n:"麦冬",a:"10g",p:"去心"},{n:"麻仁",a:"10g"},{n:"大枣",a:"30枚",p:"擘"}],
+    prep:"清酒和水各半同煎，阿胶烊化冲入，温服。",
+    contra:"实热证禁用；腹胀便溏者慎用。"
+  },
+  苓桂术甘汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉沉紧",
+    modern:"慢性心衰、梅尼埃病、体位性低血压",
+    pattern:"心脾阳虚，水饮上冲",
+    source:"《伤寒论》第67条",
+    original:"心下逆满，气上冲胸，起则头眩，茯苓桂枝白术甘草汤主之。",
+    herbs:[{n:"茯苓",a:"12g"},{n:"桂枝",a:"9g",p:"去皮"},{n:"白术",a:"6g"},{n:"炙甘草",a:"6g"}],
+    prep:"水煎，分两次温服。",
+    contra:"阴虚火旺者禁用。"
+  },
+  桂枝加附子汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉微缓",
+    modern:"体虚大汗后虚脱、风湿痹痛、阳虚自汗",
+    pattern:"过汗亡阳，表阳虚损",
+    source:"《伤寒论》第20条",
+    original:"太阳病，发汗，遂漏不止，其人恶风，四肢微急，难以屈伸者，桂枝加附子汤主之。",
+    herbs:[{n:"桂枝",a:"9g",p:"去皮"},{n:"白芍",a:"9g"},{n:"炙甘草",a:"9g"},{n:"生姜",a:"9g",p:"切"},{n:"大枣",a:"12枚",p:"擘"},{n:"附子",a:"6g",p:"炮，先煎30分钟"}],
+    prep:"附子先煎30分钟，余药再煎，温服。",
+    contra:"阴虚内热者禁用；孕妇禁用附子。"
+  },
+  桃核承气汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉沉涩",
+    modern:"急性盆腔炎、痛经（瘀热型）、前列腺炎",
+    pattern:"太阳蓄血，瘀热互结",
+    source:"《伤寒论》第106条",
+    original:"热结膀胱，其人如狂，少腹急结者，桃核承气汤主之。",
+    herbs:[{n:"桃仁",a:"12g",p:"去皮尖"},{n:"大黄",a:"12g",p:"后下"},{n:"桂枝",a:"6g",p:"去皮"},{n:"炙甘草",a:"6g"},{n:"芒硝",a:"6g",p:"溶入"}],
+    prep:"水煎，大黄后下，去渣溶入芒硝，温服，便通即止。",
+    contra:"⚠️ 孕妇绝对禁用；体虚者禁用。"
+  },
+  // ── 阳明病 ──
+  白虎汤:{
+    mc:"var(--ym)", meridian:"阳明病", pulse:"脉洪大",
+    modern:"高烧不退、中暑、急性感染性高热、糖尿病（消渴）",
+    pattern:"阳明经证，气分热盛",
+    source:"《伤寒论》第176条",
+    original:"伤寒，脉浮滑，此以表有热，里有寒，白虎汤主之。",
+    herbs:[{n:"石膏",a:"30g",p:"碎"},{n:"知母",a:"9g"},{n:"炙甘草",a:"3g"},{n:"粳米",a:"9g"}],
+    prep:"水煎至米熟汤成，去渣温服。热退即止。",
+    contra:"无大热大汗大渴者禁用；脾胃虚寒者禁用；体虚怕冷者禁用。四大症缺一需慎用。"
+  },
+  白虎加人参汤:{
+    mc:"var(--ym)", meridian:"阳明病", pulse:"脉洪大而虚",
+    modern:"高烧伴气虚、糖尿病口渴、中暑后体虚",
+    pattern:"阳明热盛兼气阴两伤",
+    source:"《伤寒论》第26条",
+    original:"服桂枝汤，大汗出后，大烦渴不解，脉洪大者，白虎加人参汤主之。",
+    herbs:[{n:"石膏",a:"30g",p:"碎"},{n:"知母",a:"9g"},{n:"炙甘草",a:"3g"},{n:"粳米",a:"9g"},{n:"人参",a:"9g"}],
+    prep:"水煎至米熟汤成，去渣温服。",
+    contra:"脾胃虚寒者禁用；无热证者禁用。"
+  },
+  调胃承气汤:{
+    mc:"var(--ym)", meridian:"阳明病", pulse:"脉滑数",
+    modern:"轻度便秘、胃热便干、口臭",
+    pattern:"阳明腑实轻证，燥热初结",
+    source:"《伤寒论》第207条",
+    original:"阳明病，不吐不下，心烦者，可与调胃承气汤。",
+    herbs:[{n:"大黄",a:"12g",p:"后下"},{n:"芒硝",a:"9g",p:"溶入"},{n:"炙甘草",a:"6g"}],
+    prep:"水煎，大黄后下，去渣溶入芒硝，温服，便通即止。",
+    contra:"体虚孕妇禁用；虚寒便秘不宜。力量最缓，适合便干无腹胀。"
+  },
+  小承气汤:{
+    mc:"var(--ym)", meridian:"阳明病", pulse:"脉滑而疾",
+    modern:"中度便秘、腹胀、消化不良",
+    pattern:"阳明腑实中证，腑气不通",
+    source:"《伤寒论》第213条",
+    original:"阳明病，其人多汗，以津液外出，胃中燥，大便必硬，小承气汤主之。",
+    herbs:[{n:"大黄",a:"12g",p:"后下"},{n:"厚朴",a:"6g",p:"去皮"},{n:"枳实",a:"9g"}],
+    prep:"水煎，大黄后下，温服。便通即止，不必尽剂。",
+    contra:"体虚孕妇禁用；无腹胀者改调胃承气汤。"
+  },
+  大承气汤:{
+    mc:"var(--ym)", meridian:"阳明病", pulse:"脉沉实",
+    modern:"急性肠梗阻、严重便秘、急腹症（保守治疗）",
+    pattern:"阳明腑实重证，燥屎内结",
+    source:"《伤寒论》第209条",
+    original:"阳明病，谵语有潮热，反不能食者，胃中必有燥屎五六枚，宜大承气汤下之。",
+    herbs:[{n:"大黄",a:"12g",p:"后下"},{n:"厚朴",a:"15g",p:"去皮"},{n:"枳实",a:"12g"},{n:"芒硝",a:"9g",p:"溶入"}],
+    prep:"先煎厚朴枳实，后下大黄，去渣溶入芒硝，温服。得下即止，不必再服。",
+    contra:"⚠️ 峻下之剂，体虚孕妇绝对禁用。急腹症需同时西医会诊。"
+  },
+  茵陈蒿汤:{
+    mc:"var(--ym)", meridian:"阳明病", pulse:"脉沉数",
+    modern:"急慢性肝炎、胆囊炎、黄疸型肝炎",
+    pattern:"湿热发黄，阳黄证",
+    source:"《伤寒论》第236条",
+    original:"阳明病，发热汗出者，此为热越，不能发黄也。身必发黄，茵陈蒿汤主之。",
+    herbs:[{n:"茵陈",a:"18g"},{n:"栀子",a:"12g",p:"擘"},{n:"大黄",a:"6g",p:"去皮"}],
+    prep:"先煎茵陈，后加栀子大黄同煎，温服。小便当利，尿如皂荚汁色，一宿腹减。",
+    contra:"阴黄（寒湿黄疸，黄色晦暗、畏寒）禁用；脾虚便溏者慎用。"
+  },
+  猪苓汤:{
+    mc:"var(--ym)", meridian:"阳明病", pulse:"脉细数",
+    modern:"泌尿道感染、肾结石、急性肾炎、血尿",
+    pattern:"阴虚水热互结",
+    source:"《伤寒论》第223条",
+    original:"若脉浮发热，渴欲饮水，小便不利者，猪苓汤主之。",
+    herbs:[{n:"猪苓",a:"9g",p:"去皮"},{n:"茯苓",a:"9g"},{n:"泽泻",a:"9g"},{n:"阿胶",a:"9g",p:"烊化"},{n:"滑石",a:"9g",p:"碎"}],
+    prep:"阿胶烊化冲入，余药水煎，温服。",
+    contra:"脾胃虚寒者慎用；与五苓散区别：五苓散偏阳虚水停，猪苓汤偏阴虚水热。"
+  },
+  麻子仁丸:{
+    mc:"var(--ym)", meridian:"阳明病", pulse:"脉浮涩",
+    modern:"老年便秘、术后便秘、习惯性便秘、痔疮",
+    pattern:"脾约证，津液不足",
+    source:"《伤寒论》第247条",
+    original:"趺阳脉浮而涩，浮则胃气强，涩则小便数，大便则硬，其脾为约，麻子仁丸主之。",
+    herbs:[{n:"麻子仁",a:"15g"},{n:"白芍",a:"9g"},{n:"枳实",a:"9g",p:"炙"},{n:"大黄",a:"9g",p:"去皮"},{n:"厚朴",a:"9g",p:"炙"},{n:"杏仁",a:"9g",p:"去皮尖"}],
+    prep:"原为蜜丸，现可水煎服。便通即减量，可长期小剂量维持。",
+    contra:"孕妇慎用；体虚者减量。老年慢性便秘首选，力量温和。"
+  },
+  // ── 少阳病 ──
+  大柴胡汤:{
+    mc:"var(--sy)", meridian:"少阳病", pulse:"脉弦有力",
+    modern:"急性胆囊炎、胆石症、急性胰腺炎（轻型）、高血压伴便秘",
+    pattern:"少阳阳明合病",
+    source:"《伤寒论》第103条",
+    original:"伤寒发热，汗出不解，心中痞硬，呕吐而下利者，大柴胡汤主之。",
+    herbs:[{n:"柴胡",a:"12g"},{n:"黄芩",a:"9g"},{n:"半夏",a:"9g",p:"洗"},{n:"枳实",a:"9g"},{n:"白芍",a:"9g"},{n:"大黄",a:"6g",p:"后下"},{n:"生姜",a:"15g",p:"切"},{n:"大枣",a:"12枚",p:"擘"}],
+    prep:"水煎，大黄后下，去渣温服。",
+    contra:"体虚者禁用；孕妇慎用。小柴胡汤证+便秘腹满=大柴胡汤。"
+  },
+  柴胡桂枝汤:{
+    mc:"var(--sy)", meridian:"少阳病", pulse:"脉弦浮",
+    modern:"感冒迁延不愈、太阳少阳并病、癫痫、胃溃疡",
+    pattern:"太阳少阳并病",
+    source:"《伤寒论》第146条",
+    original:"伤寒六七日，发热，微恶寒，支节烦疼，微呕，心下支结，外证未去者，柴胡桂枝汤主之。",
+    herbs:[{n:"桂枝",a:"4.5g",p:"去皮"},{n:"白芍",a:"4.5g"},{n:"黄芩",a:"4.5g"},{n:"人参",a:"4.5g"},{n:"炙甘草",a:"3g"},{n:"半夏",a:"6g",p:"洗"},{n:"柴胡",a:"6g"},{n:"生姜",a:"4.5g",p:"切"},{n:"大枣",a:"6枚",p:"擘"}],
+    prep:"水煎，去渣温服。各取小柴胡、桂枝汤之半量。",
+    contra:"阴虚内热者慎用。感冒一周以上不愈首选。"
+  },
+  柴胡加龙骨牡蛎汤:{
+    mc:"var(--sy)", meridian:"少阳病", pulse:"脉弦",
+    modern:"焦虑症、失眠、神经官能症、高血压、更年期综合征",
+    pattern:"少阳枢机不利，痰热扰心",
+    source:"《伤寒论》第107条",
+    original:"伤寒八九日，下之，胸满烦惊，小便不利，谵语，一身尽重，不可转侧者，柴胡加龙骨牡蛎汤主之。",
+    herbs:[{n:"柴胡",a:"12g"},{n:"黄芩",a:"9g"},{n:"半夏",a:"9g",p:"洗"},{n:"人参",a:"6g"},{n:"龙骨",a:"15g"},{n:"牡蛎",a:"15g"},{n:"茯苓",a:"9g"},{n:"桂枝",a:"6g"},{n:"大黄",a:"6g",p:"后下"},{n:"生姜",a:"9g",p:"切"},{n:"大枣",a:"6枚",p:"擘"}],
+    prep:"水煎，大黄后下，温服。龙骨牡蛎先煎20分钟更佳。",
+    contra:"阴虚体质慎用；脾虚便溏者去大黄。"
+  },
+  半夏泻心汤:{
+    mc:"var(--sy)", meridian:"少阳病", pulse:"脉弦",
+    modern:"慢性胃炎、胃食管反流、功能性消化不良、肠易激综合征",
+    pattern:"寒热互结，胃气不和",
+    source:"《伤寒论》第149条",
+    original:"但满而不痛者，此为痞，柴胡不中与之，宜半夏泻心汤。",
+    herbs:[{n:"半夏",a:"9g",p:"洗"},{n:"黄芩",a:"9g"},{n:"干姜",a:"9g"},{n:"人参",a:"9g"},{n:"黄连",a:"3g"},{n:"大枣",a:"12枚",p:"擘"},{n:"炙甘草",a:"9g"}],
+    prep:"水煎，去渣再煎，温服。",
+    contra:"单纯寒证或热证不宜；实热便秘者禁用。上腹胀满但不痛是辨证关键。"
+  },
+  黄连汤:{
+    mc:"var(--sy)", meridian:"少阳病", pulse:"脉弦",
+    modern:"急慢性胃肠炎、胃溃疡、上热下寒型胃痛",
+    pattern:"上热下寒，胃气不和",
+    source:"《伤寒论》第173条",
+    original:"伤寒胸中有热，胃中有邪气，腹中痛，欲呕吐者，黄连汤主之。",
+    herbs:[{n:"黄连",a:"9g"},{n:"炙甘草",a:"9g"},{n:"干姜",a:"9g"},{n:"桂枝",a:"9g",p:"去皮"},{n:"人参",a:"6g"},{n:"半夏",a:"6g",p:"洗"},{n:"大枣",a:"12枚",p:"擘"}],
+    prep:"水煎，去渣再煎，温服，昼三夜二服。",
+    contra:"纯热证或纯寒证不宜。上热下寒同时存在是使用关键。"
+  },
+  // ── 太阴病 ──
+  理中汤:{
+    mc:"var(--ti)", meridian:"太阴病", pulse:"脉沉细缓",
+    modern:"慢性胃炎、胃溃疡（寒证）、慢性腹泻、肠易激综合征（寒型）",
+    pattern:"脾胃虚寒，中阳不足",
+    source:"《伤寒论》第386条",
+    original:"霍乱，寒多不用水者，理中丸主之。",
+    herbs:[{n:"人参",a:"9g"},{n:"干姜",a:"9g"},{n:"炙甘草",a:"9g"},{n:"白术",a:"9g"}],
+    prep:"水煎温服，或制蜜丸服用。服后喝热粥以助药力。",
+    contra:"湿热泄泻禁用；实热便秘禁用；阴虚内热者禁用。喜温不渴便溏三症并见效果最佳。"
+  },
+  小建中汤:{
+    mc:"var(--ti)", meridian:"太阴病", pulse:"脉弦细",
+    modern:"胃溃疡、十二指肠溃疡、慢性腹痛、儿童体虚",
+    pattern:"中焦虚寒，气血不足",
+    source:"《伤寒论》第100条",
+    original:"伤寒，阳脉涩，阴脉弦，法当腹中急痛，先与小建中汤。",
+    herbs:[{n:"桂枝",a:"9g",p:"去皮"},{n:"炙甘草",a:"6g"},{n:"大枣",a:"12枚",p:"擘"},{n:"白芍",a:"18g"},{n:"生姜",a:"9g",p:"切"},{n:"饴糖",a:"30g",p:"溶入"}],
+    prep:"水煎去渣，溶入饴糖再略煮，温服。饴糖是本方核心，不可省略。",
+    contra:"中满痞胀者禁用饴糖；糖尿病患者慎用。腹部隐痛喜按是辨证要点。"
+  },
+  桂枝加芍药汤:{
+    mc:"var(--ti)", meridian:"太阴病", pulse:"脉弦",
+    modern:"肠易激综合征、慢性腹痛、功能性腹痛",
+    pattern:"太阴脾络不和",
+    source:"《伤寒论》第279条",
+    original:"本太阳病，医反下之，因尔腹满时痛者，属太阴也，桂枝加芍药汤主之。",
+    herbs:[{n:"桂枝",a:"9g",p:"去皮"},{n:"白芍",a:"18g"},{n:"炙甘草",a:"6g"},{n:"生姜",a:"9g",p:"切"},{n:"大枣",a:"12枚",p:"擘"}],
+    prep:"水煎温服。",
+    contra:"实热腹痛禁用；腹痛时发时止、按压略舒是辨证要点。"
+  },
+  四逆汤:{
+    mc:"var(--ti)", meridian:"太阴病", pulse:"脉微细或沉",
+    modern:"休克早期、严重腹泻脱水、心力衰竭、肾上腺功能不全",
+    pattern:"阳气衰微，阴寒内盛",
+    source:"《伤寒论》第323条",
+    original:"少阴病，脉沉者，急温之，宜四逆汤。",
+    herbs:[{n:"附子",a:"15g",p:"生用，先煎一小时"},{n:"干姜",a:"9g"},{n:"炙甘草",a:"6g"}],
+    prep:"附子先煎一小时，加余药再煎，温服。",
+    contra:"⚠️ 附子有毒，必须先煎一小时。阴虚、实热、假寒真热者禁用。危重症需同时西医救治。"
+  },
+  // ── 少阴病 ──
+  麻黄附子细辛汤:{
+    mc:"var(--sn)", meridian:"少阴病", pulse:"脉沉",
+    modern:"阳虚感冒、老年感冒、病态窦房结综合征、过敏性鼻炎（寒型）",
+    pattern:"少阴阳虚，外感风寒",
+    source:"《伤寒论》第301条",
+    original:"少阴病，始得之，反发热，脉沉者，麻黄细辛附子汤主之。",
+    herbs:[{n:"麻黄",a:"6g",p:"去节"},{n:"细辛",a:"3g"},{n:"附子",a:"9g",p:"炮，先煎30分钟"}],
+    prep:"附子先煎30分钟，加麻黄细辛再煎，温服。",
+    contra:"阴虚感冒禁用；无阳虚表现者慎用。老人体虚感冒精神萎靡首选。"
+  },
+  真武汤:{
+    mc:"var(--sn)", meridian:"少阴病", pulse:"脉沉细",
+    modern:"慢性心衰、肾性水肿、眩晕症、慢性肾炎",
+    pattern:"肾阳虚衰，水气泛滥",
+    source:"《伤寒论》第316条",
+    original:"少阴病，二三日不已，腹痛，小便不利，四肢沉重疼痛，自下利者，此为有水气，真武汤主之。",
+    herbs:[{n:"茯苓",a:"9g"},{n:"白芍",a:"9g"},{n:"白术",a:"6g"},{n:"生姜",a:"9g",p:"切"},{n:"附子",a:"9g",p:"炮，先煎30分钟"}],
+    prep:"附子先煎30分钟，加余药再煎，温服。",
+    contra:"阴虚水肿禁用；湿热水肿禁用。浮肿+怕冷+精神差是辨证要点。"
+  },
+  黄连阿胶汤:{
+    mc:"var(--sn)", meridian:"少阴病", pulse:"脉细数",
+    modern:"失眠（阴虚火旺型）、更年期失眠、焦虑性失眠",
+    pattern:"少阴阴虚，心火亢盛",
+    source:"《伤寒论》第303条",
+    original:"少阴病，得之二三日以上，心中烦，不得卧，黄连阿胶汤主之。",
+    herbs:[{n:"黄连",a:"12g"},{n:"黄芩",a:"6g"},{n:"白芍",a:"6g"},{n:"阿胶",a:"9g",p:"烊化"},{n:"鸡子黄",a:"2枚",p:"去壳搅匀"}],
+    prep:"先煎黄连黄芩白芍，去渣，入阿胶烊化，稍冷后入鸡子黄搅匀，温服。",
+    contra:"虚寒失眠禁用（改酸枣仁汤）；脾虚便溏者慎用。口干手足心热越烦越睡不着是辨证要点。"
+  },
+  酸枣仁汤:{
+    mc:"var(--sn)", meridian:"少阴病", pulse:"脉弦细",
+    modern:"神经衰弱、失眠、更年期综合征、慢性疲劳",
+    pattern:"肝血不足，虚热内扰",
+    source:"《金匮要略》血痹虚劳篇",
+    original:"虚劳虚烦不得眠，酸枣仁汤主之。",
+    herbs:[{n:"酸枣仁",a:"15g",p:"炒"},{n:"甘草",a:"3g"},{n:"知母",a:"6g"},{n:"茯苓",a:"6g"},{n:"川芎",a:"6g"}],
+    prep:"水煎，睡前一小时温服。",
+    contra:"痰热失眠禁用；实证失眠不宜。疲倦但睡不着、心悸、盗汗是辨证要点。"
+  },
+  四逆散:{
+    mc:"var(--sn)", meridian:"少阴病", pulse:"脉弦",
+    modern:"抑郁症、焦虑症、慢性肝炎、胆囊炎、手足冰冷（肝郁型）",
+    pattern:"阳郁四逆，肝气不疏",
+    source:"《伤寒论》第318条",
+    original:"少阴病，四逆，其人或咳，或悸，或小便不利，或腹中痛，或泄利下重者，四逆散主之。",
+    herbs:[{n:"柴胡",a:"9g"},{n:"白芍",a:"9g"},{n:"枳实",a:"9g"},{n:"炙甘草",a:"6g"}],
+    prep:"水煎温服，或研末冲服。",
+    contra:"阳虚真寒四逆禁用（改四逆汤）。手足冷但摸上去不冰、有情绪因素是辨证要点。"
+  },
+  附子汤:{
+    mc:"var(--sn)", meridian:"少阴病", pulse:"脉沉微",
+    modern:"风湿性关节炎（寒型）、骨关节炎、慢性腰腿痛",
+    pattern:"少阴阳虚，寒湿痹痛",
+    source:"《伤寒论》第304条",
+    original:"少阴病，身体痛，手足寒，骨节痛，脉沉者，附子汤主之。",
+    herbs:[{n:"附子",a:"15g",p:"炮，先煎一小时"},{n:"茯苓",a:"9g"},{n:"人参",a:"6g"},{n:"白术",a:"12g"},{n:"白芍",a:"9g"}],
+    prep:"附子先煎一小时，加余药再煎，温服。",
+    contra:"阴虚热痹禁用；附子必须先煎。遇冷加重得温则减是辨证要点。"
+  },
+  // ── 厥阴病 ──
+  乌梅丸:{
+    mc:"var(--jy)", meridian:"厥阴病", pulse:"脉微细",
+    modern:"慢性腹泻（久泻不愈）、肠易激综合征、蛔虫症、更年期综合征",
+    pattern:"厥阴寒热错杂，蛔厥",
+    source:"《伤寒论》第338条",
+    original:"蛔厥者，乌梅丸主之。又主久利。",
+    herbs:[{n:"乌梅",a:"30g"},{n:"细辛",a:"6g"},{n:"干姜",a:"9g"},{n:"黄连",a:"12g"},{n:"当归",a:"6g"},{n:"附子",a:"6g",p:"炮"},{n:"蜀椒",a:"6g",p:"去汗"},{n:"桂枝",a:"6g"},{n:"人参",a:"6g"},{n:"黄柏",a:"6g"}],
+    prep:"乌梅用醋浸泡一夜，余药研末，混合制蜜丸；或水煎服。丸剂需服一至三月。",
+    contra:"实热泄泻禁用；孕妇慎用。久泻不愈（超三个月）+寒热错杂是辨证关键。"
+  },
+  当归四逆汤:{
+    mc:"var(--jy)", meridian:"厥阴病", pulse:"脉细欲绝",
+    modern:"雷诺病、冻疮、痛经（寒型）、末梢循环障碍、手足长期冰冷",
+    pattern:"血虚寒凝，经脉不通",
+    source:"《伤寒论》第351条",
+    original:"手足厥寒，脉细欲绝者，当归四逆汤主之。",
+    herbs:[{n:"当归",a:"9g"},{n:"桂枝",a:"9g",p:"去皮"},{n:"白芍",a:"9g"},{n:"细辛",a:"3g"},{n:"炙甘草",a:"6g"},{n:"通草",a:"6g"},{n:"大枣",a:"25枚",p:"擘"}],
+    prep:"水煎，温服。冬季可长期服用。",
+    contra:"阳虚寒极者改四逆汤；湿热体质禁用。手足白或紫、脉细是辨证要点。"
+  },
+  吴茱萸汤:{
+    mc:"var(--jy)", meridian:"厥阴病", pulse:"脉沉迟",
+    modern:"偏头痛（巅顶痛）、胃食管反流、妊娠呕吐、寒性胃痛",
+    pattern:"肝胃虚寒，浊阴上逆",
+    source:"《伤寒论》第309条",
+    original:"少阴病，吐利，手足逆冷，烦躁欲死者，吴茱萸汤主之。",
+    herbs:[{n:"吴茱萸",a:"9g",p:"洗"},{n:"人参",a:"9g"},{n:"生姜",a:"18g",p:"切"},{n:"大枣",a:"12枚",p:"擘"}],
+    prep:"水煎，温服，一日三服。",
+    contra:"胃热呕吐禁用；阴虚内热者禁用。巅顶头痛+呕吐是辨证要点。"
+  },
+
+  // ── 感冒轻证 ──
+  桂枝麻黄各半汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉浮小而缓",
+    modern:"感冒轻证、皮肤过敏瘙痒、荨麻疹伴微热",
+    pattern:"太阳轻证，营卫小郁",
+    source:"《伤寒论》第23条",
+    original:"太阳病，得之八九日，如疟状，发热恶寒，热多寒少，其人不呕，清便欲自可，一日二三度发，脉微缓者，为欲愈也。若脉微而恶寒者，此阴阳俱虚，不可更发汗、更下、更吐也。面色反有热色者，未欲解也，以其不能得小汗出，身必痒，宜桂枝麻黄各半汤。",
+    herbs:[{n:"桂枝",a:"4.5g",p:"去皮"},{n:"白芍",a:"3g"},{n:"生姜",a:"3g",p:"切"},{n:"炙甘草",a:"3g"},{n:"麻黄",a:"3g",p:"去节"},{n:"大枣",a:"4枚",p:"擘"},{n:"杏仁",a:"6g",p:"去皮尖"}],
+    prep:"先煎麻黄去上沫，入余药再煎，温服，取微似汗。",
+    contra:"体虚者慎用；大汗出者禁用。剂量为麻黄汤桂枝汤各取一半。"
+  },
+  桂枝二麻黄一汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉洪大",
+    modern:"感冒极轻证、反复微汗不解",
+    pattern:"太阳极轻证，汗后余邪未尽",
+    source:"《伤寒论》第25条",
+    original:"服桂枝汤，大汗出，脉洪大者，与桂枝汤如前法。若形似疟，一日再发者，汗出必解，宜桂枝二麻黄一汤。",
+    herbs:[{n:"桂枝",a:"5g",p:"去皮"},{n:"白芍",a:"5g"},{n:"麻黄",a:"2g",p:"去节"},{n:"生姜",a:"4g",p:"切"},{n:"杏仁",a:"4g",p:"去皮尖"},{n:"炙甘草",a:"3g"},{n:"大枣",a:"5枚",p:"擘"}],
+    prep:"先煎麻黄去上沫，入余药再煎，温服微汗。",
+    contra:"比桂枝麻黄各半汤更轻，发汗力极弱，适合症状极轻者。"
+  },
+  桂枝二越婢一汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉微弱",
+    modern:"感冒热多寒少、微烦口渴",
+    pattern:"太阳轻证兼内热",
+    source:"《伤寒论》第27条",
+    original:"太阳病，发热恶寒，热多寒少，脉微弱者，此无阳也，不可发汗，宜桂枝二越婢一汤。",
+    herbs:[{n:"桂枝",a:"4.5g",p:"去皮"},{n:"白芍",a:"4.5g"},{n:"麻黄",a:"4.5g",p:"去节"},{n:"炙甘草",a:"3g"},{n:"大枣",a:"4枚",p:"擘"},{n:"生姜",a:"4.5g",p:"切"},{n:"石膏",a:"8g",p:"碎"}],
+    prep:"先煎麻黄去上沫，入余药再煎，温服。",
+    contra:"体虚脉微弱者慎用；纯寒证禁用。热多寒少、微烦是辨证要点。"
+  },
+  葛根黄芩黄连汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉数",
+    modern:"急性肠炎、细菌性痢疾、肠胃型感冒（热性腹泻）",
+    pattern:"表邪入里化热，热迫大肠",
+    source:"《伤寒论》第34条",
+    original:"太阳病，桂枝证，医反下之，利遂不止，脉促者，表未解也；喘而汗出者，葛根黄芩黄连汤主之。",
+    herbs:[{n:"葛根",a:"15g"},{n:"炙甘草",a:"6g"},{n:"黄芩",a:"9g"},{n:"黄连",a:"9g"}],
+    prep:"先煎葛根，后加余药同煎，温服。",
+    contra:"寒性腹泻禁用；脾胃虚寒者禁用。肛门灼热、大便臭是热性腹泻辨证要点。"
+  },
+
+  // ── 栀子豉汤系列 ──
+  栀子豉汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉数",
+    modern:"失眠（虚烦型）、感冒后心烦、焦虑症、抑郁症初期",
+    pattern:"余热扰胸，虚烦不眠",
+    source:"《伤寒论》第76条",
+    original:"发汗后，水药不得入口为逆，若更发汗，必吐下不止。发汗吐下后，虚烦不得眠，若剧者，必反覆颠倒，心中懊侬，栀子豉汤主之。",
+    herbs:[{n:"栀子",a:"14枚",p:"擘"},{n:"香豉",a:"9g",p:"绵裹"}],
+    prep:"先煎栀子，后入香豉再煎，分两次温服。得吐则止，不必尽剂。",
+    contra:"脾胃虚寒者禁用；非虚烦者不宜。心中懊侬（莫名烦躁）是辨证关键。"
+  },
+  栀子甘草豉汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉数",
+    modern:"虚烦失眠伴气短乏力",
+    pattern:"余热扰胸兼气虚",
+    source:"《伤寒论》第76条",
+    original:"若少气者，栀子甘草豉汤主之。",
+    herbs:[{n:"栀子",a:"14枚",p:"擘"},{n:"炙甘草",a:"6g"},{n:"香豉",a:"9g",p:"绵裹"}],
+    prep:"先煎栀子甘草，后入香豉再煎，温服。",
+    contra:"脾胃虚寒者禁用。在栀子豉汤基础上加气短乏力则用此方。"
+  },
+  栀子生姜豉汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉数",
+    modern:"虚烦失眠伴恶心呕吐",
+    pattern:"余热扰胸兼胃气上逆",
+    source:"《伤寒论》第76条",
+    original:"若呕者，栀子生姜豉汤主之。",
+    herbs:[{n:"栀子",a:"14枚",p:"擘"},{n:"生姜",a:"15g",p:"切"},{n:"香豉",a:"9g",p:"绵裹"}],
+    prep:"先煎栀子生姜，后入香豉再煎，温服。",
+    contra:"脾胃虚寒者禁用。虚烦+呕吐是与栀子豉汤的区别。"
+  },
+  栀子厚朴汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉数",
+    modern:"心烦腹胀、焦虑伴消化不良",
+    pattern:"余热留扰，腑气不畅",
+    source:"《伤寒论》第79条",
+    original:"伤寒下后，心烦腹满，卧起不安者，栀子厚朴汤主之。",
+    herbs:[{n:"栀子",a:"14枚",p:"擘"},{n:"厚朴",a:"12g",p:"炙，去皮"},{n:"枳实",a:"9g",p:"水浸，炙"}],
+    prep:"水煎，分两次温服。",
+    contra:"脾胃虚寒者禁用。心烦+腹胀并见是辨证要点，无需香豉。"
+  },
+  栀子干姜汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉数",
+    modern:"上热下寒型失眠、心烦伴腹部怕冷",
+    pattern:"上热下寒，虚烦脾寒",
+    source:"《伤寒论》第80条",
+    original:"伤寒，医以丸药大下之，身热不去，微烦者，栀子干姜汤主之。",
+    herbs:[{n:"栀子",a:"14枚",p:"擘"},{n:"干姜",a:"6g"}],
+    prep:"水煎，分两次温服。",
+    contra:"纯热或纯寒者不宜。心烦（上热）+腹部怕冷（下寒）并见是辨证要点。"
+  },
+
+  // ── 咽喉症状 ──
+  甘草汤:{
+    mc:"var(--sn)", meridian:"少阴病", pulse:"脉数",
+    modern:"轻微咽痛、口腔溃疡、轻度咽炎",
+    pattern:"热毒轻证，咽喉微痛",
+    source:"《伤寒论》第311条",
+    original:"少阴病二三日，咽痛者，可与甘草汤；不差者，与桔梗汤。",
+    herbs:[{n:"甘草",a:"6g",p:"生用"}],
+    prep:"水煎，缓缓含咽，频服。",
+    contra:"虚寒咽痛禁用。症状轻微者先用甘草汤，不愈再用桔梗汤。"
+  },
+  猪肤汤:{
+    mc:"var(--sn)", meridian:"少阴病", pulse:"脉细数",
+    modern:"慢性咽炎（阴虚型）、咽干咽痛、声音嘶哑",
+    pattern:"少阴阴虚，虚火上炎",
+    source:"《伤寒论》第310条",
+    original:"少阴病，下利咽痛，胸满心烦，猪肤汤主之。",
+    herbs:[{n:"猪肤",a:"500g",p:"即猪皮，刮去肥油"}],
+    prep:"猪皮加水煮烂，加白蜜、白粉（米粉）调和，温服。",
+    contra:"实热咽痛禁用；脾虚便溏者慎用。咽干+胸满心烦是辨证要点。"
+  },
+  苦酒汤:{
+    mc:"var(--sn)", meridian:"少阴病", pulse:"脉细",
+    modern:"声音嘶哑、咽喉溃疡、慢性咽炎",
+    pattern:"痰热阻喉，咽伤声哑",
+    source:"《伤寒论》第312条",
+    original:"少阴病，咽中伤，生疮，不能语言，声不出者，苦酒汤主之。",
+    herbs:[{n:"半夏",a:"14枚",p:"洗，破"},{n:"鸡子",a:"1枚",p:"去黄，内苦酒（米醋）"}],
+    prep:"半夏置鸡蛋壳中（去蛋黄留蛋白加米醋），以刀环煎三沸，少少含咽。",
+    contra:"声音嘶哑、咽喉有溃疡是辨证要点。含咽勿咽下。"
+  },
+  半夏散及汤:{
+    mc:"var(--sn)", meridian:"少阴病", pulse:"脉沉细",
+    modern:"寒性咽痛、慢性咽炎（寒型）、咽部异物感",
+    pattern:"寒客少阴，咽喉痹痛",
+    source:"《伤寒论》第313条",
+    original:"少阴病，咽中痛，半夏散及汤主之。",
+    herbs:[{n:"半夏",a:"9g",p:"洗"},{n:"桂枝",a:"6g",p:"去皮"},{n:"炙甘草",a:"6g"}],
+    prep:"可研末（散）以白饮冲服，亦可水煎（汤）温服，缓缓咽下。",
+    contra:"热性咽痛禁用（改桔梗汤）。咽不红、不口渴、遇冷加重是辨证要点。"
+  },
+  柴胡桂枝干姜汤:{
+    mc:"var(--sy)", meridian:"少阳病", pulse:"脉弦细",
+    modern:"慢性肝炎、胆囊炎伴腹泻、少阳兼太阴、更年期综合征",
+    pattern:"少阳枢机不利，兼太阴脾寒",
+    source:"《伤寒论》第147条",
+    original:"伤寒五六日，已发汗而复下之，胸胁满微结，小便不利，渴而不呕，但头汗出，往来寒热，心烦者，此为未解也，柴胡桂枝干姜汤主之。",
+    herbs:[{n:"柴胡",a:"12g"},{n:"桂枝",a:"9g",p:"去皮"},{n:"干姜",a:"6g"},{n:"瓜蒌根",a:"12g"},{n:"黄芩",a:"9g"},{n:"牡蛎",a:"6g",p:"熬"},{n:"炙甘草",a:"6g"}],
+    prep:"水煎，去渣再煎，温服。初服微烦，复服汗出便愈。",
+    contra:"阴虚内热者慎用。少阳证+口渴+腹泻（不呕）是与小柴胡汤的区别。"
+  },
+  // ── 心血管 ──
+  桂枝甘草汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉虚",
+    modern:"发汗过多后心悸、功能性心悸、心慌气短",
+    pattern:"过汗损伤心阳，心下悸动",
+    source:"《伤寒论》第64条",
+    original:"发汗过多，其人叉手自冒心，心下悸，欲得按者，桂枝甘草汤主之。",
+    herbs:[{n:"桂枝",a:"12g",p:"去皮"},{n:"炙甘草",a:"6g"}],
+    prep:"水煎，顿服（一次服完）。",
+    contra:"阴虚内热者禁用；心火亢盛者禁用。双手按压心口才舒服是辨证要点。"
+  },
+  // ── 皮肤科 ──
+  麻黄连翘赤小豆汤:{
+    mc:"var(--ty)", meridian:"太阳病", pulse:"脉浮数",
+    modern:"急性湿疹、荨麻疹、皮肤瘙痒伴黄疸、过敏性皮炎",
+    pattern:"湿热郁表，外不得越",
+    source:"《伤寒论》第262条",
+    original:"伤寒，瘀热在里，身必黄，麻黄连翘赤小豆汤主之。",
+    herbs:[{n:"麻黄",a:"6g",p:"去节"},{n:"连翘",a:"6g"},{n:"杏仁",a:"6g",p:"去皮尖"},{n:"赤小豆",a:"30g"},{n:"大枣",a:"12枚",p:"擘"},{n:"生梓白皮",a:"9g",p:"可用桑白皮代"},{n:"生姜",a:"6g",p:"切"},{n:"炙甘草",a:"6g"}],
+    prep:"先煎麻黄去上沫，入余药再煎，温服。",
+    contra:"阴虚血燥皮肤病禁用；无湿热者不宜。皮肤痒+黄疸或皮肤黄染是辨证要点。"
+  }
+};
+
+// ─────────────────────────────────────────
+// 六经 + 决策树
+// ─────────────────────────────────────────
+const MERIDIANS = [
+  { id:"太阳", color:"var(--ty)", bg:"#fff5f5", border:"#ffb0b0",
+    name:"太阳病", modern:"感冒·发烧·咳嗽·流感·后遗症",
+    desc:"太阳主表，外邪初犯首犯太阳。",
+    tree:{
+      q:"目前发烧吗？",
+      opts:[
+        { l:"正在发烧", s:"体温升高，感冒进行中",
+          next:{ q:"有没有出汗？",
+            opts:[
+              { l:"无汗", s:"皮肤干燥，怎么都出不了汗",
+                next:{ q:"有没有咳嗽？",
+                  opts:[
+                    { l:"有咳嗽",
+                      next:{ q:"痰是什么颜色？",
+                        opts:[
+                          { l:"黄痰 / 烦躁口渴", s:"痰黄黏稠，极度烦躁", r:"大青龙汤" },
+                          { l:"白痰 / 痰清稀", s:"痰白水样，鼻涕清", r:"小青龙汤" }
+                        ]}},
+                    { l:"无咳嗽",
+                      next:{ q:"颈背有没有僵硬？",
+                        opts:[
+                          { l:"有颈背僵硬", s:"后颈到背部紧绷，转头困难（项背强几几）", r:"葛根汤" },
+                          { l:"无颈背僵硬", s:"全身酸痛，骨节疼痛", r:"麻黄汤" }
+                        ]}}
+                  ]}},
+              { l:"有汗", s:"自然出汗，不用力就有汗",
+                next:{ q:"有没有咳嗽？",
+                  opts:[
+                    { l:"有咳嗽",
+                      next:{ q:"痰色？",
+                        opts:[
+                          { l:"黄痰 + 口渴", s:"痰黄，口渴明显", r:"麻杏甘石汤" },
+                          { l:"白痰 + 怕冷", s:"痰白，不口渴", r:"桂枝加厚朴杏子汤" }
+                        ]}},
+                    { l:"无咳嗽",
+                      next:{ q:"有没有颈肩酸痛？",
+                        opts:[
+                          { l:"有颈肩酸痛", r:"桂枝加葛根汤" },
+                          { l:"无颈肩酸痛", s:"普通怕冷发烧有汗", r:"桂枝汤" }
+                        ]}}
+                  ]}},
+              { l:"忽冷忽热", s:"时而发热时而怕冷，交替出现", r:"小柴胡汤" },
+              { l:"女性月经期", s:"经期感冒，无论什么症状", r:"小柴胡汤" },
+              { l:"上吐下泻为主", s:"肠胃型感冒", r:"五苓散" }
+            ]}},
+        { l:"不发烧（感冒后遗症）", s:"体温正常，但仍有不适",
+          next:{ q:"主要是哪种不适？",
+            opts:[
+              { l:"咳嗽为主",
+                next:{ q:"痰的情况？",
+                  opts:[
+                    { l:"干咳 / 无痰", s:"咳嗽剧烈但痰少或无痰", r:"麦门冬汤" },
+                    { l:"白痰 / 清稀痰", s:"痰白水样，量多", r:"小青龙汤" },
+                    { l:"黄痰 / 黄鼻涕", s:"痰黄黏稠，鼻涕黄绿", r:"麻杏甘石汤" }
+                  ]}},
+              { l:"嗓子痛为主", s:"咽喉红肿疼痛", r:"桔梗汤" },
+              { l:"乏力口渴为主", s:"感冒好了但仍乏力口渴低热", r:"竹叶石膏汤" }
+            ]}},
+        { l:"太阳病变证", s:"误治或传变后出现的症状",
+          next:{ q:"主要症状是？",
+            opts:[
+              { l:"心跳不规律 / 心悸", s:"心律不齐、脉结代（炙甘草汤证）", r:"炙甘草汤" },
+              { l:"站起来头晕 + 心悸", s:"体位性头晕，胸中有水声（苓桂术甘汤证）", r:"苓桂术甘汤" },
+              { l:"喝水多但尿少 / 浮肿", s:"口渴喝水不解，小便不利（五苓散证）", r:"五苓散" },
+              { l:"大汗后手脚拘急", s:"发汗过多后手脚僵硬难以屈伸（桂枝加附子汤证）", r:"桂枝加附子汤" },
+              { l:"少腹急痛 + 便秘 + 烦躁", s:"下腹硬痛拒按，情绪烦躁如狂（桃核承气汤证）", r:"桃核承气汤" }
+            ]}}
+      ]}
+  },
+  { id:"阳明", color:"var(--ym)", bg:"#fff8f0", border:"#ffd090",
+    name:"阳明病", modern:"高烧·便秘·黄疸·肠胃热证",
+    desc:"阳明主里，多气多血。邪入阳明，化热成实。",
+    tree:{
+      q:"主要症状偏向哪一类？",
+      opts:[
+        { l:"阳明经证 — 高烧大汗", s:"发高烧、大量出汗、极度口渴、烦躁",
+          next:{ q:"有没有明显乏力气虚？",
+            opts:[
+              { l:"无气虚，体质壮实", s:"高烧、大汗、大渴、脉洪大（四大症）", r:"白虎汤" },
+              { l:"有气虚，汗多乏力", s:"高烧大汗后极度疲倦、口渴更甚", r:"白虎加人参汤" }
+            ]}},
+        { l:"阳明腑证 — 便秘腹胀", s:"大便不通、腹部胀满、发热",
+          next:{ q:"便秘和腹痛的严重程度？",
+            opts:[
+              { l:"轻：大便干硬，无腹胀", s:"便秘但腹部不胀不痛", r:"调胃承气汤" },
+              { l:"中：腹胀明显，便秘", s:"腹部胀满，大便数日不通", r:"小承气汤" },
+              { l:"重：腹痛拒按 + 神昏谵语", s:"腹部硬痛不让碰，甚至神志不清", r:"大承气汤" },
+              { l:"慢性便秘（老年/习惯性）", s:"长期便秘，无急性症状", r:"麻子仁丸" }
+            ]}},
+        { l:"黄疸 — 皮肤眼白发黄", s:"黄色鲜明如橘色、发热、口渴、尿黄",
+          r:"茵陈蒿汤" },
+        { l:"小便灼热涩痛 / 尿血", s:"小便时疼痛、频繁、量少，口渴，失眠",
+          r:"猪苓汤" }
+      ]}
+  },
+  { id:"少阳", color:"var(--sy)", bg:"#f0fff4", border:"#90d0a0",
+    name:"少阳病", modern:"往来寒热·口苦·胸胁胀·慢性炎症",
+    desc:"少阳主枢，邪居半表半里，枢机不利。",
+    tree:{
+      q:"主要症状偏向哪一类？",
+      opts:[
+        { l:"忽冷忽热 / 口苦 / 胸胁胀", s:"寒热往来、口苦咽干、胸胁苦满、不想吃东西",
+          next:{ q:"有没有以下兼症？",
+            opts:[
+              { l:"便秘 + 上腹硬痛", s:"胸胁痛同时大便不通、腹部硬满", r:"大柴胡汤" },
+              { l:"口渴 + 腹泻（不呕）", s:"少阳兼太阴，口渴但有腹泻", r:"柴胡桂枝干姜汤" },
+              { l:"焦虑 / 失眠 / 烦躁易惊", s:"心烦、睡不着、容易惊吓、小便不利", r:"柴胡加龙骨牡蛎汤" },
+              { l:"感冒超过一周未愈", s:"还有怕冷发热、身体酸痛", r:"柴胡桂枝汤" },
+              { l:"以上都没有（标准少阳证）", s:"只有往来寒热、口苦、胸胁胀、恶心", r:"小柴胡汤" }
+            ]}},
+        { l:"胃部不适为主", s:"上腹胀满、恶心、消化不良",
+          next:{ q:"是哪种胃部症状？",
+            opts:[
+              { l:"上腹胀满但不痛 + 恶心肠鸣", s:"胃部撑胀感、时有恶心、肠鸣腹泻", r:"半夏泻心汤" },
+              { l:"上腹热痛 + 呕吐 + 下腹怕冷", s:"上半部热痛想吐，下腹部却怕冷腹泻", r:"黄连汤" }
+            ]}}
+      ]}
+  },
+  { id:"太阴", color:"var(--ti)", bg:"#fdf0ff", border:"#d0a0e0",
+    name:"太阴病", modern:"脾胃虚寒·腹泻·慢性胃炎·消化差",
+    desc:"太阴主湿，脾主运化。寒湿困脾，升降失司。",
+    tree:{
+      q:"主要症状偏向哪一类？",
+      opts:[
+        { l:"腹泻 / 大便稀溏", s:"大便不成形、腹泻、肚子怕冷",
+          next:{ q:"腹泻的特点？",
+            opts:[
+              { l:"腹泻同时有严重手脚冰冷", s:"四肢厥冷、精神萎靡、脉微弱", r:"四逆汤" },
+              { l:"普通脾胃虚寒腹泻", s:"腹泻便溏、喜温暖、不口渴、食欲差", r:"理中汤" }
+            ]}},
+        { l:"腹痛为主", s:"肚子疼痛，反复发作",
+          next:{ q:"腹痛的特点？",
+            opts:[
+              { l:"隐痛喜按 + 乏力面黄", s:"隐隐作痛、按压舒服、面色萎黄", r:"小建中汤" },
+              { l:"时痛时止 + 按压略舒", s:"腹痛时发时止，无严重腹泻", r:"桂枝加芍药汤" }
+            ]}},
+        { l:"食欲差 / 消化不良", s:"不想吃东西、饭后腹胀、四肢沉重",
+          r:"理中汤" }
+      ]}
+  },
+  { id:"少阴", color:"var(--sn)", bg:"#f0f8ff", border:"#90b8e0",
+    name:"少阴病", modern:"心肾虚衰·极度疲劳·失眠·手足冷",
+    desc:"少阴主枢，心肾为本。阴阳俱衰，神机将灭。",
+    tree:{
+      q:"主要症状偏向哪一类？",
+      opts:[
+        { l:"极度疲劳 / 手足冰冷", s:"精神萎靡只想睡、四肢冰冷、脉微弱",
+          next:{ q:"有没有发烧？",
+            opts:[
+              { l:"有发烧但精神极差", s:"阳虚感冒，老人体虚感冒", r:"麻黄附子细辛汤" },
+              { l:"无发烧，全身浮肿", s:"浮肿、四肢沉重、头晕、腹泻", r:"真武汤" },
+              { l:"无发烧，腹泻手脚冷", s:"下利清谷、手足厥冷、脉微欲绝", r:"四逆汤" }
+            ]}},
+        { l:"失眠 / 心烦", s:"睡不着、心烦、口干",
+          next:{ q:"失眠的特点？",
+            opts:[
+              { l:"越烦越睡不着 + 口干手心热", s:"阴虚火旺，心烦不得卧", r:"黄连阿胶汤" },
+              { l:"疲倦但睡不着 + 心悸盗汗", s:"血虚虚烦，辗转反侧", r:"酸枣仁汤" }
+            ]}},
+        { l:"手足冷但情绪郁闷", s:"手脚冷但不是真阳虚，有情绪因素、胸胁不适",
+          r:"四逆散" },
+        { l:"关节疼痛 + 手足寒", s:"骨节痛、遇冷加重、手足冰冷、脉沉",
+          r:"附子汤" }
+      ]}
+  },
+  { id:"厥阴", color:"var(--jy)", bg:"#f0f4ff", border:"#a0b8e0",
+    name:"厥阴病", modern:"寒热错杂·久泻·手足厥冷·巅顶痛",
+    desc:"厥阴为阴之尽，阴极阳生。寒热错杂，厥热胜复。",
+    tree:{
+      q:"主要症状偏向哪一类？",
+      opts:[
+        { l:"久泻不愈 + 寒热错杂", s:"腹泻超过三个月、时冷时热、腹痛",
+          r:"乌梅丸" },
+        { l:"手足长期冰冷", s:"手脚冰冷发紫、遇冷更甚、痛经、冻疮",
+          next:{ q:"有没有呕吐头痛？",
+            opts:[
+              { l:"有巅顶头痛 + 剧烈呕吐", s:"头顶部剧痛伴呕吐，手足冷", r:"吴茱萸汤" },
+              { l:"无头痛，只是手足冰冷", s:"血虚寒凝，末梢循环差", r:"当归四逆汤" }
+            ]}},
+        { l:"上热下寒 + 呕吐头痛", s:"上半身热下半身冷，巅顶痛，剧烈呕吐",
+          r:"吴茱萸汤" }
+      ]}
+  }
+];
+
+// ─────────────────────────────────────────
+// 状态
+// ─────────────────────────────────────────
+let curMeridian = MERIDIANS[0];
+// selections[depth] = optionIndex chosen at that level
+let selections = [];
+
+// ─────────────────────────────────────────
+// 构建六经栏
+// ─────────────────────────────────────────
+function buildMBar() {
+  const bar = document.getElementById('mBar');
+  bar.innerHTML = '';
+  MERIDIANS.forEach(m => {
+    const t = document.createElement('div');
+    t.className = 'm-tab' + (m.id === curMeridian.id ? ' active' : '');
+    t.style.setProperty('--active-color', m.color);
+    t.innerHTML = `<div class="m-dot" style="background:${m.color}"></div>${m.name}`;
+    t.onclick = () => { curMeridian = m; selections = []; buildMBar(); render(); };
+    bar.appendChild(t);
+  });
+}
+
+// ─────────────────────────────────────────
+// 主渲染：整个树展开
+// ─────────────────────────────────────────
+function render() {
+  const m = curMeridian;
+  document.getElementById('panelTitle').textContent = m.name + ' 辨证';
+
+  const body = document.getElementById('treeBody');
+  body.innerHTML = '';
+
+  // intro
+  const intro = document.createElement('div');
+  intro.className = 'm-intro';
+  intro.style.cssText = `background:${m.bg};border-color:${m.color}`;
+  intro.innerHTML = `
+    <div class="m-intro-name" style="color:${m.color}">${m.name}</div>
+    <div class="m-intro-desc">${m.modern} · ${m.desc}</div>`;
+  body.appendChild(intro);
+
+  // reset
+  const resetRow = document.createElement('div');
+  resetRow.className = 'reset-row';
+  resetRow.innerHTML = `<button class="btn-reset" onclick="resetTree()">↺ 重新选择</button>`;
+  body.appendChild(resetRow);
+
+  // render tree recursively
+  const treeRoot = document.createElement('div');
+  treeRoot.className = 'tree-root';
+  renderLevel(m.tree, 0, treeRoot);
+  body.appendChild(treeRoot);
+}
+
+function renderLevel(node, depth, container) {
+  if (!node || !node.q) return;
+
+  const levelEl = document.createElement('div');
+  levelEl.className = 'tree-level';
+
+  // question
+  const qEl = document.createElement('div');
+  qEl.className = 'level-question';
+  qEl.textContent = node.q;
+  levelEl.appendChild(qEl);
+
+  const opts = node.opts || [];
+  if (opts.length === 0) { container.appendChild(levelEl); return; }
+
+  const selectedIdx = selections[depth];
+
+  opts.forEach((opt, idx) => {
+    const isSelected = selectedIdx === idx;
+    const hasResult = !!opt.r;
+
+    // option button
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn' + (isSelected ? (hasResult ? ' result-selected' : ' selected') : '');
+    btn.innerHTML = `
+      <div class="opt-radio"></div>
+      <div class="opt-label-wrap">
+        <span class="opt-main">${opt.l}</span>
+        ${opt.s ? `<span class="opt-sub">${opt.s}</span>` : ''}
+      </div>`;
+    btn.onclick = () => {
+      // trim selections to this depth and set
+      selections = selections.slice(0, depth);
+      selections[depth] = idx;
+      render();
+      if (opt.r) showResult(opt.r);
+      else showResult(null);
+    };
+    levelEl.appendChild(btn);
+
+    // if selected and has children, render children indented
+    if (isSelected && opt.next) {
+      const childWrap = document.createElement('div');
+      childWrap.className = 'opt-children';
+      renderLevel(opt.next, depth + 1, childWrap);
+      levelEl.appendChild(childWrap);
+    }
+
+    // if selected and has result, show result
+    if (isSelected && opt.r) {
+      showResult(opt.r);
+    }
+  });
+
+  container.appendChild(levelEl);
+}
+
+// ─────────────────────────────────────────
+// 右侧结果
+// ─────────────────────────────────────────
+function showResult(name) {
+  const body = document.getElementById('resultBody');
+  if (!name) {
+    body.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📖</div>
+        <p>请在左侧<br><strong>逐步选择症状</strong><br>系统自动推荐方剂</p>
+      </div>`;
+    return;
+  }
+  const f = F[name];
+  if (!f) { body.innerHTML = `<div style="padding:20px;font-size:15px">推荐：${name}</div>`; return; }
+
+  const herbsHtml = f.herbs.map(h => `
+    <div class="herb-tag">
+      <b>${h.n}</b>
+      <span>${h.a}${h.p ? ' · '+h.p : ''}</span>
+    </div>`).join('');
+
+  body.innerHTML = `
+    <div class="rc-header">
+      <div class="rc-badge" style="background:${f.mc}">${name.slice(0,2)}</div>
+      <div>
+        <div class="rc-name">${name}</div>
+        <div class="rc-modern">${f.modern}</div>
+        <span class="rc-pill" style="background:${f.mc}">${f.meridian} · ${f.pulse}</span>
+      </div>
+    </div>
+    <div class="rc-body">
+      <div class="sec">
+        <div class="sec-lbl">药物组成</div>
+        <div class="herb-grid">${herbsHtml}</div>
+      </div>
+      <div class="sec">
+        <div class="sec-lbl">煎服方法</div>
+        <div class="prep-box">${f.prep}</div>
+      </div>
+      <div class="sec">
+        <div class="sec-lbl">原文出处</div>
+        <div class="classic-box">${f.original}<div class="classic-src">— ${f.source} · ${f.pattern}</div></div>
+      </div>
+      <div class="sec">
+        <div class="sec-lbl">禁忌注意</div>
+        <div class="warn-box">${f.contra}</div>
+      </div>
+    </div>`;
+}
+
+function resetTree() {
+  selections = [];
+  render();
+  showResult(null);
+}
+
+// ─────────────────────────────────────────
+// 按症状查 — 现代分类
+// ─────────────────────────────────────────
+const SYMPTOM_CATS = [
+  { icon:"🤒", name:"感冒发烧", desc:"发热·怕冷·流涕",
+    tree:{ q:"有没有出汗？",
+      opts:[
+        { l:"无汗", next:{ q:"有没有咳嗽？", opts:[
+          { l:"有咳嗽", next:{ q:"痰色？", opts:[
+            { l:"黄痰/烦躁口渴", r:"大青龙汤" },
+            { l:"白痰/清稀", r:"小青龙汤" }
+          ]}},
+          { l:"无咳嗽", next:{ q:"颈背僵硬？", opts:[
+            { l:"有颈背僵硬", r:"葛根汤" },
+            { l:"无颈背僵硬", r:"麻黄汤" }
+          ]}}
+        ]}},
+        { l:"有汗", next:{ q:"有没有咳嗽？", opts:[
+          { l:"有咳嗽", next:{ q:"痰色？", opts:[
+            { l:"黄痰+口渴", r:"麻杏甘石汤" },
+            { l:"白痰+怕冷", r:"桂枝加厚朴杏子汤" }
+          ]}},
+          { l:"无咳嗽", next:{ q:"有无颈肩酸痛？", opts:[
+            { l:"有颈肩酸痛", r:"桂枝加葛根汤" },
+            { l:"无颈肩酸痛", r:"桂枝汤" }
+          ]}}
+        ]}},
+        { l:"微微发热、皮肤痒", s:"症状极轻，一阵阵发热", next:{ q:"热多还是寒多？", opts:[
+          { l:"热多寒少、微烦", r:"桂枝二越婢一汤" },
+          { l:"寒热各半、皮肤痒", r:"桂枝麻黄各半汤" },
+          { l:"汗后仍微热", r:"桂枝二麻黄一汤" }
+        ]}},
+        { l:"忽冷忽热", r:"小柴胡汤" },
+        { l:"女性月经期", r:"小柴胡汤" },
+        { l:"上吐下泻为主", r:"五苓散" },
+        { l:"发烧+腹泻肛门灼热", s:"热性肠炎，大便臭", r:"葛根黄芩黄连汤" }
+      ]}
+  },
+  { icon:"😮‍💨", name:"感冒后遗症", desc:"不发烧·咳嗽·咽痛",
+    tree:{ q:"主要不适？", opts:[
+      { l:"咳嗽", next:{ q:"痰的情况？", opts:[
+        { l:"干咳/无痰", r:"麦门冬汤" },
+        { l:"白痰清稀", r:"小青龙汤" },
+        { l:"黄痰/黄鼻涕", r:"麻杏甘石汤" }
+      ]}},
+      { l:"嗓子痛", r:"桔梗汤" },
+      { l:"乏力口渴低热", r:"竹叶石膏汤" }
+    ]}
+  },
+  { icon:"🫁", name:"咳嗽气喘", desc:"咳嗽·气喘·痰多·哮喘",
+    tree:{ q:"目前有没有发烧？", opts:[
+      { l:"有发烧", next:{ q:"有没有出汗？", opts:[
+        { l:"无汗", next:{ q:"痰色？", opts:[
+          { l:"白痰/清稀/鼻涕清", s:"痰白水样，遇冷加重", r:"小青龙汤" },
+          { l:"黄痰/极度烦躁", s:"痰黄，高烧无汗，烦躁", r:"大青龙汤" }
+        ]}},
+        { l:"有汗", next:{ q:"痰色？", opts:[
+          { l:"黄痰+口渴", s:"热性咳喘", r:"麻杏甘石汤" },
+          { l:"白痰+怕冷", s:"有汗但怕冷咳嗽", r:"桂枝加厚朴杏子汤" }
+        ]}}
+      ]}},
+      { l:"不发烧", next:{ q:"痰的情况？", opts:[
+        { l:"干咳/无痰/少痰", s:"咳嗽剧烈，痰少或没有", r:"麦门冬汤" },
+        { l:"白痰/清稀/量多", s:"痰白水样，鼻涕清，遇冷加重", r:"小青龙汤" },
+        { l:"黄痰/黄鼻涕", s:"痰黄黏稠，鼻涕黄绿", r:"麻杏甘石汤" }
+      ]}}
+    ]}
+  },
+  { icon:"🔥", name:"高热口渴", desc:"高烧大汗·黄疸·小便热痛",
+    tree:{ q:"主要症状？", opts:[
+      { l:"高烧大汗大渴", next:{ q:"有没有气虚乏力？", opts:[
+        { l:"体壮，四大症俱全", s:"大热大汗大渴脉洪大", r:"白虎汤" },
+        { l:"高烧大汗后极度乏力口渴", r:"白虎加人参汤" }
+      ]}},
+      { l:"黄疸（皮肤眼白发黄）", s:"黄色鲜明，发热，尿黄", r:"茵陈蒿汤" },
+      { l:"小便灼热涩痛", s:"尿频、尿痛、血尿", r:"猪苓汤" }
+    ]}
+  },
+  { icon:"🚽", name:"便秘腹胀", desc:"大便不通·腹满·腹痛",
+    tree:{ q:"便秘腹胀的严重程度？", opts:[
+      { l:"轻：大便干硬，无腹胀腹痛", s:"便秘但肚子不胀不痛", r:"调胃承气汤" },
+      { l:"中：腹胀明显，数日不通", s:"肚子胀满，按压不太痛", r:"小承气汤" },
+      { l:"重：腹痛拒按+神昏谵语", s:"肚子硬痛不让碰，甚至神志不清", r:"大承气汤" },
+      { l:"慢性便秘（老年/习惯性）", s:"长期便秘，无急性症状", r:"麻子仁丸" }
+    ]}
+  },
+  { icon:"🤢", name:"胃肠不适", desc:"胃痛·腹泻·恶心·消化差",
+    tree:{ q:"主要症状？", opts:[
+      { l:"上腹胀满不痛+恶心肠鸣", r:"半夏泻心汤" },
+      { l:"上热下寒+呕吐腹痛", r:"黄连汤" },
+      { l:"热性腹泻+肛门灼热", s:"大便臭，口渴，发热", r:"葛根黄芩黄连汤" },
+      { l:"脾胃虚寒腹泻", r:"理中汤" },
+      { l:"腹部隐痛喜按", r:"小建中汤" },
+      { l:"腹痛时发时止", r:"桂枝加芍药汤" },
+      { l:"上吐下泻/水肿尿少", r:"五苓散" },
+      { l:"小便灼热涩痛", r:"猪苓汤" }
+    ]}
+  },
+  { icon:"😴", name:"失眠焦虑", desc:"睡不着·心悸·烦躁·惊吓",
+    tree:{ q:"失眠焦虑的特点？", opts:[
+      { l:"莫名烦躁睡不着（懊侬）", s:"心中烦乱，辗转反侧", next:{ q:"有无兼症？", opts:[
+        { l:"单纯虚烦", r:"栀子豉汤" },
+        { l:"虚烦+气短乏力", r:"栀子甘草豉汤" },
+        { l:"虚烦+恶心呕吐", r:"栀子生姜豉汤" },
+        { l:"虚烦+腹部胀满", r:"栀子厚朴汤" },
+        { l:"虚烦+腹部怕冷", r:"栀子干姜汤" }
+      ]}},
+      { l:"越烦越睡不着+口干手心热", s:"阴虚火旺", r:"黄连阿胶汤" },
+      { l:"疲倦但睡不着+心悸盗汗", s:"血虚虚烦", r:"酸枣仁汤" }
+    ]}
+  },
+  { icon:"💓", name:"心血管", desc:"心悸·心律不齐·胸闷·心慌",
+    tree:{ q:"主要症状？", opts:[
+      { l:"心跳不规律/脉结代", s:"心律不齐、房颤、心动过缓", r:"炙甘草汤" },
+      { l:"心慌心悸+双手按心口才舒服", s:"发汗过多后心悸，喜按", r:"桂枝甘草汤" },
+      { l:"头晕+心悸+站起来晕", s:"体位性头晕，胸中有水声", r:"苓桂术甘汤" },
+      { l:"胸胁胀满+心烦+便秘", s:"少阳证兼心烦", r:"大柴胡汤" }
+    ]}
+  },
+  { icon:"🧠", name:"神经精神", desc:"焦虑·烦躁·情绪·惊吓",
+    tree:{ q:"主要症状？", opts:[
+      { l:"焦虑烦躁+容易惊吓+失眠", s:"心烦、睡不着、小便不利", r:"柴胡加龙骨牡蛎汤" },
+      { l:"情绪郁闷+手足发凉", s:"压力大，手脚冷但不是真寒", r:"四逆散" },
+      { l:"莫名烦躁+心中懊侬", s:"说不清楚的烦乱感", r:"栀子豉汤" },
+      { l:"心烦+腹胀", s:"烦躁同时肚子胀满", r:"栀子厚朴汤" }
+    ]}
+  },
+  { icon:"🌿", name:"皮肤过敏", desc:"皮肤痒·湿疹·荨麻疹",
+    tree:{ q:"皮肤症状的特点？", opts:[
+      { l:"皮肤瘙痒+微微发热", s:"一阵阵痒，轻微发热", r:"桂枝麻黄各半汤" },
+      { l:"湿疹/荨麻疹+皮肤发黄", s:"皮肤痒同时有黄疸或皮肤黄", r:"麻黄连翘赤小豆汤" }
+    ]}
+  },
+  { icon:"🗣️", name:"咽喉症状", desc:"咽痛·声哑·咽干·异物感",
+    tree:{ q:"咽喉症状的特点？", opts:[
+      { l:"轻微咽痛", s:"刚开始，症状不重", r:"甘草汤" },
+      { l:"咽喉红肿热痛", s:"明显红肿，口渴", r:"桔梗汤" },
+      { l:"声音嘶哑+咽喉溃疡", s:"说不出话，咽部有伤", r:"苦酒汤" },
+      { l:"寒性咽痛", s:"咽不红、不渴、遇冷加重", r:"半夏散及汤" },
+      { l:"咽干+胸闷心烦", s:"阴虚慢性咽炎", r:"猪肤汤" }
+    ]}
+  },
+  { icon:"🔀", name:"反复寒热", desc:"忽冷忽热·口苦·胸胁胀",
+    tree:{ q:"有没有兼症？", opts:[
+      { l:"便秘+上腹硬痛", r:"大柴胡汤" },
+      { l:"口渴+腹泻（不呕）", s:"少阳兼太阴", r:"柴胡桂枝干姜汤" },
+      { l:"焦虑失眠烦躁", r:"柴胡加龙骨牡蛎汤" },
+      { l:"感冒超过一周未愈", r:"柴胡桂枝汤" },
+      { l:"只有往来寒热口苦", r:"小柴胡汤" }
+    ]}
+  },
+  { icon:"❄️", name:"手足冰冷", desc:"手脚冷·末梢差·痛经冻疮",
+    tree:{ q:"手足冷的特点？", opts:[
+      { l:"血虚+冷+发紫（痛经冻疮）", r:"当归四逆汤" },
+      { l:"情绪郁闷+手足冷", r:"四逆散" },
+      { l:"极度虚寒+腹泻厥冷", r:"四逆汤" },
+      { l:"浮肿+怕冷+精神差", r:"真武汤" }
+    ]}
+  },
+  { icon:"🦴", name:"关节疼痛", desc:"骨节痛·遇冷加重·腰腿痛",
+    tree:{ q:"关节痛的特点？", opts:[
+      { l:"遇冷加重+手足寒", r:"附子汤" },
+      { l:"大汗后手脚拘急难以屈伸", r:"桂枝加附子汤" }
+    ]}
+  },
+  { icon:"🌀", name:"头晕头痛", desc:"头晕·头痛·呕吐",
+    tree:{ q:"头晕头痛的特点？", opts:[
+      { l:"站起来头晕+心悸水声", r:"苓桂术甘汤" },
+      { l:"巅顶剧痛+剧烈呕吐", r:"吴茱萸汤" }
+    ]}
+  },
+  { icon:"⏳", name:"慢性久病", desc:"久泻·慢性虚弱·寒热错杂",
+    tree:{ q:"主要症状？", opts:[
+      { l:"久泻不愈（超三个月）+寒热错杂", r:"乌梅丸" },
+      { l:"黄疸型肝炎/胆囊炎", r:"茵陈蒿汤" },
+      { l:"阳虚感冒（老人体虚）", r:"麻黄附子细辛汤" },
+      { l:"少腹急痛+便秘+烦躁", r:"桃核承气汤" }
+    ]}
+  }
+];
+
+// ─────────────────────────────────────────
+// 模式切换
+// ─────────────────────────────────────────
+let currentMode = 'jing'; // 'jing' | 'zheng'
+let zhengSelections = [];
+let zhengCat = null;
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('modeJing').classList.toggle('active', mode==='jing');
+  document.getElementById('modeZheng').classList.toggle('active', mode==='zheng');
+  document.getElementById('jingMode').style.display = mode==='jing' ? '' : 'none';
+  document.getElementById('panelTitle').textContent = mode==='jing'
+    ? (curMeridian.name + ' 辨证') : '按症状查方';
+
+  if (mode === 'zheng') {
+    zhengSelections = [];
+    zhengCat = null;
+    renderZheng();
+    showResult(null);
+  } else {
+    render();
+  }
+}
+
+function renderZheng() {
+  const body = document.getElementById('treeBody');
+  body.innerHTML = '';
+
+  // reset btn
+  const resetRow = document.createElement('div');
+  resetRow.className = 'reset-row';
+  resetRow.innerHTML = `<button class="btn-reset" onclick="resetZheng()">↺ 重新选择</button>`;
+  body.appendChild(resetRow);
+
+  if (zhengCat === null) {
+    // show symptom category grid
+    const label = document.createElement('div');
+    label.className = 'level-question';
+    label.textContent = '你主要想查哪类问题？';
+    body.appendChild(label);
+
+    const grid = document.createElement('div');
+    grid.className = 'symptom-grid';
+    SYMPTOM_CATS.forEach((cat, i) => {
+      const card = document.createElement('div');
+      card.className = 'sym-card';
+      card.innerHTML = `<div class="sym-icon">${cat.icon}</div><div class="sym-name">${cat.name}</div><div class="sym-desc">${cat.desc}</div>`;
+      card.onclick = () => { zhengCat = i; zhengSelections = []; renderZheng(); showResult(null); };
+      grid.appendChild(card);
+    });
+    body.appendChild(grid);
+  } else {
+    // show decision tree for chosen category
+    const cat = SYMPTOM_CATS[zhengCat];
+
+    // category header
+    const hdr = document.createElement('div');
+    hdr.className = 'm-intro';
+    hdr.style.cssText = 'background:#f0f4ff;border-color:#a0b8e0;margin-bottom:14px;';
+    hdr.innerHTML = `<div class="m-intro-name" style="color:var(--blue)">${cat.icon} ${cat.name}</div><div class="m-intro-desc">${cat.desc}</div>`;
+    body.appendChild(hdr);
+
+    // render tree
+    const treeRoot = document.createElement('div');
+    treeRoot.className = 'tree-root';
+    renderZhengLevel(cat.tree, 0, treeRoot);
+    body.appendChild(treeRoot);
+  }
+}
+
+function renderZhengLevel(node, depth, container) {
+  if (!node || !node.q) return;
+  const levelEl = document.createElement('div');
+  levelEl.className = 'tree-level';
+
+  const qEl = document.createElement('div');
+  qEl.className = 'level-question';
+  qEl.textContent = node.q;
+  levelEl.appendChild(qEl);
+
+  const opts = node.opts || [];
+  if (opts.length === 0) { container.appendChild(levelEl); return; }
+
+  const selectedIdx = zhengSelections[depth];
+  opts.forEach((opt, idx) => {
+    const isSelected = selectedIdx === idx;
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn' + (isSelected ? (opt.r ? ' result-selected' : ' selected') : '');
+    btn.innerHTML = `<div class="opt-radio"></div><div class="opt-label-wrap"><span class="opt-main">${opt.l}</span>${opt.s?`<span class="opt-sub">${opt.s}</span>`:''}</div>`;
+    btn.onclick = () => {
+      zhengSelections = zhengSelections.slice(0, depth);
+      zhengSelections[depth] = idx;
+      renderZheng();
+      if (opt.r) showResult(opt.r);
+      else showResult(null);
+    };
+    levelEl.appendChild(btn);
+    if (isSelected && opt.next) {
+      const childWrap = document.createElement('div');
+      childWrap.className = 'opt-children';
+      renderZhengLevel(opt.next, depth+1, childWrap);
+      levelEl.appendChild(childWrap);
+    }
+    if (isSelected && opt.r) showResult(opt.r);
+  });
+  container.appendChild(levelEl);
+}
+
+function resetZheng() {
+  zhengCat = null;
+  zhengSelections = [];
+  renderZheng();
+  showResult(null);
+}
+
+// ─────────────────────────────────────────
+// 付费墙配置
+// ─────────────────────────────────────────
+const FREE_MERIDIANS = ["太阳", "阳明"];
+const FREE_SYMPTOM_CATS = ["感冒发烧", "感冒后遗症", "咳嗽气喘", "高热口渴", "便秘腹胀"];
+const API_URL = "https://shanghan-api.oceanyc.workers.dev";
+
+function isFreeMeridian(id) { return FREE_MERIDIANS.includes(id); }
+function isFreeSymCat(name) { return FREE_SYMPTOM_CATS.includes(name); }
+
+// ─────────────────────────────────────────
+// 付费墙弹窗
+// ─────────────────────────────────────────
+function showPaywall(title) {
+  document.getElementById('modalSubText').textContent = title || '完整版包含六经全部内容';
+  document.getElementById('modalContent1').style.display = 'block';
+  document.getElementById('modalContent2').style.display = 'none';
+  document.getElementById('paywallModal').classList.add('show');
+}
+function closeModal() {
+  document.getElementById('paywallModal').classList.remove('show');
+}
+function showKeyInput() {
+  document.getElementById('modalContent1').style.display = 'none';
+  document.getElementById('modalContent2').style.display = 'block';
+  document.getElementById('modalKeyInput').value = '';
+  document.getElementById('modalKeyError').textContent = '';
+}
+function showModalMain() {
+  document.getElementById('modalContent1').style.display = 'block';
+  document.getElementById('modalContent2').style.display = 'none';
+}
+
+async function doModalUnlock() {
+  const key = document.getElementById('modalKeyInput').value.trim();
+  const errEl = document.getElementById('modalKeyError');
+  const loadEl = document.getElementById('modalKeyLoading');
+  if (!key) { errEl.textContent = '请输入Key'; return; }
+  errEl.textContent = '';
+  loadEl.style.display = 'block';
+  try {
+    const res = await fetch(`${API_URL}/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key })
+    });
+    const data = await res.json();
+    if (data.success) {
+      closeModal();
+      // 跳转到付费版HTML（用户已有完整版文件）
+      alert('✅ Key验证成功！\n\n请使用完整版文件（shanghan_paid_shell.html）\n并输入此Key解锁所有内容。');
+    } else {
+      errEl.textContent = data.error || '验证失败';
+    }
+  } catch(e) {
+    errEl.textContent = '网络错误，请重试';
+  } finally {
+    loadEl.style.display = 'none';
+  }
+}
+
+// 点击modal外部关闭
+document.getElementById('paywallModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ─────────────────────────────────────────
+// 更新 buildMBar 加锁
+// ─────────────────────────────────────────
+function buildMBar() {
+  const bar = document.getElementById('mBar');
+  bar.innerHTML = '';
+  MERIDIANS.forEach(m => {
+    const locked = !isFreeMeridian(m.id);
+    const t = document.createElement('div');
+    t.className = 'm-tab' + (m.id === curMeridian.id ? ' active' : '') + (locked ? ' locked' : '');
+    t.style.setProperty('--active-color', m.color);
+    t.innerHTML = `<div class="m-dot" style="background:${m.color}"></div>${m.name}${locked ? '<span class="lock-icon">🔒</span>' : ''}`;
+    t.onclick = () => {
+      if (locked) {
+        showPaywall(`${m.name}包含${m.modern}`);
+        return;
+      }
+      curMeridian = m; selections = []; buildMBar(); render();
+    };
+    bar.appendChild(t);
+  });
+}
+
+// ─────────────────────────────────────────
+// 初始化
+// ─────────────────────────────────────────
+// 覆盖 renderZheng 的症状网格，加锁
+const _origRenderZheng = renderZheng;
+function renderZheng() {
+  const body = document.getElementById('treeBody');
+  body.innerHTML = '';
+  const resetRow = document.createElement('div');
+  resetRow.className = 'reset-row';
+  resetRow.innerHTML = `<button class="btn-reset" onclick="resetZheng()">↺ 重新选择</button>`;
+  body.appendChild(resetRow);
+
+  if (zhengCat === null) {
+    const label = document.createElement('div');
+    label.className = 'level-question';
+    label.textContent = '你主要想查哪类问题？';
+    body.appendChild(label);
+    const grid = document.createElement('div');
+    grid.className = 'symptom-grid';
+    SYMPTOM_CATS.forEach((cat, i) => {
+      const locked = !isFreeSymCat(cat.name);
+      const card = document.createElement('div');
+      card.className = 'sym-card' + (locked ? ' locked' : '');
+      card.innerHTML = `
+        <div class="sym-icon">${cat.icon}</div>
+        <div class="sym-name">${cat.name}</div>
+        <div class="sym-desc">${cat.desc}</div>
+        ${locked ? '<div class="lock-badge">🔒 完整版</div>' : ''}`;
+      card.onclick = () => {
+        if (locked) { showPaywall(`「${cat.name}」需要完整版解锁`); return; }
+        zhengCat = i; zhengSelections = []; renderZheng(); showResult(null);
+      };
+      grid.appendChild(card);
+    });
+    body.appendChild(grid);
+  } else {
+    const cat = SYMPTOM_CATS[zhengCat];
+    const hdr = document.createElement('div');
+    hdr.className = 'm-intro';
+    hdr.style.cssText = 'background:#f0f4ff;border-color:#a0b8e0;margin-bottom:14px;';
+    hdr.innerHTML = `<div class="m-intro-name" style="color:var(--blue)">${cat.icon} ${cat.name}</div><div class="m-intro-desc">${cat.desc}</div>`;
+    body.appendChild(hdr);
+    const treeRoot = document.createElement('div');
+    treeRoot.className = 'tree-root';
+    renderZhengLevel(cat.tree, 0, treeRoot);
+    body.appendChild(treeRoot);
+  }
+}
+
+buildMBar();
+render();
+</script>
+</body>
+</html>
