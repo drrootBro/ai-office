@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -6,7 +7,7 @@
 <title>伤寒论经方辨证 · 完整版</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
-
+ 
   :root {
     --ink:#0f1923; --ink2:#3a4a5a;
     --paper:#f0f4f0; --paper2:#e8ede8;
@@ -21,7 +22,7 @@
     font-family:'Noto Sans SC',sans-serif;
     background:var(--paper); color:var(--ink); min-height:100vh;
   }
-
+ 
   /* UNLOCK SCREEN */
   .unlock-screen{
     min-height:100vh; display:flex; align-items:center; justify-content:center;
@@ -47,7 +48,7 @@
     letter-spacing:2px; margin-bottom:6px;
   }
   .unlock-sub{ font-size:12px; color:var(--ink2); margin-bottom:28px; line-height:1.6; }
-
+ 
   .unlock-features{
     background:var(--paper); border-radius:8px; padding:16px;
     margin-bottom:24px; text-align:left;
@@ -58,7 +59,7 @@
   }
   .feature-item:last-child{ margin-bottom:0; }
   .feature-icon{ font-size:14px; flex-shrink:0; }
-
+ 
   .unlock-input{
     width:100%; padding:12px 14px; border:1.5px solid var(--border);
     border-radius:7px; font-size:14px; color:var(--ink);
@@ -69,7 +70,7 @@
   }
   .unlock-input:focus{ outline:none; border-color:var(--blue2); }
   .unlock-input::placeholder{ letter-spacing:1px; color:#bbb; text-transform:none; }
-
+ 
   .unlock-btn{
     width:100%; padding:13px; background:var(--blue);
     border:none; border-radius:7px; color:white; font-size:15px;
@@ -78,7 +79,7 @@
   }
   .unlock-btn:hover{ background:var(--blue2); }
   .unlock-btn:disabled{ background:var(--border); cursor:not-allowed; }
-
+ 
   .unlock-error{
     color:var(--red); font-size:12px; margin-bottom:10px;
     min-height:18px; line-height:1.5;
@@ -91,10 +92,10 @@
     font-size:11px; color:var(--border); line-height:1.7; margin-top:16px;
   }
   .unlock-footer a{ color:var(--blue3); text-decoration:none; }
-
+ 
   /* MAIN APP (hidden until unlocked) */
   #app{ display:none; }
-
+ 
   header{
     background:var(--blue); padding:18px 32px;
     display:flex; align-items:center; gap:14px;
@@ -117,7 +118,7 @@
     cursor:pointer;transition:all .15s;
   }
   .logout-btn:hover{background:rgba(139,26,26,.4);border-color:var(--red);color:white;}
-
+ 
   .mode-bar{
     background:#e8ede8;border-bottom:1px solid var(--border);
     display:flex;justify-content:center;padding:10px 20px;gap:8px;
@@ -129,7 +130,7 @@
   }
   .mode-btn.active{background:var(--blue);color:white;border-color:var(--blue);}
   .mode-btn:hover:not(.active){border-color:var(--blue2);color:var(--blue2);}
-
+ 
   .m-bar{
     background:var(--blue);padding:0 32px;
     display:flex;border-bottom:1px solid rgba(74,126,200,.25);
@@ -143,7 +144,7 @@
   .m-tab:hover{color:#a8c8f0;}
   .m-tab.active{color:white;border-bottom-color:var(--active-color,white);}
   .m-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-
+ 
   .container{max-width:1120px;margin:0 auto;padding:20px;}
   .disclaimer{
     background:#e8f0e8;border-left:4px solid var(--blue3);
@@ -151,14 +152,14 @@
     font-size:11px;color:var(--ink2);margin-bottom:18px;line-height:1.6;
   }
   .layout{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start;}
-
+ 
   .tree-panel{background:white;border:1px solid var(--border);border-radius:8px;
     overflow:hidden;box-shadow:0 2px 10px var(--shadow);}
   .panel-hd{background:var(--blue);padding:12px 18px;display:flex;align-items:center;gap:8px;}
   .panel-hd .hdot{width:7px;height:7px;background:var(--blue3);border-radius:50%;}
   .panel-hd h2{font-family:'Noto Serif SC',serif;color:#e8f0fa;font-size:13px;letter-spacing:2px;}
   .panel-bd{padding:18px;}
-
+ 
   .m-intro{padding:11px 13px;border-radius:6px;border-left:3px solid;margin-bottom:16px;}
   .m-intro-name{font-family:'Noto Serif SC',serif;font-size:14px;font-weight:700;}
   .m-intro-desc{font-size:11px;color:var(--ink2);margin-top:3px;line-height:1.6;}
@@ -166,12 +167,12 @@
   .btn-reset{padding:6px 14px;background:white;border:1px solid var(--border);
     border-radius:5px;font-size:11px;color:var(--ink2);cursor:pointer;}
   .btn-reset:hover{border-color:var(--red);color:var(--red);}
-
+ 
   .tree-root{display:flex;flex-direction:column;gap:0;}
   .tree-level{display:flex;flex-direction:column;gap:0;animation:fadeIn .2s ease;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
   .level-question{font-size:13px;font-weight:600;color:var(--blue);padding:8px 0 6px;line-height:1.5;}
-
+ 
   .opt-btn{
     flex:1;padding:9px 12px;background:var(--paper);
     border:1.5px solid var(--border);border-radius:6px;
@@ -192,14 +193,14 @@
   .opt-main{display:block;}
   .opt-sub{display:block;font-size:10px;color:var(--ink2);margin-top:1px;}
   .opt-children{margin-left:24px;padding-left:12px;border-left:2px solid #d8e8d8;margin-top:4px;margin-bottom:6px;}
-
+ 
   .result-panel{background:white;border:1px solid var(--border);border-radius:8px;
     overflow:hidden;box-shadow:0 2px 10px var(--shadow);position:sticky;top:16px;}
   .empty-state{display:flex;flex-direction:column;align-items:center;
     justify-content:center;padding:50px 20px;text-align:center;color:var(--ink2);}
   .empty-icon{font-size:40px;margin-bottom:12px;opacity:.3;}
   .empty-state p{font-size:12px;line-height:1.9;}
-
+ 
   .rc-header{padding:16px 18px;display:flex;align-items:center;gap:13px;border-bottom:2px solid var(--paper2);}
   .rc-badge{width:46px;height:46px;border-radius:7px;display:flex;align-items:center;justify-content:center;
     font-family:'Noto Serif SC',serif;color:white;font-size:13px;flex-shrink:0;box-shadow:2px 2px 0 rgba(0,0,0,.2);}
@@ -220,7 +221,7 @@
     font-family:'Noto Serif SC',serif;font-size:11px;color:#a8c8f0;line-height:1.9;}
   .classic-src{font-size:10px;color:#6898c0;margin-top:5px;}
   .warn-box{background:#fff8f0;border:1px solid #f0c890;border-radius:5px;padding:9px 11px;font-size:11px;color:#7a4010;line-height:1.7;}
-
+ 
   .symptom-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:4px;}
   .sym-card{background:white;border:1.5px solid var(--border);border-radius:8px;
     padding:14px 12px;cursor:pointer;transition:all .2s;text-align:center;}
@@ -228,7 +229,7 @@
   .sym-icon{font-size:26px;margin-bottom:6px;}
   .sym-name{font-size:13px;font-weight:500;color:var(--ink);}
   .sym-desc{font-size:10px;color:var(--ink2);margin-top:2px;line-height:1.4;}
-
+ 
   /* loading spinner */
   .spinner{
     width:40px;height:40px;border:3px solid var(--paper2);
@@ -236,7 +237,7 @@
     animation:spin .8s linear infinite;margin:40px auto;display:block;
   }
   @keyframes spin{to{transform:rotate(360deg)}}
-
+ 
   @media(max-width:800px){
     .layout{grid-template-columns:1fr;}
     .result-panel{position:static;}
@@ -246,30 +247,30 @@
 </style>
 </head>
 <body>
-
+ 
 <!-- 解锁界面 -->
 <div class="unlock-screen" id="unlockScreen">
   <div class="unlock-card">
     <div class="unlock-seal">伤寒</div>
     <div class="unlock-title">伤寒论经方辨证</div>
     <div class="unlock-sub">完整版 · 六经全覆盖 · 57首方剂</div>
-
+ 
     <div class="unlock-features">
       <div class="feature-item"><span class="feature-icon">✅</span>六经完整辨证（太阳→厥阴）</div>
       <div class="feature-item"><span class="feature-icon">✅</span>按症状查方（16个现代分类）</div>
       <div class="feature-item"><span class="feature-icon">✅</span>完整原文、煎法、禁忌</div>
       <div class="feature-item"><span class="feature-icon">✅</span>离线可用，一次购买永久使用</div>
     </div>
-
+ 
     <input class="unlock-input" id="keyInput" type="text"
-      placeholder="输入你的 License Key"
-      maxlength="20"
+      placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+      maxlength="40"
       oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9-]/g,'')"
     />
     <div class="unlock-error" id="unlockError"></div>
     <div class="unlock-loading" id="unlockLoading">⏳ 验证中，请稍候...</div>
     <button class="unlock-btn" id="unlockBtn" onclick="doUnlock()">解锁完整版</button>
-
+ 
     <div class="unlock-footer">
       还没有Key？<a href="https://rootbro.lemonsqueezy.com" target="_blank">点此购买</a><br>
       已购买但Key无效？请联系：support@rootbro.com<br><br>
@@ -277,7 +278,7 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- 主应用（解锁后显示） -->
 <div id="app">
   <header>
@@ -291,14 +292,14 @@
       <button class="logout-btn" onclick="doLogout()">退出</button>
     </div>
   </header>
-
+ 
   <div class="mode-bar">
     <button class="mode-btn active" id="modeJing" onclick="setMode('jing')">📚 六经辨证（专业）</button>
     <button class="mode-btn" id="modeZheng" onclick="setMode('zheng')">🔍 按症状查（普通）</button>
   </div>
-
+ 
   <div id="jingMode"><div class="m-bar" id="mBar"></div></div>
-
+ 
   <div class="container">
     <div class="disclaimer">⚕️ <strong>重要提示：</strong>本系统仅供学习参考，不构成医疗建议。请在专业中医师指导下使用。</div>
     <div class="layout">
@@ -318,18 +319,18 @@
     </div>
   </div>
 </div>
-
+ 
 <script>
 // ── API配置 ──────────────────────────────────────────────
 // 部署后替换成你的Worker URL
 const API_URL = "https://shanghan-api.oceanyc.workers.dev"; // 部署后改为 https://api.rootbro.com
-
+ 
 // ── 本地缓存key名 ─────────────────────────────────────────
 const STORAGE_KEY = "shanghan_license";
-
+ 
 // ── 全局数据（从API加载） ─────────────────────────────────
 let KB = null; // { F: {...}, MERIDIANS: [...], SYMPTOM_CATS: [...] }
-
+ 
 // ── 设备指纹 ─────────────────────────────────────────────
 function getDeviceId() {
   let id = sessionStorage.getItem('_did');
@@ -354,29 +355,29 @@ function getDeviceId() {
   }
   return id;
 }
-
+ 
 // ── 解锁逻辑 ─────────────────────────────────────────────
 async function doUnlock() {
   const key = document.getElementById('keyInput').value.trim();
   const errEl = document.getElementById('unlockError');
   const loadEl = document.getElementById('unlockLoading');
   const btn = document.getElementById('unlockBtn');
-
+ 
   if (!key) { errEl.textContent = '请输入License Key'; return; }
-
+ 
   errEl.textContent = '';
   loadEl.style.display = 'block';
   btn.disabled = true;
-
+ 
   try {
     const res = await fetch(`${API_URL}/verify`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ key, deviceId: getDeviceId() })
     });
-
+ 
     const data = await res.json();
-
+ 
     if (data.success) {
       // 保存key到sessionStorage（关闭页面后失效，每次需重新输入）
       sessionStorage.setItem(STORAGE_KEY, key);
@@ -392,14 +393,14 @@ async function doUnlock() {
     btn.disabled = false;
   }
 }
-
+ 
 // 回车触发解锁
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('keyInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') doUnlock();
   });
 });
-
+ 
 function doLogout() {
   sessionStorage.removeItem(STORAGE_KEY);
   KB = null;
@@ -407,27 +408,27 @@ function doLogout() {
   document.getElementById('unlockScreen').style.display = 'flex';
   document.getElementById('keyInput').value = '';
 }
-
+ 
 function showApp() {
   document.getElementById('unlockScreen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   initApp();
 }
-
+ 
 // ── 应用初始化 ────────────────────────────────────────────
 let curMeridian = null;
 let selections = [];
 let currentMode = 'jing';
 let zhengSelections = [];
 let zhengCat = null;
-
+ 
 function initApp() {
   const { F, MERIDIANS, SYMPTOM_CATS } = KB;
   curMeridian = MERIDIANS[0];
   buildMBar();
   render();
 }
-
+ 
 function buildMBar() {
   const bar = document.getElementById('mBar');
   bar.innerHTML = '';
@@ -440,7 +441,7 @@ function buildMBar() {
     bar.appendChild(t);
   });
 }
-
+ 
 function setMode(mode) {
   currentMode = mode;
   document.getElementById('modeJing').classList.toggle('active', mode==='jing');
@@ -451,30 +452,30 @@ function setMode(mode) {
   if (mode === 'zheng') { zhengSelections=[]; zhengCat=null; renderZheng(); showResult(null); }
   else render();
 }
-
+ 
 function render() {
   const m = curMeridian;
   document.getElementById('panelTitle').textContent = m.name + ' 辨证';
   const body = document.getElementById('treeBody');
   body.innerHTML = '';
-
+ 
   const intro = document.createElement('div');
   intro.className = 'm-intro';
   intro.style.cssText = `background:${m.bg};border-color:${m.color}`;
   intro.innerHTML = `<div class="m-intro-name" style="color:${m.color}">${m.name}</div><div class="m-intro-desc">${m.modern} · ${m.desc}</div>`;
   body.appendChild(intro);
-
+ 
   const resetRow = document.createElement('div');
   resetRow.className = 'reset-row';
   resetRow.innerHTML = `<button class="btn-reset" onclick="resetTree()">↺ 重新选择</button>`;
   body.appendChild(resetRow);
-
+ 
   const treeRoot = document.createElement('div');
   treeRoot.className = 'tree-root';
   renderLevel(m.tree, 0, treeRoot);
   body.appendChild(treeRoot);
 }
-
+ 
 function renderLevel(node, depth, container) {
   if (!node || !node.q) return;
   const levelEl = document.createElement('div');
@@ -509,7 +510,7 @@ function renderLevel(node, depth, container) {
   });
   container.appendChild(levelEl);
 }
-
+ 
 function renderZheng() {
   const body = document.getElementById('treeBody');
   body.innerHTML = '';
@@ -545,7 +546,7 @@ function renderZheng() {
     body.appendChild(treeRoot);
   }
 }
-
+ 
 function renderZhengLevel(node, depth, container) {
   if (!node || !node.q) return;
   const levelEl = document.createElement('div');
@@ -580,7 +581,7 @@ function renderZhengLevel(node, depth, container) {
   });
   container.appendChild(levelEl);
 }
-
+ 
 function showResult(name) {
   const body = document.getElementById('resultBody');
   if (!name) {
@@ -606,7 +607,7 @@ function showResult(name) {
       <div class="sec"><div class="sec-lbl">禁忌注意</div><div class="warn-box">${f.contra}</div></div>
     </div>`;
 }
-
+ 
 function resetTree() { selections=[]; render(); showResult(null); }
 function resetZheng() { zhengCat=null; zhengSelections=[]; renderZheng(); showResult(null); }
 </script>
