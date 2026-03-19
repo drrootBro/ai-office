@@ -332,7 +332,7 @@ let KB = null; // { F: {...}, MERIDIANS: [...], SYMPTOM_CATS: [...] }
 
 // ── 设备指纹 ─────────────────────────────────────────────
 function getDeviceId() {
-  let id = sessionStorage.getItem('_did');
+  let id = localStorage.getItem('_did');
   if (!id) {
     // 生成基于浏览器特征的设备ID
     const canvas = document.createElement('canvas');
@@ -350,7 +350,7 @@ function getDeviceId() {
       hash |= 0;
     }
     id = 'D' + Math.abs(hash).toString(36).toUpperCase();
-    sessionStorage.setItem('_did', id);
+    localStorage.setItem('_did', id);
   }
   return id;
 }
@@ -378,8 +378,8 @@ async function doUnlock() {
     const data = await res.json();
 
     if (data.success) {
-      // 保存key到sessionStorage（关闭页面后失效，每次需重新输入）
-      sessionStorage.setItem(STORAGE_KEY, key);
+      // 保存key到localStorage（关闭页面后失效，每次需重新输入）
+      localStorage.setItem(STORAGE_KEY, key);
       KB = data.data;
       showApp();
     } else {
@@ -405,13 +405,20 @@ document.addEventListener('DOMContentLoaded', () => {
   if (urlKey) {
     const input = document.getElementById('keyInput');
     input.value = urlKey.toUpperCase();
-    // 自动触发解锁
     setTimeout(doUnlock, 500);
+    return;
+  }
+
+  // 检查localStorage里有没有已保存的Key，有就自动解锁
+  const savedKey = localStorage.getItem(STORAGE_KEY);
+  if (savedKey) {
+    document.getElementById('keyInput').value = savedKey;
+    setTimeout(doUnlock, 300);
   }
 });
 
 function doLogout() {
-  sessionStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(STORAGE_KEY);
   KB = null;
   document.getElementById('app').style.display = 'none';
   document.getElementById('unlockScreen').style.display = 'flex';
