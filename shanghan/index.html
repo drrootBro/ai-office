@@ -6,266 +6,123 @@
 <title>伤寒论经方辨证 · 完整版</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
-
-  :root {
-    --ink:#0f1923; --ink2:#3a4a5a;
-    --paper:#f0f4f0; --paper2:#e8ede8;
-    --blue:#1a3a5c; --blue2:#2a5298; --blue3:#4a7ec8;
-    --red:#8b1a1a; --gold:#b8860b; --border:#b8c8b8;
-    --shadow:rgba(15,25,15,0.10);
-    --ty:#c0392b; --ym:#c07020; --sy:#27ae60;
-    --ti:#8e44ad; --sn:#2980b9; --jy:#445588;
-  }
+  :root{--ink:#0f1923;--ink2:#3a4a5a;--paper:#f0f4f0;--paper2:#e8ede8;--blue:#1a3a5c;--blue2:#2a5298;--blue3:#4a7ec8;--red:#8b1a1a;--gold:#b8860b;--border:#b8c8b8;--shadow:rgba(15,25,15,0.10);--ty:#c0392b;--ym:#c07020;--sy:#27ae60;--ti:#8e44ad;--sn:#2980b9;--jy:#445588;}
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{
-    font-family:'Noto Sans SC',sans-serif;
-    background:var(--paper); color:var(--ink); min-height:100vh;
-  }
-
-  /* UNLOCK SCREEN */
-  .unlock-screen{
-    min-height:100vh; display:flex; align-items:center; justify-content:center;
-    padding:20px;
-    background-image:
-      radial-gradient(ellipse at 10% 0%,rgba(139,26,26,.05) 0%,transparent 50%),
-      radial-gradient(ellipse at 90% 100%,rgba(26,58,92,.05) 0%,transparent 50%);
-  }
-  .unlock-card{
-    background:white; border:1px solid var(--border); border-radius:12px;
-    padding:40px 36px; max-width:420px; width:100%;
-    box-shadow:0 4px 24px var(--shadow); text-align:center;
-  }
-  .unlock-seal{
-    width:64px; height:64px; background:var(--red); border-radius:8px;
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Noto Serif SC',serif; color:white; font-size:22px;
-    letter-spacing:-2px; margin:0 auto 20px;
-    box-shadow:2px 2px 0 rgba(0,0,0,.25);
-  }
-  .unlock-title{
-    font-family:'Noto Serif SC',serif; font-size:20px; color:var(--ink);
-    letter-spacing:2px; margin-bottom:6px;
-  }
-  .unlock-sub{ font-size:12px; color:var(--ink2); margin-bottom:28px; line-height:1.6; }
-
-  .unlock-features{
-    background:var(--paper); border-radius:8px; padding:16px;
-    margin-bottom:24px; text-align:left;
-  }
-  .feature-item{
-    display:flex; align-items:center; gap:8px;
-    font-size:12px; color:var(--ink2); margin-bottom:8px;
-  }
-  .feature-item:last-child{ margin-bottom:0; }
-  .feature-icon{ font-size:14px; flex-shrink:0; }
-
-  .unlock-input{
-    width:100%; padding:12px 14px; border:1.5px solid var(--border);
-    border-radius:7px; font-size:14px; color:var(--ink);
-    font-family:'Noto Sans SC',sans-serif;
-    text-align:center; letter-spacing:2px;
-    transition:border-color .2s; margin-bottom:10px;
-    text-transform:uppercase;
-  }
-  .unlock-input:focus{ outline:none; border-color:var(--blue2); }
-  .unlock-input::placeholder{ letter-spacing:1px; color:#bbb; text-transform:none; }
-
-  .unlock-btn{
-    width:100%; padding:13px; background:var(--blue);
-    border:none; border-radius:7px; color:white; font-size:15px;
-    font-family:'Noto Serif SC',serif; letter-spacing:2px;
-    cursor:pointer; transition:all .2s; margin-bottom:10px;
-  }
-  .unlock-btn:hover{ background:var(--blue2); }
-  .unlock-btn:disabled{ background:var(--border); cursor:not-allowed; }
-
-  .unlock-error{
-    color:var(--red); font-size:12px; margin-bottom:10px;
-    min-height:18px; line-height:1.5;
-  }
-  .unlock-loading{
-    color:var(--ink2); font-size:12px; margin-bottom:10px;
-    display:none;
-  }
-  .unlock-footer{
-    font-size:11px; color:var(--border); line-height:1.7; margin-top:16px;
-  }
-  .unlock-footer a{ color:var(--blue3); text-decoration:none; }
-
-  /* MAIN APP (hidden until unlocked) */
-  #app{ display:none; }
-
-  header{
-    background:var(--blue); padding:18px 32px;
-    display:flex; align-items:center; gap:14px;
-    border-bottom:3px solid var(--blue3);
-  }
-  .seal{
-    width:48px;height:48px;background:var(--red);border-radius:6px;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Noto Serif SC',serif;color:white;font-size:17px;
-    letter-spacing:-2px;flex-shrink:0;box-shadow:2px 2px 0 rgba(0,0,0,.3);
-  }
+  body{font-family:'Noto Sans SC',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;}
+  .unlock-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .unlock-card{background:white;border:1px solid var(--border);border-radius:12px;padding:40px 36px;max-width:420px;width:100%;box-shadow:0 4px 24px var(--shadow);text-align:center;}
+  .unlock-logo{height:36px;margin:0 auto 20px;display:block;}
+  .unlock-title{font-family:'Noto Serif SC',serif;font-size:20px;color:var(--ink);letter-spacing:2px;margin-bottom:6px;}
+  .unlock-sub{font-size:12px;color:var(--ink2);margin-bottom:28px;line-height:1.6;}
+  .unlock-features{background:var(--paper);border-radius:8px;padding:16px;margin-bottom:24px;text-align:left;}
+  .feature-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink2);margin-bottom:8px;}
+  .feature-item:last-child{margin-bottom:0;}
+  .feature-icon{font-size:14px;flex-shrink:0;}
+  .unlock-input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;color:var(--ink);font-family:'Noto Sans SC',sans-serif;text-align:center;letter-spacing:1px;transition:border-color .2s;margin-bottom:10px;}
+  .unlock-input:focus{outline:none;border-color:var(--blue2);}
+  .unlock-input::placeholder{color:#bbb;}
+  .unlock-btn{width:100%;padding:13px;background:var(--blue);border:none;border-radius:7px;color:white;font-size:15px;font-family:'Noto Serif SC',serif;letter-spacing:2px;cursor:pointer;transition:all .2s;margin-bottom:10px;}
+  .unlock-btn:hover{background:var(--blue2);}
+  .unlock-btn:disabled{background:var(--border);cursor:not-allowed;}
+  .unlock-error{color:var(--red);font-size:12px;margin-bottom:10px;min-height:18px;line-height:1.5;}
+  .unlock-loading{color:var(--ink2);font-size:12px;margin-bottom:10px;display:none;}
+  .unlock-footer{font-size:11px;color:var(--border);line-height:1.7;margin-top:16px;}
+  .unlock-footer a{color:var(--blue3);text-decoration:none;}
+  #app{display:none;}
+  header{background:var(--blue);padding:18px 32px;display:flex;align-items:center;gap:14px;border-bottom:3px solid var(--blue3);}
+  .header-logo{height:32px;filter:brightness(0) invert(1);opacity:.9;flex-shrink:0;}
+  .header-divider{width:1px;height:36px;background:rgba(74,126,200,.4);flex-shrink:0;}
   header h1{font-family:'Noto Serif SC',serif;color:#e8f0fa;font-size:19px;letter-spacing:3px;}
   header p{color:var(--blue3);font-size:11px;letter-spacing:1px;margin-top:3px;}
   .hdr-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
-  .version{background:rgba(74,126,200,.3);color:#a8c8f0;font-size:10px;
-    padding:3px 9px;border-radius:10px;border:1px solid rgba(74,126,200,.4);}
-  .logout-btn{
-    background:transparent;border:1px solid rgba(74,126,200,.4);
-    color:#a8c8f0;font-size:11px;padding:3px 10px;border-radius:10px;
-    cursor:pointer;transition:all .15s;
-  }
+  .version{background:rgba(74,126,200,.3);color:#a8c8f0;font-size:10px;padding:3px 9px;border-radius:10px;border:1px solid rgba(74,126,200,.4);}
+  .logout-btn{background:transparent;border:1px solid rgba(74,126,200,.4);color:#a8c8f0;font-size:11px;padding:3px 10px;border-radius:10px;cursor:pointer;}
   .logout-btn:hover{background:rgba(139,26,26,.4);border-color:var(--red);color:white;}
-
-  .mode-bar{
-    background:#e8ede8;border-bottom:1px solid var(--border);
-    display:flex;justify-content:center;padding:10px 20px;gap:8px;
-  }
-  .mode-btn{
-    padding:8px 28px;border-radius:20px;font-size:13px;cursor:pointer;
-    border:1.5px solid var(--border);background:white;color:var(--ink2);
-    transition:all .2s;display:flex;align-items:center;gap:6px;
-  }
+  .mode-bar{background:#e8ede8;border-bottom:1px solid var(--border);display:flex;justify-content:center;padding:10px 20px;gap:8px;}
+  .mode-btn{padding:8px 28px;border-radius:20px;font-size:13px;cursor:pointer;border:1.5px solid var(--border);background:white;color:var(--ink2);transition:all .2s;display:flex;align-items:center;gap:6px;}
   .mode-btn.active{background:var(--blue);color:white;border-color:var(--blue);}
   .mode-btn:hover:not(.active){border-color:var(--blue2);color:var(--blue2);}
-
-  .m-bar{
-    background:var(--blue);padding:0 32px;
-    display:flex;border-bottom:1px solid rgba(74,126,200,.25);
-    overflow-x:auto;
-  }
-  .m-tab{
-    padding:10px 16px;font-size:12px;color:#6888aa;cursor:pointer;
-    border-bottom:3px solid transparent;transition:all .2s;
-    display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;
-  }
+  .m-bar{background:var(--blue);padding:0 32px;display:flex;border-bottom:1px solid rgba(74,126,200,.25);overflow-x:auto;}
+  .m-tab{padding:10px 16px;font-size:12px;color:#6888aa;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;}
   .m-tab:hover{color:#a8c8f0;}
   .m-tab.active{color:white;border-bottom-color:var(--active-color,white);}
   .m-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-
   .container{max-width:1120px;margin:0 auto;padding:20px;}
-  .disclaimer{
-    background:#e8f0e8;border-left:4px solid var(--blue3);
-    padding:9px 13px;border-radius:0 6px 6px 0;
-    font-size:11px;color:var(--ink2);margin-bottom:18px;line-height:1.6;
-  }
+  .disclaimer{background:#e8f0e8;border-left:4px solid var(--blue3);padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:var(--ink2);margin-bottom:18px;line-height:1.6;}
   .layout{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start;}
-
-  .tree-panel{background:white;border:1px solid var(--border);border-radius:8px;
-    overflow:hidden;box-shadow:0 2px 10px var(--shadow);}
+  .tree-panel{background:white;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 2px 10px var(--shadow);}
   .panel-hd{background:var(--blue);padding:12px 18px;display:flex;align-items:center;gap:8px;}
   .panel-hd .hdot{width:7px;height:7px;background:var(--blue3);border-radius:50%;}
   .panel-hd h2{font-family:'Noto Serif SC',serif;color:#e8f0fa;font-size:13px;letter-spacing:2px;}
   .panel-bd{padding:18px;}
-
   .m-intro{padding:11px 13px;border-radius:6px;border-left:3px solid;margin-bottom:16px;}
   .m-intro-name{font-family:'Noto Serif SC',serif;font-size:14px;font-weight:700;}
   .m-intro-desc{font-size:11px;color:var(--ink2);margin-top:3px;line-height:1.6;}
   .reset-row{margin-bottom:14px;}
-  .btn-reset{padding:6px 14px;background:white;border:1px solid var(--border);
-    border-radius:5px;font-size:11px;color:var(--ink2);cursor:pointer;}
+  .btn-reset{padding:6px 14px;background:white;border:1px solid var(--border);border-radius:5px;font-size:11px;color:var(--ink2);cursor:pointer;}
   .btn-reset:hover{border-color:var(--red);color:var(--red);}
-
   .tree-root{display:flex;flex-direction:column;gap:0;}
   .tree-level{display:flex;flex-direction:column;gap:0;animation:fadeIn .2s ease;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
   .level-question{font-size:13px;font-weight:600;color:var(--blue);padding:8px 0 6px;line-height:1.5;}
-
-  .opt-btn{
-    flex:1;padding:9px 12px;background:var(--paper);
-    border:1.5px solid var(--border);border-radius:6px;
-    font-size:12px;color:var(--ink);cursor:pointer;
-    text-align:left;transition:all .15s;line-height:1.5;
-    display:flex;align-items:center;gap:8px;width:100%;margin-bottom:2px;
-  }
+  .opt-btn{flex:1;padding:9px 12px;background:var(--paper);border:1.5px solid var(--border);border-radius:6px;font-size:12px;color:var(--ink);cursor:pointer;text-align:left;transition:all .15s;line-height:1.5;display:flex;align-items:center;gap:8px;width:100%;margin-bottom:2px;}
   .opt-btn:hover{border-color:var(--blue2);background:#eef4ff;}
   .opt-btn.selected{background:#e8f0fb;border-color:var(--blue2);color:var(--blue);font-weight:500;}
   .opt-btn.result-selected{background:#e8f8e8;border-color:var(--sy);color:#1a5a1a;font-weight:500;}
-  .opt-radio{width:14px;height:14px;border-radius:50%;border:2px solid var(--border);
-    flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .opt-radio{width:14px;height:14px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
   .opt-btn.selected .opt-radio{border-color:var(--blue2);background:var(--blue2);}
-  .opt-btn.selected .opt-radio::after{content:'';width:5px;height:5px;border-radius:50%;background:white;}
+  .opt-btn.selected .opt-radio::after,.opt-btn.result-selected .opt-radio::after{content:'';width:5px;height:5px;border-radius:50%;background:white;}
   .opt-btn.result-selected .opt-radio{border-color:var(--sy);background:var(--sy);}
-  .opt-btn.result-selected .opt-radio::after{content:'';width:5px;height:5px;border-radius:50%;background:white;}
   .opt-label-wrap{flex:1;}
   .opt-main{display:block;}
   .opt-sub{display:block;font-size:10px;color:var(--ink2);margin-top:1px;}
   .opt-children{margin-left:24px;padding-left:12px;border-left:2px solid #d8e8d8;margin-top:4px;margin-bottom:6px;}
-
-  .result-panel{background:white;border:1px solid var(--border);border-radius:8px;
-    overflow:hidden;box-shadow:0 2px 10px var(--shadow);position:sticky;top:16px;}
-  .empty-state{display:flex;flex-direction:column;align-items:center;
-    justify-content:center;padding:50px 20px;text-align:center;color:var(--ink2);}
+  .result-panel{background:white;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 2px 10px var(--shadow);position:sticky;top:16px;}
+  .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 20px;text-align:center;color:var(--ink2);}
   .empty-icon{font-size:40px;margin-bottom:12px;opacity:.3;}
   .empty-state p{font-size:12px;line-height:1.9;}
-
   .rc-header{padding:16px 18px;display:flex;align-items:center;gap:13px;border-bottom:2px solid var(--paper2);}
-  .rc-badge{width:46px;height:46px;border-radius:7px;display:flex;align-items:center;justify-content:center;
-    font-family:'Noto Serif SC',serif;color:white;font-size:13px;flex-shrink:0;box-shadow:2px 2px 0 rgba(0,0,0,.2);}
+  .rc-badge{width:46px;height:46px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;color:white;font-size:13px;flex-shrink:0;}
   .rc-name{font-family:'Noto Serif SC',serif;font-size:20px;letter-spacing:1px;}
   .rc-modern{font-size:11px;color:var(--ink2);margin-top:3px;line-height:1.5;}
   .rc-pill{display:inline-block;font-size:10px;padding:2px 7px;border-radius:8px;color:white;margin-top:4px;}
   .rc-body{padding:14px 18px;}
   .sec{margin-bottom:14px;}
-  .sec-lbl{font-size:10px;color:var(--gold);letter-spacing:2px;font-weight:700;
-    margin-bottom:6px;display:flex;align-items:center;gap:5px;}
+  .sec-lbl{font-size:10px;color:var(--gold);letter-spacing:2px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:5px;}
   .sec-lbl::before{content:'';display:inline-block;width:12px;height:2px;background:var(--gold);}
   .herb-grid{display:flex;flex-wrap:wrap;gap:5px;}
   .herb-tag{background:var(--paper);border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:11px;}
   .herb-tag b{display:block;font-size:12px;}
   .herb-tag span{color:var(--ink2);font-size:10px;}
   .prep-box{background:#f0f6ff;border:1px solid #b8d0f0;border-radius:5px;padding:10px 12px;font-size:12px;line-height:1.8;}
-  .classic-box{background:var(--blue);border-radius:5px;padding:10px 12px;
-    font-family:'Noto Serif SC',serif;font-size:11px;color:#a8c8f0;line-height:1.9;}
+  .classic-box{background:var(--blue);border-radius:5px;padding:10px 12px;font-family:'Noto Serif SC',serif;font-size:11px;color:#a8c8f0;line-height:1.9;}
   .classic-src{font-size:10px;color:#6898c0;margin-top:5px;}
   .warn-box{background:#fff8f0;border:1px solid #f0c890;border-radius:5px;padding:9px 11px;font-size:11px;color:#7a4010;line-height:1.7;}
-
   .symptom-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:4px;}
-  .sym-card{background:white;border:1.5px solid var(--border);border-radius:8px;
-    padding:14px 12px;cursor:pointer;transition:all .2s;text-align:center;}
+  .sym-card{background:white;border:1.5px solid var(--border);border-radius:8px;padding:14px 12px;cursor:pointer;transition:all .2s;text-align:center;}
   .sym-card:hover{border-color:var(--blue2);transform:translateY(-2px);box-shadow:0 4px 12px var(--shadow);}
   .sym-icon{font-size:26px;margin-bottom:6px;}
   .sym-name{font-size:13px;font-weight:500;color:var(--ink);}
   .sym-desc{font-size:10px;color:var(--ink2);margin-top:2px;line-height:1.4;}
-
-  /* loading spinner */
-  .spinner{
-    width:40px;height:40px;border:3px solid var(--paper2);
-    border-top-color:var(--blue2);border-radius:50%;
-    animation:spin .8s linear infinite;margin:40px auto;display:block;
-  }
+  .spinner{width:40px;height:40px;border:3px solid var(--paper2);border-top-color:var(--blue2);border-radius:50%;animation:spin .8s linear infinite;margin:40px auto;display:block;}
   @keyframes spin{to{transform:rotate(360deg)}}
-
-  @media(max-width:800px){
-    .layout{grid-template-columns:1fr;}
-    .result-panel{position:static;}
-    .container{padding:12px;}
-    header{padding:14px 16px;}
-  }
+  @media(max-width:800px){.layout{grid-template-columns:1fr;}.result-panel{position:static;}.container{padding:12px;}header{padding:14px 16px;}}
 </style>
 </head>
 <body>
-<header>
-  <a href="https://rootbro.com" style="display:flex;align-items:center;flex-shrink:0;">
-    <img src="/assets/rootbro-logo.svg" style="height:32px;filter:brightness(0) invert(1);opacity:.9;" alt="RootBro">
-  </a>
-  <div style="width:1px;height:36px;background:rgba(74,126,200,.4);margin:0 4px;"></div>
 
 <!-- 解锁界面 -->
 <div class="unlock-screen" id="unlockScreen">
   <div class="unlock-card">
-    <div class="unlock-seal">伤寒</div>
+    <img src="/assets/rootbro-logo.svg" class="unlock-logo" alt="RootBro">
     <div class="unlock-title">伤寒论经方辨证</div>
     <div class="unlock-sub">完整版 · 六经全覆盖 · 57首方剂</div>
-
     <div class="unlock-features">
       <div class="feature-item"><span class="feature-icon">✅</span>六经完整辨证（太阳→厥阴）</div>
       <div class="feature-item"><span class="feature-icon">✅</span>按症状查方（16个现代分类）</div>
       <div class="feature-item"><span class="feature-icon">✅</span>完整原文、煎法、禁忌</div>
-      <div class="feature-item"><span class="feature-icon">✅</span>离线可用，一次购买永久使用</div>
+      <div class="feature-item"><span class="feature-icon">✅</span>一次购买，永久使用</div>
     </div>
-
     <input class="unlock-input" id="keyInput" type="text"
       placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
       maxlength="40"
@@ -274,7 +131,6 @@
     <div class="unlock-error" id="unlockError"></div>
     <div class="unlock-loading" id="unlockLoading">⏳ 验证中，请稍候...</div>
     <button class="unlock-btn" id="unlockBtn" onclick="doUnlock()">解锁完整版</button>
-
     <div class="unlock-footer">
       还没有Key？<a href="https://rootbro.lemonsqueezy.com" target="_blank">点此购买</a><br>
       已购买但Key无效？请联系：support@rootbro.com<br><br>
@@ -286,7 +142,10 @@
 <!-- 主应用（解锁后显示） -->
 <div id="app">
   <header>
-    <div class="seal">伤寒</div>
+    <a href="https://rootbro.com">
+      <img src="/assets/rootbro-logo.svg" class="header-logo" alt="RootBro">
+    </a>
+    <div class="header-divider"></div>
     <div>
       <h1>伤寒论经方辨证</h1>
       <p>张仲景 · 六经辨证 · 按经或按症状查方</p>
@@ -325,65 +184,39 @@
 </div>
 
 <script>
-// ── API配置 ──────────────────────────────────────────────
-// 部署后替换成你的Worker URL
-const API_URL = "https://shanghan-api.oceanyc.workers.dev"; // 部署后改为 https://api.rootbro.com
-
-// ── 本地缓存key名 ─────────────────────────────────────────
+const API_URL = "https://shanghan-api.oceanyc.workers.dev";
 const STORAGE_KEY = "shanghan_license";
+let KB = null;
 
-// ── 全局数据（从API加载） ─────────────────────────────────
-let KB = null; // { F: {...}, MERIDIANS: [...], SYMPTOM_CATS: [...] }
-
-// ── 设备指纹 ─────────────────────────────────────────────
 function getDeviceId() {
   let id = localStorage.getItem('_did');
   if (!id) {
-    // 生成基于浏览器特征的设备ID
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    ctx.textBaseline = 'top';
-    ctx.font = '14px Arial';
-    ctx.fillText('device', 2, 2);
-    const canvasData = canvas.toDataURL();
-    const raw = navigator.userAgent + screen.width + screen.height +
-                navigator.language + canvasData.slice(-50);
-    // 简单hash
+    ctx.textBaseline = 'top'; ctx.font = '14px Arial'; ctx.fillText('device', 2, 2);
+    const raw = navigator.userAgent + screen.width + screen.height + navigator.language + canvas.toDataURL().slice(-50);
     let hash = 0;
-    for (let i = 0; i < raw.length; i++) {
-      hash = ((hash << 5) - hash) + raw.charCodeAt(i);
-      hash |= 0;
-    }
+    for (let i = 0; i < raw.length; i++) { hash = ((hash << 5) - hash) + raw.charCodeAt(i); hash |= 0; }
     id = 'D' + Math.abs(hash).toString(36).toUpperCase();
     localStorage.setItem('_did', id);
   }
   return id;
 }
 
-// ── 解锁逻辑 ─────────────────────────────────────────────
 async function doUnlock() {
   const key = document.getElementById('keyInput').value.trim();
   const errEl = document.getElementById('unlockError');
   const loadEl = document.getElementById('unlockLoading');
   const btn = document.getElementById('unlockBtn');
-
   if (!key) { errEl.textContent = '请输入License Key'; return; }
-
-  errEl.textContent = '';
-  loadEl.style.display = 'block';
-  btn.disabled = true;
-
+  errEl.textContent = ''; loadEl.style.display = 'block'; btn.disabled = true;
   try {
     const res = await fetch(`${API_URL}/verify`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ key, deviceId: getDeviceId() })
     });
-
     const data = await res.json();
-
     if (data.success) {
-      // 保存key到localStorage（关闭页面后失效，每次需重新输入）
       localStorage.setItem(STORAGE_KEY, key);
       KB = data.data;
       showApp();
@@ -393,38 +226,20 @@ async function doUnlock() {
   } catch (e) {
     errEl.textContent = '网络错误，请检查网络后重试';
   } finally {
-    loadEl.style.display = 'none';
-    btn.disabled = false;
+    loadEl.style.display = 'none'; btn.disabled = false;
   }
 }
 
-// 回车触发解锁
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('keyInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doUnlock();
-  });
-
-  // 自动读取URL里的key参数
-  const urlParams = new URLSearchParams(window.location.search);
-  const urlKey = urlParams.get('key');
-  if (urlKey) {
-    const input = document.getElementById('keyInput');
-    input.value = urlKey.toUpperCase();
-    setTimeout(doUnlock, 500);
-    return;
-  }
-
-  // 检查localStorage里有没有已保存的Key，有就自动解锁
+  document.getElementById('keyInput').addEventListener('keydown', e => { if (e.key === 'Enter') doUnlock(); });
+  const urlKey = new URLSearchParams(window.location.search).get('key');
+  if (urlKey) { document.getElementById('keyInput').value = urlKey.toUpperCase(); setTimeout(doUnlock, 500); return; }
   const savedKey = localStorage.getItem(STORAGE_KEY);
-  if (savedKey) {
-    document.getElementById('keyInput').value = savedKey;
-    setTimeout(doUnlock, 300);
-  }
+  if (savedKey) { document.getElementById('keyInput').value = savedKey; setTimeout(doUnlock, 300); }
 });
 
 function doLogout() {
-  localStorage.removeItem(STORAGE_KEY);
-  KB = null;
+  localStorage.removeItem(STORAGE_KEY); KB = null;
   document.getElementById('app').style.display = 'none';
   document.getElementById('unlockScreen').style.display = 'flex';
   document.getElementById('keyInput').value = '';
@@ -433,26 +248,13 @@ function doLogout() {
 function showApp() {
   document.getElementById('unlockScreen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  initApp();
+  curMeridian = KB.MERIDIANS[0]; buildMBar(); render();
 }
 
-// ── 应用初始化 ────────────────────────────────────────────
-let curMeridian = null;
-let selections = [];
-let currentMode = 'jing';
-let zhengSelections = [];
-let zhengCat = null;
-
-function initApp() {
-  const { F, MERIDIANS, SYMPTOM_CATS } = KB;
-  curMeridian = MERIDIANS[0];
-  buildMBar();
-  render();
-}
+let curMeridian = null, selections = [], currentMode = 'jing', zhengSelections = [], zhengCat = null;
 
 function buildMBar() {
-  const bar = document.getElementById('mBar');
-  bar.innerHTML = '';
+  const bar = document.getElementById('mBar'); bar.innerHTML = '';
   KB.MERIDIANS.forEach(m => {
     const t = document.createElement('div');
     t.className = 'm-tab' + (m.id === curMeridian.id ? ' active' : '');
@@ -468,87 +270,54 @@ function setMode(mode) {
   document.getElementById('modeJing').classList.toggle('active', mode==='jing');
   document.getElementById('modeZheng').classList.toggle('active', mode==='zheng');
   document.getElementById('jingMode').style.display = mode==='jing' ? '' : 'none';
-  document.getElementById('panelTitle').textContent = mode==='jing'
-    ? (curMeridian.name + ' 辨证') : '按症状查方';
-  if (mode === 'zheng') { zhengSelections=[]; zhengCat=null; renderZheng(); showResult(null); }
-  else render();
+  document.getElementById('panelTitle').textContent = mode==='jing' ? (curMeridian.name+' 辨证') : '按症状查方';
+  if (mode === 'zheng') { zhengSelections=[]; zhengCat=null; renderZheng(); showResult(null); } else render();
 }
 
 function render() {
   const m = curMeridian;
   document.getElementById('panelTitle').textContent = m.name + ' 辨证';
-  const body = document.getElementById('treeBody');
-  body.innerHTML = '';
-
-  const intro = document.createElement('div');
-  intro.className = 'm-intro';
+  const body = document.getElementById('treeBody'); body.innerHTML = '';
+  const intro = document.createElement('div'); intro.className = 'm-intro';
   intro.style.cssText = `background:${m.bg};border-color:${m.color}`;
   intro.innerHTML = `<div class="m-intro-name" style="color:${m.color}">${m.name}</div><div class="m-intro-desc">${m.modern} · ${m.desc}</div>`;
   body.appendChild(intro);
-
-  const resetRow = document.createElement('div');
-  resetRow.className = 'reset-row';
-  resetRow.innerHTML = `<button class="btn-reset" onclick="resetTree()">↺ 重新选择</button>`;
-  body.appendChild(resetRow);
-
-  const treeRoot = document.createElement('div');
-  treeRoot.className = 'tree-root';
-  renderLevel(m.tree, 0, treeRoot);
-  body.appendChild(treeRoot);
+  const rr = document.createElement('div'); rr.className = 'reset-row';
+  rr.innerHTML = `<button class="btn-reset" onclick="resetTree()">↺ 重新选择</button>`;
+  body.appendChild(rr);
+  const tr = document.createElement('div'); tr.className = 'tree-root';
+  renderLevel(m.tree, 0, tr); body.appendChild(tr);
 }
 
 function renderLevel(node, depth, container) {
   if (!node || !node.q) return;
-  const levelEl = document.createElement('div');
-  levelEl.className = 'tree-level';
-  const qEl = document.createElement('div');
-  qEl.className = 'level-question';
-  qEl.textContent = node.q;
-  levelEl.appendChild(qEl);
+  const lv = document.createElement('div'); lv.className = 'tree-level';
+  const q = document.createElement('div'); q.className = 'level-question'; q.textContent = node.q; lv.appendChild(q);
   const opts = node.opts || [];
-  if (opts.length === 0) { container.appendChild(levelEl); return; }
-  const selectedIdx = selections[depth];
+  if (opts.length === 0) { container.appendChild(lv); return; }
+  const si = selections[depth];
   opts.forEach((opt, idx) => {
-    const isSelected = selectedIdx === idx;
+    const isSel = si === idx;
     const btn = document.createElement('button');
-    btn.className = 'opt-btn' + (isSelected ? (opt.r ? ' result-selected' : ' selected') : '');
+    btn.className = 'opt-btn' + (isSel ? (opt.r ? ' result-selected' : ' selected') : '');
     btn.innerHTML = `<div class="opt-radio"></div><div class="opt-label-wrap"><span class="opt-main">${opt.l}</span>${opt.s?`<span class="opt-sub">${opt.s}</span>`:''}</div>`;
-    btn.onclick = () => {
-      selections = selections.slice(0, depth);
-      selections[depth] = idx;
-      render();
-      if (opt.r) showResult(opt.r);
-      else showResult(null);
-    };
-    levelEl.appendChild(btn);
-    if (isSelected && opt.next) {
-      const childWrap = document.createElement('div');
-      childWrap.className = 'opt-children';
-      renderLevel(opt.next, depth+1, childWrap);
-      levelEl.appendChild(childWrap);
-    }
-    if (isSelected && opt.r) showResult(opt.r);
+    btn.onclick = () => { selections = selections.slice(0, depth); selections[depth] = idx; render(); if (opt.r) showResult(opt.r); else showResult(null); };
+    lv.appendChild(btn);
+    if (isSel && opt.next) { const cw = document.createElement('div'); cw.className = 'opt-children'; renderLevel(opt.next, depth+1, cw); lv.appendChild(cw); }
+    if (isSel && opt.r) showResult(opt.r);
   });
-  container.appendChild(levelEl);
+  container.appendChild(lv);
 }
 
 function renderZheng() {
-  const body = document.getElementById('treeBody');
-  body.innerHTML = '';
-  const resetRow = document.createElement('div');
-  resetRow.className = 'reset-row';
-  resetRow.innerHTML = `<button class="btn-reset" onclick="resetZheng()">↺ 重新选择</button>`;
-  body.appendChild(resetRow);
+  const body = document.getElementById('treeBody'); body.innerHTML = '';
+  const rr = document.createElement('div'); rr.className = 'reset-row';
+  rr.innerHTML = `<button class="btn-reset" onclick="resetZheng()">↺ 重新选择</button>`; body.appendChild(rr);
   if (zhengCat === null) {
-    const label = document.createElement('div');
-    label.className = 'level-question';
-    label.textContent = '你主要想查哪类问题？';
-    body.appendChild(label);
-    const grid = document.createElement('div');
-    grid.className = 'symptom-grid';
+    const lbl = document.createElement('div'); lbl.className = 'level-question'; lbl.textContent = '你主要想查哪类问题？'; body.appendChild(lbl);
+    const grid = document.createElement('div'); grid.className = 'symptom-grid';
     KB.SYMPTOM_CATS.forEach((cat, i) => {
-      const card = document.createElement('div');
-      card.className = 'sym-card';
+      const card = document.createElement('div'); card.className = 'sym-card';
       card.innerHTML = `<div class="sym-icon">${cat.icon}</div><div class="sym-name">${cat.name}</div><div class="sym-desc">${cat.desc}</div>`;
       card.onclick = () => { zhengCat = i; zhengSelections = []; renderZheng(); showResult(null); };
       grid.appendChild(card);
@@ -556,77 +325,42 @@ function renderZheng() {
     body.appendChild(grid);
   } else {
     const cat = KB.SYMPTOM_CATS[zhengCat];
-    const hdr = document.createElement('div');
-    hdr.className = 'm-intro';
+    const hdr = document.createElement('div'); hdr.className = 'm-intro';
     hdr.style.cssText = 'background:#f0f4ff;border-color:#a0b8e0;margin-bottom:14px;';
     hdr.innerHTML = `<div class="m-intro-name" style="color:var(--blue)">${cat.icon} ${cat.name}</div><div class="m-intro-desc">${cat.desc}</div>`;
     body.appendChild(hdr);
-    const treeRoot = document.createElement('div');
-    treeRoot.className = 'tree-root';
-    renderZhengLevel(cat.tree, 0, treeRoot);
-    body.appendChild(treeRoot);
+    const tr = document.createElement('div'); tr.className = 'tree-root';
+    renderZhengLevel(cat.tree, 0, tr); body.appendChild(tr);
   }
 }
 
 function renderZhengLevel(node, depth, container) {
   if (!node || !node.q) return;
-  const levelEl = document.createElement('div');
-  levelEl.className = 'tree-level';
-  const qEl = document.createElement('div');
-  qEl.className = 'level-question';
-  qEl.textContent = node.q;
-  levelEl.appendChild(qEl);
+  const lv = document.createElement('div'); lv.className = 'tree-level';
+  const q = document.createElement('div'); q.className = 'level-question'; q.textContent = node.q; lv.appendChild(q);
   const opts = node.opts || [];
-  if (opts.length === 0) { container.appendChild(levelEl); return; }
-  const selectedIdx = zhengSelections[depth];
+  if (opts.length === 0) { container.appendChild(lv); return; }
+  const si = zhengSelections[depth];
   opts.forEach((opt, idx) => {
-    const isSelected = selectedIdx === idx;
+    const isSel = si === idx;
     const btn = document.createElement('button');
-    btn.className = 'opt-btn' + (isSelected ? (opt.r ? ' result-selected' : ' selected') : '');
+    btn.className = 'opt-btn' + (isSel ? (opt.r ? ' result-selected' : ' selected') : '');
     btn.innerHTML = `<div class="opt-radio"></div><div class="opt-label-wrap"><span class="opt-main">${opt.l}</span>${opt.s?`<span class="opt-sub">${opt.s}</span>`:''}</div>`;
-    btn.onclick = () => {
-      zhengSelections = zhengSelections.slice(0, depth);
-      zhengSelections[depth] = idx;
-      renderZheng();
-      if (opt.r) showResult(opt.r);
-      else showResult(null);
-    };
-    levelEl.appendChild(btn);
-    if (isSelected && opt.next) {
-      const childWrap = document.createElement('div');
-      childWrap.className = 'opt-children';
-      renderZhengLevel(opt.next, depth+1, childWrap);
-      levelEl.appendChild(childWrap);
-    }
-    if (isSelected && opt.r) showResult(opt.r);
+    btn.onclick = () => { zhengSelections = zhengSelections.slice(0, depth); zhengSelections[depth] = idx; renderZheng(); if (opt.r) showResult(opt.r); else showResult(null); };
+    lv.appendChild(btn);
+    if (isSel && opt.next) { const cw = document.createElement('div'); cw.className = 'opt-children'; renderZhengLevel(opt.next, depth+1, cw); lv.appendChild(cw); }
+    if (isSel && opt.r) showResult(opt.r);
   });
-  container.appendChild(levelEl);
+  container.appendChild(lv);
 }
 
 function showResult(name) {
   const body = document.getElementById('resultBody');
-  if (!name) {
-    body.innerHTML = `<div class="empty-state"><div class="empty-icon">📖</div><p>请在左侧<br><strong>逐步选择症状</strong><br>系统自动推荐方剂</p></div>`;
-    return;
-  }
+  if (!name) { body.innerHTML = `<div class="empty-state"><div class="empty-icon">📖</div><p>请在左侧<br><strong>逐步选择症状</strong><br>系统自动推荐方剂</p></div>`; return; }
   const f = KB.F[name];
   if (!f) { body.innerHTML = `<div style="padding:20px;font-size:15px">推荐：${name}</div>`; return; }
   const herbsHtml = f.herbs.map(h => `<div class="herb-tag"><b>${h.n}</b><span>${h.a}${h.p?' · '+h.p:''}</span></div>`).join('');
-  body.innerHTML = `
-    <div class="rc-header">
-      <div class="rc-badge" style="background:${f.mc}">${name.slice(0,2)}</div>
-      <div>
-        <div class="rc-name">${name}</div>
-        <div class="rc-modern">${f.modern}</div>
-        <span class="rc-pill" style="background:${f.mc}">${f.meridian} · ${f.pulse}</span>
-      </div>
-    </div>
-    <div class="rc-body">
-      <div class="sec"><div class="sec-lbl">药物组成</div><div class="herb-grid">${herbsHtml}</div></div>
-      <div class="sec"><div class="sec-lbl">煎服方法</div><div class="prep-box">${f.prep}</div></div>
-      <div class="sec"><div class="sec-lbl">原文出处</div><div class="classic-box">${f.original}<div class="classic-src">— ${f.source} · ${f.pattern}</div></div></div>
-      <div class="sec"><div class="sec-lbl">禁忌注意</div><div class="warn-box">${f.contra}</div></div>
-    </div>`;
+  body.innerHTML = `<div class="rc-header"><div class="rc-badge" style="background:${f.mc}">${name.slice(0,2)}</div><div><div class="rc-name">${name}</div><div class="rc-modern">${f.modern}</div><span class="rc-pill" style="background:${f.mc}">${f.meridian} · ${f.pulse}</span></div></div><div class="rc-body"><div class="sec"><div class="sec-lbl">药物组成</div><div class="herb-grid">${herbsHtml}</div></div><div class="sec"><div class="sec-lbl">煎服方法</div><div class="prep-box">${f.prep}</div></div><div class="sec"><div class="sec-lbl">原文出处</div><div class="classic-box">${f.original}<div class="classic-src">— ${f.source} · ${f.pattern}</div></div></div><div class="sec"><div class="sec-lbl">禁忌注意</div><div class="warn-box">${f.contra}</div></div></div>`;
 }
 
 function resetTree() { selections=[]; render(); showResult(null); }
