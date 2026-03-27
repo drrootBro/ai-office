@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神农本草经精要 · Rootbro</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1612;--ink-soft:#4a453f;--ink-muted:#8a857d;
+  --paper:#faf8f4;--paper-warm:#f0ebe0;--paper-card:#fffdf9;
+  --brush:#8b3a2a;--brush-light:rgba(139,58,42,0.08);
+  --teal:#2a6b5e;--teal-light:rgba(42,107,94,0.08);
+  --gold:#b8942a;--gold-light:rgba(184,148,42,0.10);
+  --border:rgba(26,22,18,0.10);--border-warm:rgba(139,58,42,0.15);
+}
+body{font-family:'Georgia',serif;background:var(--paper);color:var(--ink);overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 20%,rgba(139,58,42,0.03) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 90% 80%,rgba(42,107,94,0.03) 0%,transparent 60%);pointer-events:none;z-index:0}
+.page-rule{position:fixed;left:48px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--border-warm) 20%,var(--border-warm) 80%,transparent);z-index:0}
+.wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:64px 40px 80px 80px;animation:fadeUp .5s ease both}
+
+/* topbar */
+.topbar{display:flex;align-items:center;gap:16px;margin-bottom:56px}
+.back{font-family:monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .2s}
+.back::before{content:'';display:inline-block;width:16px;height:1px;background:var(--ink-muted);transition:all .2s}
+.back:hover{color:var(--brush)}.back:hover::before{background:var(--brush);width:24px}
+.topbar-rule{flex:1;height:1px;background:var(--border)}
+.topbar-brand{font-family:monospace;font-size:11px;letter-spacing:.2em;color:var(--teal)}
+
+/* hero */
+.hero{margin-bottom:40px}
+.hero-label{font-family:monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--brush);display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.hero-label::before{content:'';display:inline-block;width:20px;height:1px;background:var(--brush)}
+.hero-title{font-size:40px;font-weight:400;line-height:1.1;letter-spacing:-.01em;color:var(--ink);margin-bottom:10px}
+.hero-sub{font-size:14px;color:var(--ink-muted);letter-spacing:.08em}
+
+/* progress */
+.progress-section{margin-bottom:36px}
+.progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.progress-label{font-family:monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted)}
+.progress-count{font-family:monospace;font-size:10px;color:var(--gold)}
+.progress-track{height:2px;background:var(--border);border-radius:1px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:1px;width:43%}
+
+/* search */
+.search-wrap{margin-bottom:28px;position:relative}
+.search-input{width:100%;font-family:'Georgia',serif;font-size:14px;color:var(--ink);background:var(--paper-card);border:1px solid var(--border);padding:12px 16px 12px 44px;border-radius:2px;outline:none;transition:border-color .18s}
+.search-input:focus{border-color:var(--brush)}
+.search-input::placeholder{color:var(--ink-muted)}
+.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:14px;height:14px;opacity:.4;pointer-events:none}
+
+/* category filter */
+.cats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.cat{font-family:monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--border);border-radius:1px;cursor:pointer;background:transparent;color:var(--ink-muted);transition:all .15s}
+.cat:hover{border-color:var(--brush);color:var(--brush);background:var(--brush-light)}
+.cat.active{border-color:var(--teal);color:var(--teal);background:var(--teal-light)}
+
+/* grid */
+.herb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);border:1px solid var(--border)}
+.herb-card{background:var(--paper-card);padding:24px 20px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px;transition:background .2s;position:relative;overflow:hidden}
+.herb-card::after{content:'';position:absolute;bottom:0;left:20px;right:20px;height:2px;background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform .28s}
+.herb-card:hover{background:var(--paper-warm)}
+.herb-card:hover::after{transform:scaleX(1)}
+.herb-card.hidden{display:none}
+
+.herb-num{font-family:monospace;font-size:9px;letter-spacing:.15em;color:var(--border);margin-bottom:2px}
+.herb-pinyin{font-family:monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.herb-cn{font-size:22px;font-weight:400;line-height:1.1;color:var(--ink)}
+.herb-en{font-size:11px;color:var(--ink-muted);letter-spacing:.05em}
+.herb-tags{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px}
+.herb-tag{font-family:monospace;font-size:9px;letter-spacing:.08em;padding:2px 6px;border:1px solid var(--border);border-radius:1px;color:var(--ink-muted)}
+
+/* no results */
+.no-results{grid-column:1/-1;padding:48px;text-align:center;font-family:monospace;font-size:12px;letter-spacing:.15em;color:var(--ink-muted);display:none}
+.no-results.show{display:block}
+
+/* coming soon strip */
+.coming-strip{margin-top:2px;background:var(--paper-card);border:1px solid var(--border);border-top:none;padding:20px 24px;display:flex;align-items:center;gap:16px}
+.coming-strip-text{font-family:monospace;font-size:10px;letter-spacing:.15em;color:var(--ink-muted)}
+.coming-dots{display:flex;gap:6px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--border)}
+
+footer{margin-top:48px;display:flex;align-items:center;justify-content:space-between;padding-top:28px;border-top:1px solid var(--border)}
+.footer-text{font-family:monospace;font-size:10px;letter-spacing:.15em;color:var(--ink-muted)}
+.footer-glyph{font-size:26px;color:var(--border-warm)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){
+  .page-rule{display:none}
+  .wrap{padding:40px 20px}
+  .herb-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-title{font-size:28px}
+}
+@media(max-width:400px){
+  .herb-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="page-rule"></div>
+<div class="wrap">
+
+<div class="topbar">
+  <a href="/TCM/index.html" class="back">Rootbro</a>
+  <div class="topbar-rule"></div>
+  <span class="topbar-brand">神农本草经</span>
+</div>
+
+<div class="hero">
+  <div class="hero-label">Biological Ethnobotany</div>
+  <div class="hero-title">《神农本草经》<br>精要</div>
+  <div class="hero-sub">精选 30 味核心本草 · 系统生物学药理解读</div>
+</div>
+
+<div class="progress-section">
+  <div class="progress-header">
+    <span class="progress-label">收录进度</span>
+    <span class="progress-count">13 / 30 味</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill"></div></div>
+</div>
+
+<div class="search-wrap">
+  <svg class="search-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="6.5" cy="6.5" r="5.5" stroke="#1a1612" stroke-width="1.5"/>
+    <path d="M10.5 10.5L14 14" stroke="#1a1612" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+  <input type="text" id="searchInput" class="search-input" placeholder="搜索药名、拼音或功效 — e.g. Mahuang, 发汗, 止呕...">
+</div>
+
+<div class="cats">
+  <button class="cat active" data-cat="all">全部</button>
+  <button class="cat" data-cat="解表">解表</button>
+  <button class="cat" data-cat="清热">清热</button>
+  <button class="cat" data-cat="止呕">止呕化痰</button>
+  <button class="cat" data-cat="补益">补益</button>
+  <button class="cat" data-cat="利水">利水</button>
+</div>
+
+<div class="herb-grid" id="herbGrid">
+
+  <a href="guizhi.html" class="herb-card" data-tags="guizhi 桂枝 cinnamomi ramulus 发汗 解表 太阳" data-cat="解表">
+    <div class="herb-num">001</div>
+    <div class="herb-pinyin">Guizhi</div>
+    <div class="herb-cn">桂枝</div>
+    <div class="herb-en">Cinnamon Twig</div>
+    <div class="herb-tags"><span class="herb-tag">解表</span><span class="herb-tag">发汗</span></div>
+  </a>
+
+  <a href="mahuang.html" class="herb-card" data-tags="mahuang 麻黄 ephedrae herba 发汗 平喘 解表" data-cat="解表">
+    <div class="herb-num">002</div>
+    <div class="herb-pinyin">Mahuang</div>
+    <div class="herb-cn">麻黄</div>
+    <div class="herb-en">Ephedra</div>
+    <div class="herb-tags"><span class="herb-tag">解表</span><span class="herb-tag">平喘</span></div>
+  </a>
+
+  <a href="gegen.html" class="herb-card" data-tags="gegen 葛根 puerariae radix 解表 项背强几几 生津" data-cat="解表">
+    <div class="herb-num">003</div>
+    <div class="herb-pinyin">Gegen</div>
+    <div class="herb-cn">葛根</div>
+    <div class="herb-en">Kudzu Root</div>
+    <div class="herb-tags"><span class="herb-tag">解表</span><span class="herb-tag">生津</span></div>
+  </a>
+
+  <a href="shigao.html" class="herb-card" data-tags="shigao 石膏 gypsum fibrosum 清热 冷却 阳明" data-cat="清热">
+    <div class="herb-num">004</div>
+    <div class="herb-pinyin">Shigao</div>
+    <div class="herb-cn">石膏</div>
+    <div class="herb-en">Gypsum</div>
+    <div class="herb-tags"><span class="herb-tag">清热</span><span class="herb-tag">阳明</span></div>
+  </a>
+
+  <a href="fuzi.html" class="herb-card" data-tags="fuzi 附子 aconiti radix 回阳 补火 少阴" data-cat="补益">
+    <div class="herb-num">005</div>
+    <div class="herb-pinyin">Fuzi</div>
+    <div class="herb-cn">附子</div>
+    <div class="herb-en">Aconite Root</div>
+    <div class="herb-tags"><span class="herb-tag">回阳</span><span class="herb-tag">少阴</span></div>
+  </a>
+
+  <a href="banxia.html" class="herb-card" data-tags="banxia 半夏 pinelliae rhizoma 止呕 化痰 降逆" data-cat="止呕">
+    <div class="herb-num">006</div>
+    <div class="herb-pinyin">Banxia</div>
+    <div class="herb-cn">半夏</div>
+    <div class="herb-en">Pinellia</div>
+    <div class="herb-tags"><span class="herb-tag">止呕</span><span class="herb-tag">化痰</span></div>
+  </a>
+
+  <a href="shengjiang.html" class="herb-card" data-tags="shengjiang 生姜 zingiberis rhizoma 止呕 散寒 解表" data-cat="止呕">
+    <div class="herb-num">007</div>
+    <div class="herb-pinyin">Shengjiang</div>
+    <div class="herb-cn">生姜</div>
+    <div class="herb-en">Fresh Ginger</div>
+    <div class="herb-tags"><span class="herb-tag">止呕</span><span class="herb-tag">散寒</span></div>
+  </a>
+
+  <a href="shaoyao.html" class="herb-card" data-tags="shaoyao 芍药 paeoniae radix 解痉 缓急止痛 养血" data-cat="补益">
+    <div class="herb-num">008</div>
+    <div class="herb-pinyin">Shaoyao</div>
+    <div class="herb-cn">芍药</div>
+    <div class="herb-en">Peony Root</div>
+    <div class="herb-tags"><span class="herb-tag">解痉</span><span class="herb-tag">养血</span></div>
+  </a>
+
+  <a href="fuling.html" class="herb-card" data-tags="fuling 茯苓 poria 利尿 渗湿 健脾" data-cat="利水">
+    <div class="herb-num">009</div>
+    <div class="herb-pinyin">Fuling</div>
+    <div class="herb-cn">茯苓</div>
+    <div class="herb-en">Poria</div>
+    <div class="herb-tags"><span class="herb-tag">利水</span><span class="herb-tag">健脾</span></div>
+  </a>
+
+  <a href="xingren.html" class="herb-card" data-tags="xingren 杏仁 armeniacae semen 止咳 平喘 降气" data-cat="止呕">
+    <div class="herb-num">010</div>
+    <div class="herb-pinyin">Xingren</div>
+    <div class="herb-cn">杏仁</div>
+    <div class="herb-en">Apricot Kernel</div>
+    <div class="herb-tags"><span class="herb-tag">止咳</span><span class="herb-tag">平喘</span></div>
+  </a>
+
+  <a href="gancao.html" class="herb-card" data-tags="gancao 甘草 glycyrrhizae radix 清热 解毒 调和" data-cat="清热">
+    <div class="herb-num">011</div>
+    <div class="herb-pinyin">Gancao</div>
+    <div class="herb-cn">甘草</div>
+    <div class="herb-en">Licorice</div>
+    <div class="herb-tags"><span class="herb-tag">调和</span><span class="herb-tag">解毒</span></div>
+  </a>
+
+  <a href="zhigancao.html" class="herb-card" data-tags="zhigancao 炙甘草 glycyrrhizae prep 补气 缓急 补益" data-cat="补益">
+    <div class="herb-num">012</div>
+    <div class="herb-pinyin">Zhigancao</div>
+    <div class="herb-cn">炙甘草</div>
+    <div class="herb-en">Fried Licorice</div>
+    <div class="herb-tags"><span class="herb-tag">补气</span><span class="herb-tag">缓急</span></div>
+  </a>
+
+  <a href="dazao.html" class="herb-card" data-tags="dazao 大枣 jujubae fructus 补益 营卫 电解质" data-cat="补益">
+    <div class="herb-num">013</div>
+    <div class="herb-pinyin">Dazao</div>
+    <div class="herb-cn">大枣</div>
+    <div class="herb-en">Jujube</div>
+    <div class="herb-tags"><span class="herb-tag">补益</span><span class="herb-tag">营卫</span></div>
+  </a>
+
+  <div class="no-results" id="noResults">没有找到匹配的本草</div>
+
+</div>
+
+<div class="coming-strip">
+  <span class="coming-strip-text">更多本草持续收录中</span>
+  <div class="coming-dots">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div>
+  </div>
+  <span class="coming-strip-text">17 / 30</span>
+</div>
+
+<footer>
+  <span class="footer-text">ROOTBRO.COM · 神农本草经精要</span>
+  <span class="footer-glyph">草</span>
+</footer>
+
+</div>
+
+<script>
+const searchInput = document.getElementById('searchInput');
+const cards = document.querySelectorAll('.herb-card');
+const noResults = document.getElementById('noResults');
+const catBtns = document.querySelectorAll('.cat');
+let activeCat = 'all';
+let searchVal = '';
+
+function filterCards() {
+  let visible = 0;
+  cards.forEach(card => {
+    const tags = card.getAttribute('data-tags').toLowerCase();
+    const cat  = card.getAttribute('data-cat') || '';
+    const matchSearch = !searchVal || tags.includes(searchVal);
+    const matchCat = activeCat === 'all' || cat.includes(activeCat);
+    if (matchSearch && matchCat) {
+      card.classList.remove('hidden');
+      visible++;
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+  noResults.className = visible === 0 ? 'no-results show' : 'no-results';
+}
+
+searchInput.addEventListener('input', () => {
+  searchVal = searchInput.value.trim().toLowerCase();
+  filterCards();
+});
+
+catBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    catBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCat = btn.dataset.cat;
+    filterCards();
+  });
+});
+</script>
+</body>
+</html>
