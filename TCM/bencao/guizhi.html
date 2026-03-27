@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>桂枝 Guizhi · 神农本草经精要 · Rootbro</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1612;--ink-soft:#4a453f;--ink-muted:#8a857d;
+  --paper:#faf8f4;--paper-warm:#f0ebe0;--paper-card:#fffdf9;
+  --brush:#8b3a2a;--brush-light:rgba(139,58,42,0.08);
+  --teal:#2a6b5e;--teal-light:rgba(42,107,94,0.08);
+  --gold:#b8942a;--gold-light:rgba(184,148,42,0.10);
+  --border:rgba(26,22,18,0.10);--border-warm:rgba(139,58,42,0.15);
+}
+body{font-family:'Georgia',serif;background:var(--paper);color:var(--ink);overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 20%,rgba(139,58,42,0.03) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 90% 80%,rgba(42,107,94,0.03) 0%,transparent 60%);pointer-events:none;z-index:0}
+.page-rule{position:fixed;left:48px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--border-warm) 20%,var(--border-warm) 80%,transparent);z-index:0}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:64px 40px 80px 80px;animation:fadeUp .5s ease both}
+
+/* topbar */
+.topbar{display:flex;align-items:center;gap:16px;margin-bottom:56px}
+.back{font-family:monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .2s}
+.back::before{content:'';display:inline-block;width:16px;height:1px;background:var(--ink-muted);transition:all .2s}
+.back:hover{color:var(--teal)}.back:hover::before{background:var(--teal);width:24px}
+.topbar-rule{flex:1;height:1px;background:var(--border)}
+.topbar-num{font-family:monospace;font-size:10px;letter-spacing:.2em;color:var(--ink-muted)}
+
+/* hero layout */
+.hero{display:grid;grid-template-columns:1fr 320px;gap:40px;margin-bottom:48px;align-items:start}
+
+/* left: identity */
+.identity{}
+.herb-label{font-family:monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.herb-label::before{content:'';display:inline-block;width:20px;height:1px;background:var(--teal)}
+.herb-cn{font-size:64px;font-weight:400;line-height:1;color:var(--ink);margin-bottom:8px;letter-spacing:.05em}
+.herb-pinyin{font-family:monospace;font-size:20px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.herb-en{font-size:15px;color:var(--ink-muted);margin-bottom:4px}
+.herb-latin{font-size:13px;font-style:italic;color:var(--ink-muted);opacity:.7}
+
+.herb-meta{margin-top:24px;display:flex;flex-direction:column;gap:8px}
+.meta-row{display:flex;gap:10px;align-items:baseline}
+.meta-key{font-family:monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);min-width:60px}
+.meta-val{font-size:13px;color:var(--ink-soft)}
+.meta-tags{display:flex;flex-wrap:wrap;gap:6px}
+.meta-tag{font-family:monospace;font-size:9px;letter-spacing:.12em;padding:3px 8px;border:1px solid var(--border);border-radius:1px;color:var(--ink-muted)}
+.meta-tag.teal{border-color:var(--teal);color:var(--teal);background:var(--teal-light)}
+
+/* right: image */
+.herb-image-wrap{position:relative}
+.herb-image{width:100%;aspect-ratio:3/4;background:var(--paper-warm);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;overflow:hidden}
+.herb-image img{width:100%;height:100%;object-fit:cover;display:block}
+.herb-image.placeholder{cursor:default}
+.placeholder-text{font-family:monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);text-align:center;padding:20px}
+.placeholder-glyph{font-size:48px;color:var(--border-warm);line-height:1}
+.image-caption{margin-top:8px;font-family:monospace;font-size:9px;letter-spacing:.12em;color:var(--ink-muted);text-align:center}
+
+/* sections */
+.sections{display:flex;flex-direction:column;gap:2px}
+.section{background:var(--paper-card);border:1px solid var(--border);padding:28px 28px 24px}
+.section:first-child{border-radius:4px 4px 0 0}
+.section:last-child{border-radius:0 0 4px 4px}
+
+.section-head{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.section-icon{width:3px;height:16px;border-radius:2px}
+.si-classic{background:var(--gold)}
+.si-science{background:var(--teal)}
+.si-formula{background:var(--brush)}
+.section-title{font-family:monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--ink-muted)}
+.section-title-cn{font-family:'Georgia',serif;font-size:13px;color:var(--ink-muted);margin-left:4px}
+
+/* classic box */
+.classic-quote{background:var(--paper-warm);border-left:2px solid var(--gold);padding:16px 20px;margin-bottom:14px}
+.classic-quote p{font-size:16px;line-height:1.9;color:var(--ink);letter-spacing:.05em}
+.classic-note{font-size:13px;line-height:1.8;color:var(--ink-soft);padding-left:4px}
+.classic-note strong{color:var(--gold);font-weight:normal}
+
+/* science */
+.science-text{font-size:15px;line-height:1.9;color:var(--ink-soft)}
+.science-text strong{color:var(--ink);font-weight:normal;border-bottom:1px solid var(--teal)}
+.compound-box{margin-top:16px;background:var(--teal-light);border:1px solid rgba(42,107,94,0.15);padding:14px 18px}
+.compound-name{font-family:monospace;font-size:11px;letter-spacing:.12em;color:var(--teal);margin-bottom:4px}
+.compound-desc{font-size:13px;color:var(--ink-soft);line-height:1.7}
+
+/* formula tags */
+.formula-grid{display:flex;flex-wrap:wrap;gap:8px}
+.formula-tag{font-family:monospace;font-size:10px;letter-spacing:.12em;padding:6px 14px;border:1px solid var(--border);border-radius:1px;color:var(--ink-soft);text-decoration:none;transition:all .15s;display:inline-block}
+.formula-tag:hover{border-color:var(--brush);color:var(--brush);background:var(--brush-light)}
+.formula-tag.highlight{border-color:var(--brush);color:var(--brush);background:var(--brush-light)}
+
+/* nav between herbs */
+.herb-nav{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);border:1px solid var(--border)}
+.herb-nav-item{background:var(--paper-card);padding:16px 20px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:4px;transition:background .2s}
+.herb-nav-item:hover{background:var(--paper-warm)}
+.herb-nav-dir{font-family:monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted)}
+.herb-nav-name{font-size:16px;color:var(--ink)}
+.herb-nav-item.next{text-align:right}
+
+footer{margin-top:48px;display:flex;align-items:center;justify-content:space-between;padding-top:28px;border-top:1px solid var(--border)}
+.footer-text{font-family:monospace;font-size:10px;letter-spacing:.15em;color:var(--ink-muted)}
+.footer-glyph{font-size:26px;color:var(--border-warm)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:680px){
+  .page-rule{display:none}
+  .wrap{padding:40px 20px}
+  .hero{grid-template-columns:1fr;gap:24px}
+  .herb-image-wrap{order:-1}
+  .herb-image{aspect-ratio:16/9}
+  .herb-cn{font-size:48px}
+}
+</style>
+</head>
+<body>
+<div class="page-rule"></div>
+<div class="wrap">
+
+<div class="topbar">
+  <a href="/TCM/bencao/index.html" class="back">神农本草经</a>
+  <div class="topbar-rule"></div>
+  <span class="topbar-num">001 / 030</span>
+</div>
+
+<div class="hero">
+  <div class="identity">
+    <div class="herb-label">Cinnamomi Ramulus</div>
+    <div class="herb-cn">桂枝</div>
+    <div class="herb-pinyin">Guizhi</div>
+    <div class="herb-en">Cinnamon Twig</div>
+    <div class="herb-latin">Ramulus Cinnamomi Cassiae</div>
+
+    <div class="herb-meta">
+      <div class="meta-row">
+        <span class="meta-key">性味</span>
+        <span class="meta-val">辛、甘，温</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">归经</span>
+        <span class="meta-val">心、肺、膀胱</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">功效</span>
+        <div class="meta-tags">
+          <span class="meta-tag teal">解表</span>
+          <span class="meta-tag teal">发汗</span>
+          <span class="meta-tag">温通经络</span>
+          <span class="meta-tag">化气</span>
+        </div>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">六经</span>
+        <span class="meta-val">太阳病主药</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="herb-image-wrap">
+    <div class="herb-image placeholder">
+      <!-- 有图片时替换为：<img src="guizhi.jpg" alt="桂枝"> -->
+      <div class="placeholder-glyph">桂</div>
+      <div class="placeholder-text">植物科学绘图<br>待收录</div>
+    </div>
+    <div class="image-caption">Cinnamomum cassia · 肉桂树嫩枝</div>
+  </div>
+</div>
+
+<div class="sections">
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon si-classic"></div>
+      <span class="section-title">The Classic</span>
+      <span class="section-title-cn">神农本草经原文</span>
+    </div>
+    <div class="classic-quote">
+      <p>「味辛温。主上气咳逆，结气喉痹，吐吸，利关节。」</p>
+    </div>
+    <div class="classic-note">
+      <strong>根哥注 —</strong> 这是辛温解表的"总开关"。"利关节"指的不是字面上的关节润滑，而是疏通体表营卫之气的运行通道。张仲景在《伤寒论》中将其发展为太阳病核心药物，正是基于这个底层逻辑。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon si-science"></div>
+      <span class="section-title">PhD Insight</span>
+      <span class="section-title-cn">系统生物学视角</span>
+    </div>
+    <div class="science-text">
+      核心活性成分是<strong>肉桂醛（Cinnamaldehyde）</strong>，占挥发油的75–90%。作为高效的<strong>末梢血管扩张剂</strong>，它通过激活TRPA1离子通道，增加体表微循环血流量，辅助下丘脑调节产热与散热平衡。
+    </div>
+    <div class="compound-box">
+      <div class="compound-name">Cinnamaldehyde · 肉桂醛</div>
+      <div class="compound-desc">TRPA1激动剂 → 末梢血管扩张 → 体表血流↑ → 辅助发汗散热。同时抑制血小板聚集（TXA2通路），与"利关节"的抗炎机制相关。</div>
+    </div>
+    <div class="science-text" style="margin-top:14px">
+      "营卫不和"的现代解读：<strong>营</strong>对应血液循环与免疫应答，<strong>卫</strong>对应自主神经调控的体温与皮肤屏障。桂枝汤的"调和营卫"，本质上是恢复自主神经对外周血管的精确调控。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon si-formula"></div>
+      <span class="section-title">Logic Pairing</span>
+      <span class="section-title-cn">经典配伍</span>
+    </div>
+    <div class="formula-grid">
+      <a href="/TCM/shanghan/free.html" class="formula-tag highlight">桂枝汤</a>
+      <span class="formula-tag">麻黄汤</span>
+      <span class="formula-tag">桂枝加葛根汤</span>
+      <span class="formula-tag">小建中汤</span>
+      <span class="formula-tag">炙甘草汤</span>
+      <span class="formula-tag">苓桂术甘汤</span>
+      <span class="formula-tag">桂枝茯苓丸</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="herb-nav">
+  <div class="herb-nav-item" style="opacity:.4;cursor:not-allowed">
+    <span class="herb-nav-dir">← 上一味</span>
+    <span class="herb-nav-name">—</span>
+  </div>
+  <a href="mahuang.html" class="herb-nav-item next">
+    <span class="herb-nav-dir">下一味 →</span>
+    <span class="herb-nav-name">麻黄 Mahuang</span>
+  </a>
+</div>
+
+<footer>
+  <span class="footer-text">ROOTBRO.COM · 神农本草经精要</span>
+  <span class="footer-glyph">草</span>
+</footer>
+
+</div>
+</body>
+</html>
