@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>根哥识药 | Root Bro Botanical Lab</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #27ae60; /* 生机绿 */
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --text-main: #1a1a1a;
+            --text-sub: #666666;
+        }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--text-main); }
+        .herb-card { max-width: 500px; margin: 0 auto; background: var(--card); border-radius: 24px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        
+        /* 图片占位符 */
+        .image-placeholder { width: 100%; height: 280px; background: #eee; display: flex; align-items: center; justify-content: center; color: #999; font-style: italic; border-bottom: 1px solid #eee; }
+        
+        .content { padding: 30px; }
+        .header { border-bottom: 2px solid var(--bg); padding-bottom: 20px; margin-bottom: 25px; }
+        .header h1 { margin: 0; font-size: 28px; display: flex; align-items: baseline; gap: 10px; }
+        .pinyin { font-size: 18px; color: var(--accent); font-weight: 400; }
+        .latin { font-size: 14px; color: var(--text-sub); display: block; margin-top: 5px; }
+
+        .section { margin-bottom: 25px; }
+        .section-title { font-size: 14px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .section-title::before { content: ""; width: 4px; height: 14px; background: var(--accent); border-radius: 2px; }
+
+        .classic-box { background: #fdfaf2; border-left: 3px solid #e67e22; padding: 15px; border-radius: 0 8px 8px 0; font-size: 15px; line-height: 1.6; }
+        .science-text { font-size: 15px; line-height: 1.6; color: var(--primary); }
+        .formula-tag { display: inline-block; background: #f0f0f0; padding: 4px 12px; border-radius: 15px; font-size: 13px; margin: 4px; color: #444; }
+        
+        .footer { text-align: center; padding: 20px; font-size: 12px; color: #bbb; border-top: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+<div class="herb-card">
+    <div class="image-placeholder">
+        [ 待收集：高清植物科学绘图 / Photo Here ]
+    </div>
+
+    <div class="content">
+        <div class="header">
+            <h1>桂枝 <span class="pinyin">Guizhi</span></h1>
+            <span class="latin">Cinnamomi Ramulus (Cinnamon Twig)</span>
+        </div>
+
+        <div class="section">
+            <div class="section-title">神农本草经 / The Classic</div>
+            <div class="classic-box">
+                “味辛温。主上气咳逆，结气喉痹，吐吸，利关节。”<br>
+                <strong>根哥注：</strong>这是辛温解表的“总开关”，通过温通经络，把体表的寒邪往外推。
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">生物学视角 / PhD Insight</div>
+            <div class="science-text">
+                核心成分是<strong>肉桂醛 (Cinnamaldehyde)</strong>。作为一种高效的<strong>末梢血管扩张剂 (Peripheral Vasodilator)</strong>，它能增加体表血流，辅助下丘脑调节产热，是调节“营卫”（免疫与循环系统平衡）的物理基础。
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">经典配伍 / Logic Pairing</div>
+            <div class="formula-tag">#桂枝汤 (Guizhi Tang)</div>
+            <div class="formula-tag">#麻黄汤 (Mahuang Tang)</div>
+            <div class="formula-tag">#解热镇痛 (Analgesic)</div>
+        </div>
+        </div>
+
+    <div class="footer">
+        Root Bro Lab - 跟着根哥，科学经方不踩坑
+    </div>
+</div>
+
+</body>
+</html>
