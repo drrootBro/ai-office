@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rootbro — Systems Biology of TCM</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1612;--ink-soft:#4a453f;--ink-muted:#8a857d;
+  --paper:#faf8f4;--paper-warm:#f0ebe0;--paper-card:#fffdf9;
+  --brush:#8b3a2a;--brush-light:rgba(139,58,42,0.08);
+  --gold:#b8942a;--gold-light:rgba(184,148,42,0.10);
+  --teal:#2a6b5e;--teal-light:rgba(42,107,94,0.08);
+  --plum:#5c3a6b;--plum-light:rgba(92,58,107,0.08);
+  --border:rgba(26,22,18,0.10);--border-warm:rgba(139,58,42,0.15);
+}
+body{font-family:'Georgia',serif;background:var(--paper);color:var(--ink);overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 20%,rgba(139,58,42,0.03) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 90% 80%,rgba(42,107,94,0.03) 0%,transparent 60%);pointer-events:none;z-index:0}
+.page-rule{position:fixed;left:48px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--border-warm) 20%,var(--border-warm) 80%,transparent);z-index:0}
+.wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:72px 40px 72px 80px}
+
+header{display:grid;grid-template-columns:1fr auto;align-items:start;margin-bottom:64px;gap:32px;animation:fadeUp .6s ease both}
+.brand-mark{font-family:monospace;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--brush);display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.brand-mark::before{content:'';display:inline-block;width:24px;height:1px;background:var(--brush)}
+.brand-name{font-size:52px;font-weight:400;line-height:1;letter-spacing:-.02em;color:var(--ink);margin-bottom:6px}
+.brand-sub{font-size:14px;color:var(--ink-muted);letter-spacing:.12em}
+.lang-btn{font-family:monospace;font-size:11px;letter-spacing:.1em;color:var(--ink-soft);border:1px solid var(--border-warm);background:transparent;padding:8px 16px;border-radius:2px;cursor:pointer;white-space:nowrap;margin-top:8px;transition:all .2s}
+.lang-btn:hover{background:var(--brush-light);border-color:var(--brush);color:var(--brush)}
+
+.section-head{display:flex;align-items:center;gap:16px;margin-bottom:28px;animation:fadeUp .6s .1s ease both}
+.section-label{font-family:monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-muted)}
+.section-rule{flex:1;height:1px;background:var(--border)}
+.section-glyph{font-size:26px;color:var(--border-warm);line-height:1}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);border:1px solid var(--border);animation:fadeUp .6s .2s ease both}
+
+.card{background:var(--paper-card);padding:30px 28px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:9px;transition:background .2s;position:relative;overflow:hidden;border:none;text-align:left;cursor:pointer}
+.card::after{content:'';position:absolute;bottom:0;left:28px;right:28px;height:2px;background:var(--brush);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.card:hover{background:var(--paper-warm)}
+.card:hover::after{transform:scaleX(1)}
+.card.disabled{cursor:not-allowed;opacity:.38}
+.card.disabled:hover{background:var(--paper-card)}
+.card.disabled::after{display:none}
+.card.full{grid-column:1/-1}
+
+.duo-card{grid-column:1/-1;background:var(--paper-card);display:grid;grid-template-columns:1fr 1px 1fr;position:relative;overflow:hidden}
+.duo-card::before{content:'仲景双璧';position:absolute;top:14px;left:50%;transform:translateX(-50%);font-family:monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--ink-muted);white-space:nowrap;z-index:2}
+.duo-divider{background:var(--border);align-self:stretch;margin:28px 0}
+.duo-half{padding:30px 28px;display:flex;flex-direction:column;gap:9px;text-decoration:none;color:inherit;transition:background .2s;position:relative}
+.duo-half::after{content:'';position:absolute;bottom:0;left:28px;right:28px;height:2px;background:var(--brush);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.duo-half:hover{background:var(--paper-warm)}
+.duo-half:hover::after{transform:scaleX(1)}
+.duo-half.disabled{cursor:not-allowed;opacity:.45}
+.duo-half.disabled:hover{background:inherit}
+.duo-half.disabled::after{display:none}
+
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.badge{font-family:monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;padding:3px 8px;border:1px solid;border-radius:1px}
+.b-live{color:var(--teal);border-color:var(--teal);background:var(--teal-light)}
+.b-prog{color:var(--gold);border-color:var(--gold);background:var(--gold-light)}
+.b-soon{color:var(--ink-muted);border-color:var(--border);background:transparent}
+.b-art{color:var(--brush);border-color:var(--brush);background:var(--brush-light)}
+.b-women{color:var(--plum);border-color:var(--plum);background:var(--plum-light)}
+
+.card-num{font-family:monospace;font-size:11px;color:var(--border);letter-spacing:.1em}
+.card-sub{font-family:monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted)}
+.card-title{font-size:20px;font-weight:400;line-height:1.35;color:var(--ink)}
+.card-desc{font-size:13px;line-height:1.85;color:var(--ink-soft);margin-top:2px}
+
+.progress-wrap{margin-top:4px;display:flex;align-items:center;gap:10px}
+.progress-bar{flex:1;height:2px;background:var(--border);border-radius:1px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:1px}
+.progress-label{font-family:monospace;font-size:10px;color:var(--ink-muted);white-space:nowrap}
+
+.card-arrow{margin-top:auto;padding-top:12px;font-family:monospace;font-size:10px;letter-spacing:.15em;color:var(--brush);display:flex;align-items:center;gap:8px;opacity:0;transition:opacity .2s}
+.card-arrow::after{content:'';display:inline-block;width:20px;height:1px;background:var(--brush);transition:width .3s}
+.card:hover .card-arrow,.duo-half:hover .card-arrow{opacity:1}
+.card:hover .card-arrow::after,.duo-half:hover .card-arrow::after{width:32px}
+
+footer{margin-top:56px;display:flex;align-items:center;justify-content:space-between;padding-top:28px;border-top:1px solid var(--border);animation:fadeUp .6s .35s ease both}
+.footer-text{font-family:monospace;font-size:10px;letter-spacing:.15em;color:var(--ink-muted)}
+.footer-glyph{font-size:28px;color:var(--border-warm);line-height:1}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:660px){
+  .page-rule{display:none}
+  .wrap{padding:48px 20px}
+  .grid{grid-template-columns:1fr}
+  .duo-card{grid-template-columns:1fr;grid-template-rows:auto 1px auto}
+  .duo-divider{margin:0 28px;height:1px;align-self:auto}
+  .duo-card::before{display:none}
+  .card.full{grid-column:1}
+  .brand-name{font-size:36px}
+  header{grid-template-columns:1fr;gap:20px}
+}
+</style>
+</head>
+<body>
+<div class="page-rule"></div>
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <div class="brand-mark">Systems Biology · TCM</div>
+    <div class="brand-name" id="bname">Rootbro</div>
+    <div class="brand-sub" id="bsub">根哥 — 连接古老智慧与现代生物学</div>
+  </div>
+  <button class="lang-btn" id="langBtn">EN / Science Mode</button>
+</header>
+
+<div class="section-head">
+  <span class="section-label" id="sec-label">经典导航</span>
+  <div class="section-rule"></div>
+  <span class="section-glyph">经</span>
+</div>
+
+<div class="grid">
+
+  <!-- 仲景双璧 -->
+  <div class="duo-card">
+    <a href="/shanghan/free.html" class="duo-half">
+      <div class="card-top"><span class="badge b-live">Live · Pro</span><span class="card-num">01</span></div>
+      <div class="card-sub" id="c1s">Acute Disease · Six Meridians</div>
+      <div class="card-title" id="c1t">《伤寒论》辨证导航</div>
+      <div class="card-desc" id="c1d">六经辨证算法，精准匹配 59 首经方。症状多选与逻辑推演，付费解锁完整六经。</div>
+      <div class="card-arrow" id="c1a">进入工具</div>
+    </a>
+    <div class="duo-divider"></div>
+    <div class="duo-half disabled">
+      <div class="card-top"><span class="badge b-soon">Coming Soon</span><span class="card-num">02</span></div>
+      <div class="card-sub" id="c2s">Chronic Disease · Miscellaneous</div>
+      <div class="card-title" id="c2t">《金匮要略》杂病导航</div>
+      <div class="card-desc" id="c2d">内科、妇科、虚劳慢性病辨证。仲景杂病精华，数周内上线。</div>
+    </div>
+  </div>
+
+  <!-- 傅青主 -->
+  <a href="/TCM/fuqingzhu/index.html" class="card">
+    <div class="card-top"><span class="badge b-women">Live · Pro</span><span class="card-num">03</span></div>
+    <div class="card-sub" id="c3s">Women's Classical Medicine</div>
+    <div class="card-title" id="c3t">《傅青主女科》辨证导航</div>
+    <div class="card-desc" id="c3d">妇科经典名方，涵盖经带胎产全周期。傅山首创方剂，疗效经三百年验证。</div>
+    <div class="card-arrow" id="c3a">进入工具</div>
+  </a>
+
+  <!-- 神农 -->
+  <a href="/TCM/bencao/index.html" class="card">
+    <div class="card-top"><span class="badge b-prog">In Progress</span><span class="card-num">04</span></div>
+    <div class="card-sub" id="c4s">Biological Ethnobotany</div>
+    <div class="card-title" id="c4t">《神农本草经》精要</div>
+    <div class="card-desc" id="c4d">精选 30 味核心本草，结合生物学药理深度解读。探索经方植物的分子逻辑。</div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" style="width:43%"></div></div>
+      <span class="progress-label" id="c4p">13 / 30 味</span>
+    </div>
+    <div class="card-arrow" id="c4a">预览内容</div>
+  </a>
+
+  <!-- 钱乙 -->
+  <div class="card disabled">
+    <div class="card-top"><span class="badge b-soon">Coming Soon</span><span class="card-num">05</span></div>
+    <div class="card-sub" id="c5s">Pediatric Classical Medicine</div>
+    <div class="card-title" id="c5t">《钱乙儿科》辨证导航</div>
+    <div class="card-desc" id="c5d">儿科鼻祖钱乙经典方剂，六味地黄丸、异功散等名方原典解析与现代应用。</div>
+  </div>
+
+  <!-- 张锡纯 -->
+  <div class="card disabled">
+    <div class="card-top"><span class="badge b-soon">Coming Soon</span><span class="card-num">06</span></div>
+    <div class="card-sub" id="c6s">Integrative Medicine</div>
+    <div class="card-title" id="c6t">《衷中参西录》方剂导航</div>
+    <div class="card-desc" id="c6d">张锡纯中西汇通精华，升陷汤、镇肝熄风汤等创新方剂。近代经方与现代医学的对话。</div>
+  </div>
+
+  <!-- 博士专栏 -->
+  <a href="/TCM/blog/index.html" class="card full">
+    <div class="card-top"><span class="badge b-art">Articles</span><span class="card-num">07</span></div>
+    <div class="card-sub" id="c7s">PhD's Perspective</div>
+    <div class="card-title" id="c7t">博士专栏 — 系统生物学视角下的中医底层逻辑</div>
+    <div class="card-desc" id="c7d">从 NASA 设计原则、Ivy League 研究方法看经方科学性。打破玄学，回归严谨逻辑。</div>
+    <div class="card-arrow" id="c7a">阅读文章</div>
+  </a>
+
+</div>
+
+<footer>
+  <span class="footer-text">ROOTBRO.COM · SYSTEMS BIOLOGY OF TCM</span>
+  <span class="footer-glyph">道</span>
+</footer>
+</div>
+
+<script>
+const D={
+  cn:{bsub:'根部博罗 — 连接古老智慧与现代生物学',btn:'EN / Science Mode',sec:'经典导航',
+    c1:{s:'Acute Disease · Six Meridians',t:'《伤寒论》辨证导航',d:'六经辨证算法，精准匹配 59 首经方。症状多选与逻辑推演，付费解锁完整六经。',a:'进入工具'},
+    c2:{s:'Chronic Disease · Miscellaneous',t:'《金匮要略》杂病导航',d:'内科、妇科、虚劳慢性病辨证。仲景杂病精华，数周内上线。'},
+    c3:{s:"Women's Classical Medicine",t:'《傅青主女科》辨证导航',d:'妇科经典名方，涵盖经带胎产全周期。傅山首创方剂，疗效经三百年验证。',a:'进入工具'},
+    c4:{s:'Biological Ethnobotany',t:'《神农本草经》精要',d:'精选 30 味核心本草，结合生物学药理深度解读。探索经方植物的分子逻辑。',p:'13 / 30 味',a:'预览内容'},
+    c5:{s:'Pediatric Classical Medicine',t:'《钱乙儿科》辨证导航',d:'儿科鼻祖钱乙经典方剂，六味地黄丸、异功散等名方原典解析与现代应用。'},
+    c6:{s:'Integrative Medicine',t:'《衷中参西录》方剂导航',d:'张锡纯中西汇通精华，升陷汤、镇肝熄风汤等创新方剂。近代经方与现代医学的对话。'},
+    c7:{s:"PhD's Perspective",t:'博士专栏 — 系统生物学视角下的中医底层逻辑',d:'从 NASA 设计原则、Ivy League 研究方法看经方科学性。打破玄学，回归严谨逻辑。',a:'阅读文章'}
+  },
+  en:{bsub:'Systems Biology × Classical TCM Formulas',btn:'中文 / 经典模式',sec:'Modules',
+    c1:{s:'Acute Disease · Six Meridians',t:'Shang Han Lun Navigator',d:'Algorithmic pattern matching for 59 classical protocols. Six-meridian decision logic with symptom multi-select.',a:'Enter Tool'},
+    c2:{s:'Chronic Disease · Miscellaneous',t:'Jin Gui Yao Lue Navigator',d:"Zhang Zhongjing's miscellaneous disease protocols. Chronic syndrome navigation — coming in weeks."},
+    c3:{s:"Women's Medicine",t:'Fu Qingzhu Gynecology Navigator',d:"Three centuries of validated gynecological protocols. Fu Shan's classical formulas for menstruation, pregnancy, and postpartum.",a:'Enter Tool'},
+    c4:{s:'Pharmacology',t:'Shen Nong Ben Cao Jing',d:'30 core herbs — phytochemical analysis mapping ancient botanical wisdom to molecular mechanisms.',p:'13 / 30 herbs',a:'Preview'},
+    c5:{s:'Pediatric Medicine',t:'Qian Yi Pediatrics Navigator',d:'Liu Wei Di Huang Wan origins and 50+ pediatric classical formulas decoded through an evidence-based lens.'},
+    c6:{s:'Integrative Medicine',t:'Zhang Xichun Integrative Navigator',d:"China's first integrative physician. Sheng Xian Tang bridging TCM and Western pathophysiology."},
+    c7:{s:'Research',t:"PhD's Lab Notes — Systems Biology of Classical Formulas",d:'Deconstructing TCM via NASA design principles and Ivy League research logic. Evidence-based insights.',a:'Read Articles'}
+  }
+};
+let isCn=true;
+document.getElementById('langBtn').addEventListener('click',()=>{
+  isCn=!isCn;
+  const d=isCn?D.cn:D.en;
+  document.getElementById('bname').textContent=isCn?'Rootbro':'ROOTBRO';
+  document.getElementById('bsub').textContent=d.bsub;
+  document.getElementById('langBtn').textContent=d.btn;
+  document.getElementById('sec-label').textContent=d.sec;
+  for(let i=1;i<=7;i++){
+    const c=d['c'+i];if(!c)continue;
+    const s=document.getElementById('c'+i+'s');
+    const t=document.getElementById('c'+i+'t');
+    const dd=document.getElementById('c'+i+'d');
+    const a=document.getElementById('c'+i+'a');
+    const p=document.getElementById('c'+i+'p');
+    if(s)s.textContent=c.s;
+    if(t)t.textContent=c.t;
+    if(dd)dd.textContent=c.d;
+    if(a&&c.a)a.textContent=c.a;
+    if(p&&c.p)p.textContent=c.p;
+  }
+});
+</script>
+</body>
+</html>
