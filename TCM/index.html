@@ -104,5 +104,58 @@
             </a>
         </div>
     </div>
+<script>
+    const langBtn = document.querySelector('.lang-btn');
+    let isScienceMode = false;
+
+    // 定义双语数据
+    const content = {
+        cn: {
+            title: "Rootbro 根部博罗",
+            subtitle: "连接古老智慧与现代生物学",
+            btn: "English / Science Mode",
+            cards: [
+                { badge: "Live / Pro", en: "Classical Logic Engine", h2: "《伤寒论》辨证导航", p: "基于六经辨证算法，快速匹配 57 首急性病经方。支持症状多选与逻辑推演。" },
+                { badge: "Beta", en: "Biological Ethnobotany", h2: "《神农本草经》精要", p: "365 种本草原文摘录，结合生物学药理深度解读。探索经方植物的分子逻辑。" },
+                { badge: "Coming Soon", en: "Internal Medicine", h2: "《金匮要略》导航", p: "涵盖内科、妇科、虚劳等慢性病辨证。构建家庭中医全科知识体系。" },
+                { badge: "Articles", en: "PhD's Perspective", h2: "博士专栏", p: "从系统生物学、NASA 设计逻辑看中医底层架构。打破玄学，回归严谨逻辑。" }
+            ]
+        },
+        en: {
+            title: "ROOTBRO SYSTEMS",
+            subtitle: "Systems Biology x Classical TCM Formulas",
+            btn: "中文 / Traditional Mode",
+            cards: [
+                { badge: "Live / Pro", en: "Logic Engine", h2: "Shang Han Lun Navigator", p: "Algorithmic pattern matching for 57 classical protocols. Scientific decision support for acute patterns." },
+                { badge: "Beta", en: "Pharmacology", h2: "Shen Nong Ben Cao Jing", p: "Phytochemical analysis of 365 herbs. Mapping ancient botanical wisdom to molecular mechanisms." },
+                { badge: "Coming Soon", en: "Internal Medicine", h2: "Jin Gui Yao Lue", p: "Navigating complex chronic syndromes via systems biology. The future of family healthcare." },
+                { badge: "Articles", en: "Research", h2: "PhD's Lab Notes", p: "Deconstructing TCM via NASA design principles and Ivy League research logic. Evidence-based insights." }
+            ]
+        }
+    };
+
+    langBtn.addEventListener('click', () => {
+        isScienceMode = !isScienceMode;
+        const lang = isScienceMode ? 'en' : 'cn';
+        
+        // 更新标题和副标题
+        document.querySelector('h1').innerText = content[lang].title;
+        document.querySelector('.subtitle').innerText = content[lang].subtitle;
+        langBtn.innerText = content[lang].btn;
+
+        // 更新卡片内容
+        const cards = document.querySelectorAll('.card');
+        content[lang].cards.forEach((data, index) => {
+            const card = cards[index];
+            card.querySelector('.badge').innerText = data.badge;
+            card.querySelector('.en-title').innerText = data.en;
+            card.querySelector('h2').innerText = data.h2;
+            card.querySelector('p').innerText = data.p;
+        });
+
+        // 切换视觉风格：科学模式下背景微调成更冷的灰色
+        document.body.style.backgroundColor = isScienceMode ? "#f0f2f5" : "#f5f5f7";
+    });
+</script>
 </body>
 </html>
