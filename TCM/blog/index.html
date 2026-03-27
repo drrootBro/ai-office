@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>博士专栏 · Rootbro</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1612;--ink-soft:#4a453f;--ink-muted:#8a857d;
+  --paper:#faf8f4;--paper-warm:#f0ebe0;--paper-card:#fffdf9;
+  --brush:#8b3a2a;--brush-light:rgba(139,58,42,0.08);
+  --gold:#b8942a;--gold-light:rgba(184,148,42,0.10);
+  --teal:#2a6b5e;--teal-light:rgba(42,107,94,0.08);
+  --border:rgba(26,22,18,0.10);--border-warm:rgba(139,58,42,0.15);
+}
+body{font-family:'Georgia',serif;background:var(--paper);color:var(--ink);overflow-x:hidden;min-height:100vh}
+.page-rule{position:fixed;left:48px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--border-warm) 20%,var(--border-warm) 80%,transparent);z-index:0}
+.wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:64px 40px 80px 80px;animation:fadeUp .5s ease both}
+
+/* topbar */
+.topbar{display:flex;align-items:center;gap:16px;margin-bottom:56px}
+.back{font-family:monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .2s}
+.back::before{content:'';display:inline-block;width:16px;height:1px;background:var(--ink-muted);transition:all .2s}
+.back:hover{color:var(--brush)}.back:hover::before{background:var(--brush);width:24px}
+.topbar-rule{flex:1;height:1px;background:var(--border)}
+.topbar-brand{font-family:monospace;font-size:11px;letter-spacing:.2em;color:var(--brush)}
+
+/* hero */
+.hero{margin-bottom:48px}
+.hero-label{font-family:monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--brush);display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.hero-label::before{content:'';display:inline-block;width:20px;height:1px;background:var(--brush)}
+.hero-title{font-size:40px;font-weight:400;line-height:1.1;letter-spacing:-.01em;color:var(--ink);margin-bottom:10px}
+.hero-sub{font-size:15px;color:var(--ink-muted);letter-spacing:.05em}
+
+/* tag filter */
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px}
+.tag{font-family:monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--border);border-radius:1px;cursor:pointer;background:transparent;color:var(--ink-muted);transition:all .18s}
+.tag:hover,.tag.active{border-color:var(--brush);color:var(--brush);background:var(--brush-light)}
+
+/* posts grid */
+.posts{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--border);border:1px solid var(--border)}
+.post{background:var(--paper-card);padding:28px 24px;cursor:pointer;position:relative;overflow:hidden;transition:background .2s;display:flex;flex-direction:column;gap:8px}
+.post::after{content:'';position:absolute;bottom:0;left:24px;right:24px;height:2px;background:var(--brush);transform:scaleX(0);transform-origin:left;transition:transform .28s}
+.post:hover{background:var(--paper-warm)}.post:hover::after{transform:scaleX(1)}
+.post.hidden{display:none}
+
+.post-meta{display:flex;align-items:center;justify-content:space-between}
+.post-tag{font-family:monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;padding:2px 7px;border:1px solid;border-radius:1px}
+.pt-case{color:var(--teal);border-color:var(--teal);background:var(--teal-light)}
+.pt-theory{color:var(--gold);border-color:var(--gold);background:var(--gold-light)}
+.pt-herb{color:var(--brush);border-color:var(--brush);background:var(--brush-light)}
+.post-date{font-family:monospace;font-size:10px;color:var(--ink-muted)}
+.post-title{font-size:18px;font-weight:400;line-height:1.35;color:var(--ink)}
+.post-excerpt{font-size:13px;line-height:1.85;color:var(--ink-soft)}
+.post-read{margin-top:auto;padding-top:12px;font-family:monospace;font-size:10px;letter-spacing:.15em;color:var(--brush);display:flex;align-items:center;gap:8px;opacity:0;transition:opacity .2s}
+.post-read::after{content:'';display:inline-block;width:16px;height:1px;background:var(--brush);transition:width .25s}
+.post:hover .post-read{opacity:1}.post:hover .post-read::after{width:28px}
+
+/* reader */
+.reader{display:none;grid-column:1/-1;background:var(--paper-card);border-top:2px solid var(--brush);padding:40px 36px}
+.reader.open{display:block}
+.reader-close{font-family:monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;margin-bottom:32px;transition:color .2s;padding:0}
+.reader-close:hover{color:var(--brush)}
+.reader-title{font-size:28px;font-weight:400;line-height:1.25;color:var(--ink);margin-bottom:6px}
+.reader-meta{font-family:monospace;font-size:10px;color:var(--ink-muted);letter-spacing:.15em;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.reader-body{font-size:15px;line-height:2;color:var(--ink-soft);max-width:620px}
+.reader-body p{margin-bottom:1.2em}
+
+/* footer */
+footer{margin-top:56px;display:flex;align-items:center;justify-content:space-between;padding-top:28px;border-top:1px solid var(--border)}
+.footer-text{font-family:monospace;font-size:10px;letter-spacing:.15em;color:var(--ink-muted)}
+.footer-glyph{font-size:26px;color:var(--border-warm)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:620px){
+  .page-rule{display:none}
+  .wrap{padding:40px 20px}
+  .posts{grid-template-columns:1fr}
+  .hero-title{font-size:28px}
+  .reader{padding:28px 20px}
+}
+</style>
+</head>
+<body>
+<div class="page-rule"></div>
+<div class="wrap">
+
+<div class="topbar">
+  <a href="/index.html" class="back">Rootbro</a>
+  <div class="topbar-rule"></div>
+  <span class="topbar-brand">博士专栏</span>
+</div>
+
+<div class="hero">
+  <div class="hero-label">PhD's Perspective</div>
+  <div class="hero-title">系统生物学<br>视角下的中医</div>
+  <div class="hero-sub">短文 · 案例 · 经方解析</div>
+</div>
+
+<div class="tags">
+  <button class="tag active" data-tag="all">全部</button>
+  <button class="tag" data-tag="case">临床案例</button>
+  <button class="tag" data-tag="theory">理论解析</button>
+  <button class="tag" data-tag="herb">本草笔记</button>
+</div>
+
+<div class="posts" id="posts">
+
+  <!--
+    ================================================
+    添加新文章：复制下面的 .post 块，填入内容
+    data-tag: case | theory | herb
+    同时在下方 JS articles 对象中添加对应条目
+    ================================================
+  -->
+
+  <div class="post" data-tag="case" data-id="1">
+    <div class="post-meta">
+      <span class="post-tag pt-case">临床案例</span>
+      <span class="post-date">2025.03</span>
+    </div>
+    <div class="post-title">小柴胡汤：一个反复低烧的案例</div>
+    <div class="post-excerpt">患者低烧三周，西医检查无异常。从"往来寒热、胸胁苦满"切入，一剂见效的背后是什么逻辑？</div>
+    <div class="post-read">阅读全文</div>
+  </div>
+
+  <div class="post" data-tag="theory" data-id="2">
+    <div class="post-meta">
+      <span class="post-tag pt-theory">理论解析</span>
+      <span class="post-date">2025.02</span>
+    </div>
+    <div class="post-title">六经不是经络，是状态分类系统</div>
+    <div class="post-excerpt">很多人把六经和针灸经络混淆。张仲景的六经其实更接近现代医学的"综合征分类"——一种以症状群定义的状态空间。</div>
+    <div class="post-read">阅读全文</div>
+  </div>
+
+  <div class="post" data-tag="herb" data-id="3">
+    <div class="post-meta">
+      <span class="post-tag pt-herb">本草笔记</span>
+      <span class="post-date">2025.01</span>
+    </div>
+    <div class="post-title">附子：最被误解的经方药物</div>
+    <div class="post-excerpt">附子有毒是事实，但经方中附子的用法有严格逻辑。乌头碱的药理作用与"少阴寒化"之间，存在可以用现代生物学解释的对应关系。</div>
+    <div class="post-read">阅读全文</div>
+  </div>
+
+  <div class="post" data-tag="case" data-id="4">
+    <div class="post-meta">
+      <span class="post-tag pt-case">临床案例</span>
+      <span class="post-date">2024.12</span>
+    </div>
+    <div class="post-title">桂枝汤治自汗：表虚还是营卫失调？</div>
+    <div class="post-excerpt">同样是出汗，麻黄汤证无汗，桂枝汤证自汗。这个区别背后是完全不同的病理状态，用免疫调节的框架来理解会更清晰。</div>
+    <div class="post-read">阅读全文</div>
+  </div>
+
+  <!-- 文章展开阅读区，不要移动此块位置 -->
+  <div class="reader" id="reader">
+    <button class="reader-close" id="reader-close">← 返回列表</button>
+    <div class="reader-title" id="reader-title"></div>
+    <div class="reader-meta" id="reader-meta"></div>
+    <div class="reader-body" id="reader-body"></div>
+  </div>
+
+</div>
+
+<footer>
+  <span class="footer-text">ROOTBRO.COM · 博士专栏</span>
+  <span class="footer-glyph">道</span>
+</footer>
+</div>
+
+<script>
+// ================================================
+// 文章全文数据
+// 添加新文章：在此对象中加一个新条目，key 对应 .post 的 data-id
+// ================================================
+const articles = {
+  1: {
+    title: '小柴胡汤：一个反复低烧的案例',
+    meta: '临床案例 · 2025.03 · 少阳病',
+    body: `
+      <p>患者，女，34岁，低烧（37.4–37.8°C）反复三周，西医血检、胸片均无异常，抗生素无效。</p>
+      <p>初诊问诊发现：烧热有规律，上午轻、下午重；伴有轻微胸胁不适，口微苦，食欲差，情绪烦躁。这是典型的"往来寒热"模式。</p>
+      <p>《伤寒论》第96条："伤寒五六日，中风，往来寒热，胸胁苦满，默默不欲饮食，心烦喜呕……小柴胡汤主之。"</p>
+      <p>从现代生物学角度看，小柴胡汤的核心药物柴胡含有柴胡皂苷，具有明确的抗炎和免疫调节作用。黄芩中的黄芩苷则有广谱抗菌和退热效果。这个组合针对的是"半表半里"的慢性炎症状态——既不是急性感染，也不是单纯的虚证。</p>
+      <p>三剂后体温恢复正常，随访两周无复发。这个案例的价值不在于"神奇"，而在于辨证的精准性——症状群与方证的精确匹配，是经方疗效的核心逻辑。</p>
+    `
+  },
+  2: {
+    title: '六经不是经络，是状态分类系统',
+    meta: '理论解析 · 2025.02 · 六经辨证',
+    body: `
+      <p>学中医的人几乎都会在这里卡住：六经和十二经络是什么关系？很多教材语焉不详，导致学习者把两个完全不同的系统混为一谈。</p>
+      <p>简单说：针灸的十二经络是解剖-功能概念，描述气血运行路径。张仲景的六经辨证是病理状态分类系统，描述疾病在不同阶段的症状群组合。</p>
+      <p>更准确的类比是现代医学的"综合征"概念。太阳病不是"足太阳膀胱经出了问题"，而是一组症状的集合：发热、恶寒、头项强痛、脉浮。只要符合这个症状群，就是太阳病，无论病因是什么。</p>
+      <p>从系统生物学角度看，六经更像是人体应对外邪时的六种"应激状态模式"。这个框架的价值在于它的预测性——知道患者处于哪个状态，就能预判疾病走向，并选择对应方剂。</p>
+      <p>这是经方两千年经久不衰的真正原因：不是玄学，是一套经过大样本验证的状态-干预对应系统。</p>
+    `
+  },
+  3: {
+    title: '附子：最被误解的经方药物',
+    meta: '本草笔记 · 2025.01 · 神农本草经',
+    body: `
+      <p>附子有毒，这是事实。但"有毒"不等于"不能用"，关键在于剂量、炮制和配伍逻辑。</p>
+      <p>附子的主要活性成分是乌头碱（aconitine）。未经炮制的生附子毒性强，炮制后乌头碱水解为苯甲酰乌头原碱，毒性大幅降低，但强心、抗炎、镇痛活性保留。</p>
+      <p>经方中使用附子的方剂集中在少阴病和厥阴病——也就是现代医学意义上的循环衰竭、代谢低下状态。真武汤、四逆汤中的附子，针对的是心输出量不足、组织灌注低下的病理状态。</p>
+      <p>附子的强心作用（类似洋地黄）在这里就有了精确的适应症。张仲景的"少阴寒化"，用现代语言描述就是：低心排、低体温、低代谢的综合状态。</p>
+      <p>问题从来不是附子能不能用，而是有没有精准辨证。错误使用附子（热证用温药）才是危险的来源，而不是附子本身。</p>
+    `
+  },
+  4: {
+    title: '桂枝汤治自汗：表虚还是营卫失调？',
+    meta: '临床案例 · 2024.12 · 太阳病',
+    body: `
+      <p>桂枝汤证的核心特征是"自汗出"——不运动也出汗，尤其是睡眠中或安静状态下。这和麻黄汤证的"无汗"形成鲜明对比。</p>
+      <p>传统解释是"营卫不和"：卫气不固则汗液外泄。这个解释框架没错，但对现代读者来说不够具体。</p>
+      <p>换一个角度：桂枝汤证的自汗，本质上是皮肤屏障功能和自主神经调节的双重失调。汗腺异常激活（副交感偏亢）叠加皮肤微循环的通透性增加，导致持续性液体丢失。</p>
+      <p>桂枝（桂皮醛）有明确的自主神经调节作用；白芍（芍药苷）具有抗痉挛和免疫调节功能；生姜、大枣、甘草则提供消化道支持和抗炎基础。</p>
+      <p>服药后"微似有汗"的要求，本质上是一个反馈信号：毛孔开合功能恢复正常，不是大汗，是正常的体温调节性出汗。这个细节体现了张仲景对"量"的精确把握。</p>
+    `
+  }
+  // 新文章在这里继续添加，例如：
+  // 5: { title: '...', meta: '...', body: `<p>...</p>` }
+};
+
+// ================================================
+// 交互逻辑（不需要修改）
+// ================================================
+const tags = document.querySelectorAll('.tag');
+const posts = document.querySelectorAll('.post[data-id]');
+const reader = document.getElementById('reader');
+
+tags.forEach(tag => {
+  tag.addEventListener('click', () => {
+    tags.forEach(t => t.classList.remove('active'));
+    tag.classList.add('active');
+    const sel = tag.dataset.tag;
+    reader.classList.remove('open');
+    posts.forEach(p => {
+      if (sel === 'all' || p.dataset.tag === sel) p.classList.remove('hidden');
+      else p.classList.add('hidden');
+    });
+  });
+});
+
+posts.forEach(post => {
+  post.addEventListener('click', () => {
+    const id = parseInt(post.dataset.id);
+    const a = articles[id];
+    if (!a) return;
+    document.getElementById('reader-title').textContent = a.title;
+    document.getElementById('reader-meta').textContent = a.meta;
+    document.getElementById('reader-body').innerHTML = a.body;
+    reader.classList.add('open');
+    reader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+document.getElementById('reader-close').addEventListener('click', () => {
+  reader.classList.remove('open');
+});
+</script>
+</body>
+</html>
