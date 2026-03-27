@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rootbro - 科学经方导航 | Systems Biology of TCM</title>
+    <style>
+        :root {
+            --bg-color: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-main: #1d1d1f;
+            --text-sub: #86868b;
+            --accent: #0066cc;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0; padding: 40px 20px;
+            line-height: 1.5;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 60px; }
+        h1 { font-size: 40px; font-weight: 600; margin-bottom: 10px; }
+        .subtitle { color: var(--text-sub); font-size: 20px; }
+
+        /* 卡片网格 */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .badge {
+            align-self: flex-start;
+            background: #e8e8ed;
+            color: var(--text-sub);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .badge.active { background: #e1f5fe; color: var(--accent); }
+        .card h2 { margin: 0 0 8px 0; font-size: 24px; }
+        .card .en-title { color: var(--accent); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: block; }
+        .card p { color: var(--text-sub); margin: 0; font-size: 16px; }
+        
+        /* 英文切换按钮 */
+        .lang-switch { position: absolute; top: 20px; right: 20px; }
+        .lang-btn { background: none; border: 1px solid var(--text-sub); padding: 5px 15px; border-radius: 15px; cursor: pointer; color: var(--text-sub); }
+    </style>
+</head>
+<body>
+    <div class="lang-switch"><button class="lang-btn">English / Science Mode</button></div>
+    <div class="container">
+        <header>
+            <h1>Rootbro 根部博罗</h1>
+            <div class="subtitle">连接古老智慧与现代生物学</div>
+        </header>
+
+        <div class="grid">
+            <a href="/shanghan/free.html" class="card">
+                <span class="badge active">Live / Pro</span>
+                <span class="en-title">Classical Logic Engine</span>
+                <h2>《伤寒论》辨证导航</h2>
+                <p>基于六经辨证算法，快速匹配 57 首急性病经方。支持症状多选与逻辑推演。</p>
+            </a>
+
+            <a href="/bencao/index.html" class="card">
+                <span class="badge active">Beta</span>
+                <span class="en-title">Biological Ethnobotany</span>
+                <h2>《神农本草经》精要</h2>
+                <p>365 种本草原文摘录，结合生物学药理深度解读。探索经方植物的分子逻辑。</p>
+            </a>
+
+            <div class="card" style="opacity: 0.6; cursor: not-allowed;">
+                <span class="badge">Coming Soon</span>
+                <span class="en-title">Internal Medicine</span>
+                <h2>《金匮要略》杂病导航</h2>
+                <p>涵盖内科、妇科、虚劳等慢性病辨证。构建家庭中医全科知识体系。</p>
+            </div>
+            
+            <a href="/blog/index.html" class="card">
+                <span class="badge">Articles</span>
+                <span class="en-title">PhD's Perspective</span>
+                <h2>博士专栏</h2>
+                <p>从系统生物学、NASA 设计逻辑看中医底层架构。打破玄学，回归严谨逻辑。</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
