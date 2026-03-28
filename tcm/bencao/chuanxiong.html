@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>阿胶 Ejiao · 神农本草经精要 · Rootbro</title>
+<title>川芎 Chuanxiong · 神农本草经精要 · Rootbro</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -26,9 +26,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .topbar-num{font-family:monospace;font-size:10px;letter-spacing:.2em;color:var(--ink-muted)}
 .herb-image-block{margin-bottom:2px;position:relative;overflow:hidden;border:1px solid var(--border)}
 .herb-image-block img{width:100%;display:block;object-fit:contain;aspect-ratio:5/2;background:#f5f0e8}
-.herb-image-block.placeholder{aspect-ratio:5/2;background:var(--paper-warm);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
-.placeholder-glyph{font-size:48px;color:var(--border-warm);line-height:1}
-.placeholder-text{font-family:monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted)}
 .image-caption{padding:10px 16px;background:var(--paper-card);border:1px solid var(--border);border-top:none;font-family:monospace;font-size:9px;letter-spacing:.15em;color:var(--ink-muted);display:flex;justify-content:space-between}
 .identity-bar{display:grid;grid-template-columns:auto 1px auto;gap:32px;align-items:start;background:var(--paper-card);border:1px solid var(--border);border-top:none;padding:28px 28px 24px;margin-bottom:2px}
 .herb-label{font-family:monospace;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;display:flex;align-items:center;gap:8px}
@@ -78,7 +75,7 @@ footer{margin-top:48px;display:flex;align-items:center;justify-content:space-bet
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:680px){
   .page-rule{display:none}.wrap{padding:40px 20px}
-  .herb-image-block img,.herb-image-block{aspect-ratio:3/2}
+  .herb-image-block img{aspect-ratio:3/2}
   .identity-bar{grid-template-columns:1fr;gap:20px}
   .id-divider{display:none}.herb-cn{font-size:36px}
 }
@@ -87,66 +84,111 @@ footer{margin-top:48px;display:flex;align-items:center;justify-content:space-bet
 <body>
 <div class="page-rule"></div>
 <div class="wrap">
+
 <div class="topbar">
   <a href="/tcm/bencao/index.html" class="back">神农本草经</a>
   <div class="topbar-rule"></div>
-  <span class="topbar-num">031 / 030</span>
+  <span class="topbar-num">032 / 032</span>
 </div>
+
 <div class="herb-image-block">
-  <img src="images/ejiao.jpg" alt="ejiao">
+  <img src="images/chuanxiong.jpg" alt="chuanxiong">
 </div>
 <div class="image-caption">
-  <span>Asini Corii Colla · Donkey-hide Gelatin</span>
-  <span>Plate 031</span>
+  <span>Ligusticum chuanxiong Hort. · Chuanxiong Rhizome</span>
+  <span>Plate 032</span>
 </div>
+
 <div class="identity-bar">
   <div class="id-main">
-    <div class="herb-label">Asini Corii Colla</div>
+    <div class="herb-label">Chuanxiong Rhizoma</div>
     <div class="herb-names">
-      <span class="herb-cn">阿胶</span>
-      <span class="herb-pinyin">Ejiao</span>
+      <span class="herb-cn">川芎</span>
+      <span class="herb-pinyin">Chuanxiong</span>
     </div>
-    <div class="herb-en">Donkey-hide Gelatin</div>
-    <div class="herb-latin">Colla Corii Asini</div>
+    <div class="herb-en">Sichuan Lovage Rhizome</div>
+    <div class="herb-latin">Rhizoma Ligustici Chuanxiong</div>
   </div>
   <div class="id-divider"></div>
   <div class="id-meta">
-    <div class="meta-row"><span class="meta-key">性味</span><span class="meta-val">甘，平</span></div>
-    <div class="meta-row"><span class="meta-key">归经</span><span class="meta-val">肺、肝、肾</span></div>
-    <div class="meta-row"><span class="meta-key">功效</span><div class="meta-tags"><span class="meta-tag teal">滋阴</span><span class="meta-tag teal">养血</span><span class="meta-tag">止血</span><span class="meta-tag">润燥</span></div></div>
-    <div class="meta-row"><span class="meta-key">六经</span><span class="meta-val">少阴阴虚，血虚出血</span></div>
-  </div>
-</div>
-<div class="sections">
-  <div class="section">
-    <div class="section-head"><div class="section-icon si-classic"></div><span class="section-title">The Classic</span><span class="section-title-cn">神农本草经原文</span></div>
-    <div class="classic-quote"><p>「味甘平。主心腹内崩，劳极洒洒如疟状，腰腹痛，四肢酸疼，女子下血安胎，久服轻身益气。」</p></div>
-    <div class="classic-note"><strong>根哥注 —</strong> "滋阴止血"是阿胶的双重功效。炙甘草汤中阿胶补心血，猪苓汤中阿胶利水不伤阴，黄土汤中阿胶止血养阴——不同语境下阿胶的侧重各异。</div>
-  </div>
-  <div class="section">
-    <div class="section-head"><div class="section-icon si-science"></div><span class="section-title">PhD Insight</span><span class="section-title-cn">系统生物学视角</span></div>
-    <div class="science-text">主要成分为<strong>胶原蛋白水解物</strong>，富含甘氨酸、脯氨酸、羟脯氨酸。提供造血所需氨基酸底物，同时促进血小板聚集，具有止血效果。</div>
-    <div class="compound-box">
-      <div class="compound-name">Collagen Hydrolysate · 胶原蛋白水解物</div>
-      <div class="compound-desc">甘氨酸/脯氨酸 → 造血原料补充 → 红细胞、血红蛋白↑（养血）。激活凝血因子XII → 内源性凝血↑（止血）。同时改善肠道黏膜屏障 → 减少渗血（固涩）。</div>
+    <div class="meta-row"><span class="meta-key">性味</span><span class="meta-val">辛，温</span></div>
+    <div class="meta-row"><span class="meta-key">归经</span><span class="meta-val">肝、胆、心包</span></div>
+    <div class="meta-row">
+      <span class="meta-key">功效</span>
+      <div class="meta-tags">
+        <span class="meta-tag teal">活血</span>
+        <span class="meta-tag teal">行气</span>
+        <span class="meta-tag">祛风</span>
+        <span class="meta-tag">止痛</span>
+      </div>
     </div>
-    <div class="science-text" style="margin-top:14px">阿胶"烊化"的必要性：阿胶不能直接水煎，因胶质会裹住其他药材影响煎出率。烊化（加热熔化后兑入）是保证其完整溶解的正确方式。<strong>胶原肽</strong>在热水中溶解度远高于固态胶块，烊化确保有效成分充分释放。</div>
+    <div class="meta-row"><span class="meta-key">六经</span><span class="meta-val">厥阴血瘀，头痛要药</span></div>
   </div>
+</div>
+
+<div class="sections">
+
   <div class="section">
-    <div class="section-head"><div class="section-icon si-formula"></div><span class="section-title">Logic Pairing</span><span class="section-title-cn">经典配伍</span></div>
-    <div class="formula-grid"><a href="/tcm/shanghan/free.html" class="formula-tag highlight">炙甘草汤</a><span class="formula-tag">猪苓汤</span><span class="formula-tag">黄土汤</span><span class="formula-tag">温经汤</span><span class="formula-tag">芎归胶艾汤</span></div>
+    <div class="section-head">
+      <div class="section-icon si-classic"></div>
+      <span class="section-title">The Classic</span>
+      <span class="section-title-cn">神农本草经原文</span>
+    </div>
+    <div class="classic-quote">
+      <p>「味辛温。主中风入脑头痛，寒痹，筋挛缓急，金创，妇人血闭无子。」</p>
+    </div>
+    <div class="classic-note">
+      <strong>根哥注 —</strong> "入脑头痛"是川芎最精准的定位，也是两千年来最稳定的临床指征。头痛分经络——太阳用羌活，阳明用白芷，少阳用柴胡，厥阴用川芎、吴茱萸。川芎专入厥阴肝经，是血管性头痛（偏头痛）的核心用药。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon si-science"></div>
+      <span class="section-title">PhD Insight</span>
+      <span class="section-title-cn">系统生物学视角</span>
+    </div>
+    <div class="science-text">
+      核心成分<strong>藁本内酯（Z-Ligustilide）</strong>占挥发油的50%以上，同时含有<strong>川芎嗪（Tetramethylpyrazine, TMP）</strong>——后者是目前研究最深入的天然钙通道阻断剂之一，对脑血管有高度选择性扩张作用。
+    </div>
+    <div class="compound-box">
+      <div class="compound-name">Tetramethylpyrazine · 川芎嗪（TMP）</div>
+      <div class="compound-desc">Ca²⁺通道阻断 → 脑血管平滑肌松弛 → 脑血流↑（改善偏头痛）。同时抑制血小板聚集（TXA2↓）→ 微循环改善。抑制NF-κB → 血管炎症↓。三重机制对应"活血行气止痛"。</div>
+    </div>
+    <div class="science-text" style="margin-top:14px">
+      川芎与当归配伍（佛手散）的协同逻辑：<strong>当归</strong>富含藁本内酯（松弛子宫平滑肌）和阿魏酸（促造血），<strong>川芎嗪</strong>扩张血管改善灌注。两者合用——一个提供血液，一个打通通道——是妇科"养血活血"的最小有效单元，后世四物汤正是在此基础上扩展而来。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon si-formula"></div>
+      <span class="section-title">Logic Pairing</span>
+      <span class="section-title-cn">经典配伍</span>
+    </div>
+    <div class="formula-grid">
+      <span class="formula-tag highlight">川芎茶调散</span>
+      <span class="formula-tag">四物汤</span>
+      <span class="formula-tag">血府逐瘀汤</span>
+      <span class="formula-tag">当归芍药散</span>
+      <span class="formula-tag">佛手散</span>
+      <span class="formula-tag">温经汤</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="herb-nav">
+  <a href="ejiao.html" class="herb-nav-item">
+    <span class="herb-nav-dir">← 上一味</span>
+    <span class="herb-nav-name">阿胶 Ejiao</span>
+  </a>
+  <div class="herb-nav-item next" style="opacity:.4;cursor:not-allowed">
+    <span class="herb-nav-dir">下一味 →</span>
+    <span class="herb-nav-name">—</span>
   </div>
 </div>
-<div class="herb-nav">
-  <a href="danggui.html" class="herb-nav-item" >
-    <span class="herb-nav-dir">← 上一味</span>
-    <span class="herb-nav-name">当归 Danggui</span>
-  </a>
-  <a href="chuanxiong.html" class="herb-nav-item next">
-    <span class="herb-nav-dir">下一味 →</span>
-    <span class="herb-nav-name">川芎 Chuanxiong</span>
-  </a>
-</div>
+
 <footer>
   <span class="footer-text">ROOTBRO.COM · 神农本草经精要</span>
   <span class="footer-glyph">草</span>
