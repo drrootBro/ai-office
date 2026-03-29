@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>傅青主女科 · 智能辨证导航 · Rootbro</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  :root {
+    --ink: #1a1008;
+    --ink-light: #4a3828;
+    --paper: #f7f2e8;
+    --paper-dark: #ede5d0;
+    --red: #8b1a1a;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --jade: #2e6b4f;
+    --jade-light: #4a9b72;
+    --border: #c8b89a;
+    --shadow: rgba(26,16,8,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(184,134,11,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 90%, rgba(46,107,79,0.05) 0%, transparent 60%);
+  }
+
+  /* === HEADER === */
+  header {
+    background: var(--ink);
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 3px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg, transparent, transparent 80px, rgba(184,134,11,0.04) 80px, rgba(184,134,11,0.04) 81px
+    );
+  }
+  .header-seal {
+    width: 56px; height: 56px;
+    background: var(--red);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Serif SC', serif;
+    color: white;
+    font-size: 22px;
+    letter-spacing: -2px;
+    flex-shrink: 0;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  }
+  .header-text h1 {
+    font-family: 'Noto Serif SC', serif;
+    color: var(--paper);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 3px;
+  }
+  .header-text p {
+    color: var(--gold-light);
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+
+  /* === LAYOUT === */
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+
+  .disclaimer {
+    background: #fff8e1;
+    border-left: 4px solid var(--gold);
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .main-grid {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  /* === SYMPTOM PANEL === */
+  .panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+  .panel-header {
+    background: var(--ink);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .panel-header .dot {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .panel-header h2 {
+    font-family: 'Noto Serif SC', serif;
+    color: var(--paper);
+    font-size: 15px;
+    letter-spacing: 2px;
+    font-weight: 600;
+  }
+  .panel-body { padding: 20px; }
+
+  /* === CATEGORY TABS === */
+  .cat-tabs {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .cat-tab {
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    background: var(--paper);
+    color: var(--ink-light);
+    transition: all 0.2s;
+    font-family: 'Noto Serif SC', serif;
+    letter-spacing: 1px;
+  }
+  .cat-tab.active {
+    background: var(--jade);
+    color: white;
+    border-color: var(--jade);
+  }
+  .cat-tab:hover:not(.active) {
+    background: var(--paper-dark);
+    border-color: var(--gold);
+  }
+
+  /* === SYMPTOM GROUPS === */
+  .symptom-group { display: none; }
+  .symptom-group.visible { display: block; }
+
+  .symptom-item {
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--paper-dark);
+  }
+  .symptom-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .symptom-label {
+    font-size: 13px;
+    color: var(--ink);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+  }
+  .symptom-val {
+    background: var(--jade);
+    color: white;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 400;
+    min-width: 28px;
+    text-align: center;
+  }
+  .symptom-val.zero { background: var(--border); color: var(--ink-light); }
+
+  /* === SLIDERS === */
+  .slider-track {
+    position: relative;
+    padding: 2px 0;
+  }
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, var(--jade) 0%, var(--jade) var(--pct, 0%), var(--paper-dark) var(--pct, 0%));
+    outline: none;
+    cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--jade);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--border);
+    margin-top: 3px;
+  }
+
+  /* Toggle for boolean */
+  .toggle-wrap {
+    display: flex;
+    gap: 6px;
+  }
+  .toggle-btn {
+    flex: 1;
+    padding: 6px 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    background: var(--paper);
+    color: var(--ink-light);
+    transition: all 0.15s;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+  .toggle-btn.selected-no { background: var(--paper-dark); border-color: var(--border); color: var(--ink-light); }
+  .toggle-btn.selected-yes { background: var(--jade); border-color: var(--jade); color: white; }
+
+  /* === ACTION BUTTONS === */
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--paper-dark);
+  }
+  .btn-match {
+    flex: 1;
+    padding: 12px;
+    background: var(--jade);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: 'Noto Serif SC', serif;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(46,107,79,0.3);
+  }
+  .btn-match:hover { background: var(--jade-light); transform: translateY(-1px); }
+  .btn-match:active { transform: translateY(0); }
+  .btn-reset {
+    padding: 12px 16px;
+    background: white;
+    color: var(--ink-light);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-reset:hover { border-color: var(--red); color: var(--red); }
+
+  /* === RESULTS PANEL === */
+  .results-area { min-height: 400px; }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--ink-light);
+  }
+  .empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.4;
+  }
+  .empty-state p { font-size: 14px; line-height: 1.7; }
+  .empty-state strong { color: var(--jade); }
+
+  /* === RESULT CARDS === */
+  .result-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+  .result-card:hover { box-shadow: 0 4px 16px var(--shadow); }
+  .result-card.rank-1 { border-color: var(--gold); border-width: 2px; }
+  .result-card.rank-2 { border-color: var(--jade); }
+
+  .card-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--paper-dark);
+    cursor: pointer;
+  }
+  .rank-badge {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .rank-1 .rank-badge { background: var(--gold); color: white; }
+  .rank-2 .rank-badge { background: var(--jade); color: white; }
+  .rank-3 .rank-badge { background: var(--ink-light); color: white; }
+  .rank-other .rank-badge { background: var(--border); color: var(--ink); }
+
+  .card-title { flex: 1; }
+  .card-title h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    color: var(--ink);
+    letter-spacing: 1px;
+  }
+  .card-title .pattern {
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-top: 2px;
+    letter-spacing: 1px;
+  }
+
+  .score-bar-wrap {
+    width: 140px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .score-num {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--jade);
+    font-variant-numeric: tabular-nums;
+  }
+  .rank-1 .score-num { color: var(--gold); }
+  .score-label { font-size: 10px; color: var(--border); letter-spacing: 1px; }
+  .score-bar {
+    height: 4px;
+    background: var(--paper-dark);
+    border-radius: 2px;
+    margin-top: 4px;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--jade);
+    transition: width 0.6s ease;
+  }
+  .rank-1 .score-fill { background: var(--gold); }
+
+  /* === CARD BODY === */
+  .card-body { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+  .card-body.open { max-height: 1200px; padding: 20px; }
+
+  .matched-symptoms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .symptom-tag {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    background: #e8f5ee;
+    color: var(--jade);
+    border: 1px solid #b8dcc8;
+  }
+  .symptom-tag.strong { background: #fff3cd; color: #856404; border-color: #ffc107; }
+
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 13px;
+    color: var(--ink-light);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--paper-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    width: 3px; height: 14px;
+    background: var(--jade);
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .rank-1 .section-title::before { background: var(--gold); }
+
+  .herb-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .herb-item {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  .herb-name { font-weight: 600; color: var(--ink); }
+  .herb-amount { color: var(--ink-light); font-size: 11px; margin-top: 2px; }
+  .herb-processing { color: var(--gold); font-size: 10px; }
+  .herb-role-君 { border-left: 3px solid var(--red); }
+  .herb-role-臣 { border-left: 3px solid var(--gold); }
+  .herb-role-佐 { border-left: 3px solid var(--jade); }
+  .herb-role-使 { border-left: 3px solid var(--border); }
+
+  .prep-box {
+    background: #f0f7f4;
+    border: 1px solid #b8dcc8;
+    border-radius: 6px;
+    padding: 14px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--ink);
+  }
+  .prep-box strong { color: var(--jade); }
+
+  .note-box {
+    background: #fffbf0;
+    border: 1px solid #f0d070;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 12px;
+    color: #6b5000;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  .modern-tag {
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #3730a3;
+    line-height: 1.6;
+  }
+
+  .source-tag {
+    font-size: 11px;
+    color: var(--border);
+    text-align: right;
+    margin-top: 12px;
+    letter-spacing: 1px;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .container { padding: 16px; }
+    header { padding: 18px 20px; }
+  }
+
+
+/* ── ROOTBRO NAV ── */
+.rb-nav{background:#1a1612;padding:10px 40px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(139,58,42,0.3)}
+.rb-nav a{font-family:monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8a857d;text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .2s}
+.rb-nav a:hover{color:#b8942a}
+.rb-nav a::before{content:'';display:inline-block;width:14px;height:1px;background:currentColor}
+.rb-nav-sep{font-family:monospace;font-size:10px;color:rgba(200,184,154,0.25)}
+.rb-nav-cur{font-family:monospace;font-size:10px;letter-spacing:.15em;color:#b8860b}
+
+/* ── LANDING ── */
+.landing{max-width:860px;margin:0 auto;padding:48px 32px 64px}
+.landing-label{font-family:monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#8a857d;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.landing-label::before{content:'';display:inline-block;width:20px;height:1px;background:#8a857d}
+.landing-title{font-family:'Noto Serif SC',serif;font-size:40px;font-weight:400;line-height:1.15;color:#1a1008;margin-bottom:12px;letter-spacing:.03em}
+.landing-sub{font-size:15px;color:#6b5c4a;line-height:1.8;margin-bottom:36px}
+
+/* video */
+.video-wrap{position:relative;background:#1a1008;border:1px solid #c8b89a;border-radius:4px;overflow:hidden;margin-bottom:36px}
+.video-wrap iframe{display:block;width:100%;aspect-ratio:16/9;border:none}
+.video-placeholder{aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;cursor:pointer;background:#1a1008}
+.video-play{width:60px;height:60px;border-radius:50%;background:rgba(184,134,11,0.15);border:1px solid rgba(184,134,11,0.4);display:flex;align-items:center;justify-content:center;transition:all .2s}
+.video-play:hover{background:rgba(184,134,11,0.25);transform:scale(1.05)}
+.play-tri{width:0;height:0;border-top:12px solid transparent;border-bottom:12px solid transparent;border-left:20px solid #b8860b;margin-left:4px}
+.video-caption{font-family:monospace;font-size:11px;letter-spacing:.15em;color:rgba(200,184,154,0.5)}
+.video-tag{position:absolute;top:14px;left:16px;font-family:monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;background:rgba(184,134,11,0.15);color:#b8860b;border:1px solid rgba(184,134,11,0.3);padding:3px 10px;border-radius:2px}
+
+/* features */
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(200,184,154,0.2);border:1px solid #c8b89a;margin-bottom:32px}
+.feat{background:#f7f2e8;padding:22px 20px;display:flex;flex-direction:column;gap:6px}
+.feat-num{font-family:monospace;font-size:9px;letter-spacing:.2em;color:#c8b89a;margin-bottom:2px}
+.feat-title{font-family:'Noto Serif SC',serif;font-size:15px;color:#1a1008;letter-spacing:.05em}
+.feat-desc{font-size:12px;color:#6b5c4a;line-height:1.7}
+
+/* paywall */
+.paywall{background:#f7f2e8;border:1px solid #c8b89a;border-radius:4px;padding:28px 28px 24px;margin-bottom:28px}
+.paywall-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:20px}
+.paywall-badge{font-family:monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;background:rgba(184,134,11,0.12);color:#8b6914;border:1px solid rgba(184,134,11,0.25);padding:3px 10px;border-radius:2px;display:inline-block;margin-bottom:10px}
+.paywall-title{font-family:'Noto Serif SC',serif;font-size:22px;color:#1a1008;margin-bottom:6px;letter-spacing:.03em}
+.paywall-desc{font-size:13px;color:#6b5c4a;line-height:1.75}
+.paywall-right{flex-shrink:0;text-align:right}
+.price-big{font-family:monospace;font-size:36px;font-weight:600;color:#1a1008;line-height:1}
+.price-note{font-family:monospace;font-size:10px;color:#8a857d;margin-top:4px;margin-bottom:14px;text-align:right}
+.bundle-note{font-size:12px;color:#6b5c4a;background:rgba(46,107,79,0.06);border:1px solid rgba(46,107,79,0.15);padding:8px 12px;border-radius:2px;margin-bottom:16px;line-height:1.6}
+
+/* key input */
+.key-section{border-top:1px solid #e8dfc8;padding-top:20px}
+.key-label{font-family:monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8a857d;margin-bottom:10px;display:block}
+.key-row{display:flex;gap:10px}
+.key-input{flex:1;font-family:monospace;font-size:13px;padding:10px 14px;border:1px solid #c8b89a;border-radius:2px;background:#fffef8;color:#1a1008;outline:none;letter-spacing:.05em;transition:border-color .2s}
+.key-input:focus{border-color:#b8860b}
+.key-input::placeholder{color:#c8b89a;letter-spacing:.1em}
+.key-btn{font-family:monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:10px 20px;border:none;background:#1a1008;color:#f7f2e8;cursor:pointer;border-radius:2px;transition:opacity .2s;white-space:nowrap}
+.key-btn:hover{opacity:.8}
+.key-msg{margin-top:8px;font-family:monospace;font-size:11px;letter-spacing:.05em;display:none}
+.key-msg.error{color:#8b1a1a;display:block}
+.key-msg.ok{color:#2e6b4f;display:block}
+
+/* buy button */
+.buy-btn{display:block;width:100%;padding:14px;background:#2e6b4f;color:white;border:none;border-radius:2px;font-family:'Noto Serif SC',serif;font-size:16px;letter-spacing:3px;cursor:pointer;transition:all .2s;margin-bottom:10px;text-align:center;text-decoration:none}
+.buy-btn:hover{background:#4a9b72}
+.buy-sub{font-family:monospace;font-size:10px;color:#8a857d;text-align:center;letter-spacing:.1em}
+
+/* disclaimer */
+.disclaimer-sm{font-size:11px;color:#8a857d;line-height:1.7;border-top:1px solid #e8dfc8;padding-top:16px;margin-top:16px}
+
+/* ── TOOL (hidden until unlocked) ── */
+#toolSection{display:none}
+
+@media(max-width:640px){
+  .landing{padding:32px 20px 48px}
+  .rb-nav{padding:10px 20px}
+  .features{grid-template-columns:1fr}
+  .paywall-top{flex-direction:column;gap:16px}
+  .paywall-right{text-align:left}
+  .landing-title{font-size:28px}
+  .key-row{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- Rootbro nav -->
+<div class="rb-nav">
+  <a href="/tcm/index.html">Rootbro TCM</a>
+  <span class="rb-nav-sep">·</span>
+  <span class="rb-nav-cur">傅青主女科</span>
+</div>
+
+<!-- ══ LANDING PAGE ══ -->
+<div id="landingSection">
+<div class="landing">
+
+  <div class="landing-label">Women's Classical Medicine</div>
+  <div class="landing-title">《傅青主女科》<br>智能辨证导航</div>
+  <div class="landing-sub">
+    清代名医傅山两百年经验，今日以算法重现。<br>
+    描述症状，系统按匹配度推荐最适合的经典方剂。
+  </div>
+
+  <!-- Video -->
+  <div class="video-wrap" id="videoWrap">
+    <div class="video-placeholder" id="videoPlaceholder" onclick="loadVideo()">
+      <div class="video-play"><div class="play-tri"></div></div>
+      <div class="video-caption">产品演示 · 约 3 分钟</div>
+    </div>
+    <span class="video-tag">演示视频</span>
+  </div>
+
+  <!-- Features -->
+  <div class="features">
+    <div class="feat">
+      <div class="feat-num">01</div>
+      <div class="feat-title">症状分级输入</div>
+      <div class="feat-desc">滑块与开关选择症状及严重程度，涵盖经、带、胎、产、全身六大类</div>
+    </div>
+    <div class="feat">
+      <div class="feat-num">02</div>
+      <div class="feat-title">算法匹配排序</div>
+      <div class="feat-desc">按匹配度评分排序，显示每首方剂的匹配症状与置信分数</div>
+    </div>
+    <div class="feat">
+      <div class="feat-num">03</div>
+      <div class="feat-title">完整方剂详情</div>
+      <div class="feat-desc">组成剂量、煎制方法、疗程建议、禁忌注意，附现代临床参考</div>
+    </div>
+  </div>
+
+  <!-- Paywall -->
+  <div class="paywall">
+    <div class="paywall-top">
+      <div>
+        <div class="paywall-badge">终身使用 · 一次付费</div>
+        <div class="paywall-title">解锁完整辨证工具</div>
+        <div class="paywall-desc">
+          60余首傅青主经典方剂，覆盖妇科全周期。<br>
+          购买后即时获得 License Key，永久有效。
+        </div>
+      </div>
+      <div class="paywall-right">
+        <div class="price-big">$14.99</div>
+        <div class="price-note">USD · 终身授权</div>
+      </div>
+    </div>
+
+    <div class="bundle-note">
+      ✦ 捆绑优惠：同时购买《伤寒论》辨证导航，两套合计 <strong>$29.99</strong>（节省 $4.99）
+    </div>
+
+    <a href="https://rootbro.lemonsqueezy.com/buy/fuqingzhu" class="buy-btn" target="_blank">
+      立即购买 · $14.99 →
+    </a>
+    <div class="buy-sub">支持信用卡 · PayPal · 购买后邮件收取 License Key</div>
+
+    <!-- Key unlock -->
+    <div class="key-section">
+      <span class="key-label">已购买？输入 License Key 解锁</span>
+      <div class="key-row">
+        <input type="text" id="licenseKey" class="key-input" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="32">
+        <button class="key-btn" onclick="validateKey()">解锁</button>
+      </div>
+      <div class="key-msg" id="keyMsg"></div>
+    </div>
+
+    <div class="disclaimer-sm">
+      ⚕️ 本系统仅供学习参考，不构成医疗建议。中医辨证施治需结合望闻问切，建议在专业中医师指导下使用。
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══ TOOL SECTION (hidden until key validated) ══ -->
+<div id="toolSection">
+
+<header>
+  <div class="header-seal">方典</div>
+  <div class="header-text">
+    <h1>经典中医方剂智能匹配</h1>
+    <p>傅青主女科 · 症状分级匹配 · 按相关度排序</p>
+  </div>
+</header>
+
+<div class="container">
+  <div class="disclaimer">
+    ⚕️ <strong>重要提示：</strong>本系统仅供学习参考，不构成医疗建议。中医辨证施治需结合望闻问切，建议在专业中医师指导下使用，切勿自行配药服用。
+  </div>
+
+  <div class="main-grid">
+
+    <!-- LEFT: Symptom Input -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="dot"></div>
+        <h2>症状录入</h2>
+      </div>
+      <div class="panel-body">
+        <div class="cat-tabs" id="catTabs"></div>
+        <div id="symptomGroups"></div>
+        <div class="btn-row">
+          <button class="btn-match" onclick="runMatch()">▶ 开始匹配</button>
+          <button class="btn-reset" onclick="resetAll()">重置</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Results -->
+    <div class="panel results-area">
+      <div class="panel-header">
+        <div class="dot"></div>
+        <h2 id="resultsTitle">匹配结果</h2>
+      </div>
+      <div class="panel-body" id="resultsBody">
+        <div class="empty-state">
+          <div class="empty-icon">📜</div>
+          <p>请在左侧选择症状<br>系统将按<strong>匹配度排序</strong>推荐最适合的方剂<br><br>
+          <small style="color:var(--border)">支持症状分级 · 多症状权重叠加 · 实时排序</small></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+</div><!-- end toolSection -->
+
+<script>
+// ============================================================
+// KNOWLEDGE BASE (subset - 12 formulas from 傅青主女科)
+// ============================================================
+const KB = {
+  symptom_taxonomy: {
+    "带下症状": {
+      "带下量": { scale: "0-4", weight: 3.0, labels: ["无","偶有","时有","较多","量多不止"] },
+      "带下颜色_白": { scale: "bool", weight: 2.5, labels: ["否","是"] },
+      "带下颜色_黄": { scale: "bool", weight: 2.5, labels: ["否","是"] },
+      "带下颜色_青绿": { scale: "bool", weight: 2.5, labels: ["否","是"] },
+      "带下颜色_赤": { scale: "bool", weight: 2.5, labels: ["否","是"] },
+      "带下质地_稀薄": { scale: "bool", weight: 1.5, labels: ["否","是"] },
+      "带下质地_稠粘": { scale: "bool", weight: 1.5, labels: ["否","是"] },
+      "带下气味_腥臭": { scale: "0-4", weight: 2.0, labels: ["无味","微腥","腥气","臭秽","极臭"] }
+    },
+    "月经症状": {
+      "月经提前天数": { scale: "0-4", weight: 3.0, labels: ["不提前","提前1-3天","提前4-7天","提前1-2周","提前超过2周"] },
+      "月经推迟天数": { scale: "0-4", weight: 3.0, labels: ["不推迟","推迟1-3天","推迟4-7天","推迟1-2周","推迟超过2周"] },
+      "月经不定期": { scale: "bool", weight: 3.0, labels: ["否","是"] },
+      "月经量多": { scale: "0-4", weight: 2.5, labels: ["正常","略多","明显多","量大","崩漏"] },
+      "月经量少": { scale: "0-4", weight: 2.5, labels: ["正常","略少","明显少","点滴","近闭经"] },
+      "经血紫黑有块": { scale: "bool", weight: 1.5, labels: ["否","是"] },
+      "经血色暗黑豆汁样": { scale: "bool", weight: 1.5, labels: ["否","是"] },
+      "经前腹痛": { scale: "0-10", weight: 3.0, labels: ["0无","1","2","3","4","5中","6","7","8","9","10剧"] },
+      "经后腹痛": { scale: "0-10", weight: 3.0, labels: ["0无","1","2","3","4","5中","6","7","8","9","10剧"] },
+      "闭经": { scale: "bool", weight: 3.0, labels: ["否","是"] }
+    },
+    "不孕症状": {
+      "不孕": { scale: "bool", weight: 2.5, labels: ["否","是"] },
+      "下腹冰冷感": { scale: "0-4", weight: 3.0, labels: ["无","微凉","凉","冷","冰冷"] },
+      "少腹急迫紧绷": { scale: "bool", weight: 3.0, labels: ["否","是"] },
+      "体型消瘦": { scale: "bool", weight: 2.0, labels: ["否","是"] },
+      "体型肥胖": { scale: "bool", weight: 2.0, labels: ["否","是"] },
+      "骨蒸夜热": { scale: "0-4", weight: 2.5, labels: ["无","微热","夜间低热","骨热","遍身焦热"] },
+      "小便涩滞": { scale: "bool", weight: 2.0, labels: ["否","是"] },
+      "腹胀": { scale: "0-4", weight: 1.5, labels: ["无","微胀","时胀","明显","持续胀满"] },
+      "胸腹胀满": { scale: "0-4", weight: 1.5, labels: ["无","微胀","时胀","明显","持续胀满"] }
+    },
+    "全身症状": {
+      "疲倦乏力": { scale: "0-4", weight: 1.5, labels: ["无","偶有","时有","明显","极度"] },
+      "腰酸腰痛": { scale: "0-4", weight: 1.5, labels: ["无","微酸","隐痛","酸痛","剧痛"] },
+      "口干口渴": { scale: "0-4", weight: 1.5, labels: ["无","微干","口干","渴欲饮","大渴"] },
+      "食欲减退": { scale: "0-4", weight: 1.5, labels: ["正常","略减","明显减","纳呆","不思食"] },
+      "情绪郁结": { scale: "0-4", weight: 1.5, labels: ["无","偶郁","时郁","明显","极度压抑"] },
+      "烦热内热": { scale: "0-4", weight: 1.5, labels: ["无","微热","时烦","烦热","极烦"] },
+      "畏寒肢冷": { scale: "0-4", weight: 1.5, labels: ["无","微寒","畏寒","肢冷","极寒"] },
+      "便溏腹泻": { scale: "bool", weight: 1.0, labels: ["否","是"] },
+      "浮肿": { scale: "bool", weight: 1.0, labels: ["否","是"] },
+      "面色萎黄": { scale: "bool", weight: 1.0, labels: ["否","是"] }
+    },
+    "产后症状": {
+      "产后乳汁不下": { scale: "bool", weight: 3.5, labels: ["否","是"] },
+      "乳房胀痛": { scale: "bool", weight: 3.0, labels: ["否","是"] },
+      "产后少腹痛": { scale: "bool", weight: 3.5, labels: ["否","是"] },
+      "少腹有块按痛": { scale: "bool", weight: 3.0, labels: ["否","是"] },
+      "产后恶露不畅": { scale: "bool", weight: 3.0, labels: ["否","是"] },
+      "产后浮肿": { scale: "bool", weight: 3.0, labels: ["否","是"] }
+    },
+    "舌象脉象": {
+      "舌质淡": { scale: "bool", weight: 1.0, labels: ["否","是"] },
+      "舌质红": { scale: "bool", weight: 1.0, labels: ["否","是"] },
+      "苔白腻": { scale: "bool", weight: 1.0, labels: ["否","是"] },
+      "苔黄": { scale: "bool", weight: 1.0, labels: ["否","是"] },
+      "脉虚弱": { scale: "bool", weight: 1.0, labels: ["否","是"] },
+      "脉弦": { scale: "bool", weight: 1.0, labels: ["否","是"] },
+      "脉数": { scale: "bool", weight: 1.0, labels: ["否","是"] }
+    }
+  },
+
+
+    // ── 不孕补全 ──────────────────────────────────────────────
+    {
+      id:"FQZ-018", name:"并提汤",
+      source:"傅青主女科·种子·胸满不思食不孕三十",
+      pattern:"肾气不足，脾胃气陷",
+      indications:"饮食少思，胸膈满闷，终日倦怠思睡，房事后呻吟不已，不孕",
+      symptoms: { "不孕":1,"食欲减退":3,"疲倦乏力":3,"胸腹胀满":2,"腰酸腰痛":2,"畏寒肢冷":1,"脉虚弱":1 },
+      herbs:[
+        {n:"大熟地",a:"30g",p:"九蒸",r:"君"},{n:"巴戟",a:"30g",p:"盐水浸",r:"君"},
+        {n:"白术",a:"30g",p:"土炒",r:"臣"},{n:"人参",a:"15g",p:"",r:"臣"},
+        {n:"黄耆",a:"15g",p:"生用",r:"臣"},{n:"山萸肉",a:"9g",p:"蒸",r:"佐"},
+        {n:"枸杞",a:"6g",p:"",r:"佐"},{n:"柴胡",a:"1.5g",p:"",r:"使"}
+      ],
+      prep:"冷水浸泡30分钟，小火煎35分钟。每日一剂，分两次温服。",
+      course:"服三月而肾气大旺，再服一月未有不能受孕者",
+      contra:"阴虚火旺者慎用；感冒期间停服",
+      notes:"此症易被误诊为脾胃虚寒而用消导药，越消肾气越虚。关键辨证：胸满+纳差+房后疲惫=肾气不升，非脾胃本病。",
+      modern:"适用于卵巢储备下降伴消化功能减弱，肾虚脾弱型不孕，促排卵反应差"
+    },
+    {
+      id:"FQZ-019", name:"温土毓麟汤",
+      source:"傅青主女科·种子·胸满少食不孕三十二",
+      pattern:"脾胃虚寒，命门火衰",
+      indications:"饮食少则平和，多则难受或呕泄，胸膈胀满，久不受孕",
+      symptoms: { "不孕":1,"食欲减退":4,"胸腹胀满":3,"畏寒肢冷":2,"疲倦乏力":2,"便溏腹泻":1,"脉虚弱":1 },
+      herbs:[
+        {n:"巴戟",a:"30g",p:"去心酒浸",r:"君"},{n:"覆盆子",a:"30g",p:"酒浸蒸",r:"君"},
+        {n:"白术",a:"15g",p:"土炒",r:"臣"},{n:"人参",a:"9g",p:"",r:"臣"},
+        {n:"怀山药",a:"15g",p:"炒",r:"臣"},{n:"神曲",a:"3g",p:"炒",r:"佐"}
+      ],
+      prep:"冷水浸泡30分钟，小火煎30分钟。每日一剂，分两次温服。",
+      course:"服一月可以种子矣",
+      contra:"阴虚内热者禁用；与并提汤区别：此方偏脾胃虚寒，彼方偏肾气不升",
+      notes:"与并提汤症状相近但病机不同：并提汤是肾气不升导致脾胃受困；此方是脾胃自身虚寒，命门火不足。辨别关键：此方患者多食即不适，胃本身虚寒；并提汤患者主要是疲倦房后乏力。",
+      modern:"适用于脾肾阳虚型不孕，消化吸收差，营养状态不佳影响生育，黄体功能不足"
+    },
+    {
+      id:"FQZ-020", name:"宽带汤",
+      source:"傅青主女科·种子·少腹急迫不孕三十三",
+      pattern:"脾胃气虚，带脉拘急",
+      indications:"少腹间自觉有紧迫拘急感，不舒展，不能生育",
+      symptoms: { "不孕":1,"少腹急迫紧绷":1,"腰酸腰痛":2,"疲倦乏力":2,"食欲减退":1,"脉虚弱":1 },
+      herbs:[
+        {n:"白术",a:"30g",p:"土炒",r:"君"},{n:"巴戟肉",a:"15g",p:"酒浸",r:"臣"},
+        {n:"补骨脂",a:"3g",p:"盐水炒",r:"佐"},{n:"人参",a:"9g",p:"",r:"臣"},
+        {n:"麦冬",a:"9g",p:"去心",r:"佐"},{n:"杜仲",a:"9g",p:"炒黑",r:"佐"},
+        {n:"大熟地",a:"15g",p:"九蒸",r:"臣"},{n:"肉苁蓉",a:"9g",p:"洗净",r:"佐"},
+        {n:"白芍",a:"9g",p:"酒炒",r:"佐"},{n:"当归",a:"6g",p:"酒洗",r:"佐"},
+        {n:"五味子",a:"1g",p:"炒",r:"佐"},{n:"建莲子",a:"20粒",p:"不去心",r:"佐"}
+      ],
+      prep:"冷水浸泡30分钟，小火煎35分钟。每日一剂，分两次温服。",
+      course:"服四剂少腹无紧迫之状，服一月即受胎",
+      contra:"实热证不宜；与完带汤区别：完带汤治带下，此方治少腹急迫不孕",
+      notes:"少腹紧迫感是此方独特辨证点，现代多见于盆底肌过度紧张、子宫位置异常。傅青主认为是带脉拘急所致，根源在脾胃气虚。",
+      modern:"适用于盆底功能障碍性不孕、子宫后位、盆腔粘连轻度，带脉功能失调"
+    },
+    {
+      id:"FQZ-021", name:"加味补中益气汤（不孕）",
+      source:"傅青主女科·种子·肥胖不孕三十五",
+      pattern:"脾虚湿盛，痰湿阻胞",
+      indications:"身体肥胖，痰涎甚多，不能受孕",
+      symptoms: { "不孕":1,"体型肥胖":1,"食欲减退":1,"疲倦乏力":2,"浮肿":1,"便溏腹泻":1,"苔白腻":1,"脉虚弱":1 },
+      herbs:[
+        {n:"人参",a:"9g",p:"",r:"君"},{n:"黄耆",a:"9g",p:"生用",r:"君"},
+        {n:"白术",a:"30g",p:"土炒",r:"臣"},{n:"当归",a:"9g",p:"酒洗",r:"臣"},
+        {n:"茯苓",a:"15g",p:"",r:"臣"},{n:"半夏",a:"9g",p:"制",r:"佐"},
+        {n:"柴胡",a:"3g",p:"",r:"佐"},{n:"升麻",a:"1.2g",p:"",r:"使"},
+        {n:"陈皮",a:"1.5g",p:"",r:"佐"},{n:"甘草",a:"3g",p:"",r:"使"}
+      ],
+      prep:"冷水浸泡30分钟，小火煎30分钟。每日一剂，分两次温服。",
+      course:"服八剂痰涎尽消，再十剂水湿利，再加杜仲钱半、续断钱半必受孕",
+      contra:"阴虚内热者不宜；实热体质禁用",
+      notes:"肥胖不孕的关键不是减肥，而是化痰湿、升脾气。现代用减肥药消脂反而伤正气，此方思路是提升脾阳以运化水湿。",
+      modern:"适用于多囊卵巢综合征（痰湿型）、胰岛素抵抗性不孕，BMI偏高伴月经稀发"
+    },
+    {
+      id:"FQZ-022", name:"清骨滋肾汤",
+      source:"傅青主女科·种子·骨蒸夜热不孕三十六",
+      pattern:"肾阴亏虚，骨髓内热",
+      indications:"骨蒸夜热，遍体火焦，口干舌燥，咳嗽，难于生子",
+      symptoms: { "不孕":1,"骨蒸夜热":4,"口干口渴":3,"烦热内热":3,"腰酸腰痛":2,"疲倦乏力":1,"舌质红":1,"脉数":1,"脉虚弱":1 },
+      herbs:[
+        {n:"地骨皮",a:"30g",p:"酒洗",r:"君"},{n:"丹皮",a:"15g",p:"",r:"臣"},
+        {n:"沙参",a:"15g",p:"",r:"臣"},{n:"麦冬",a:"15g",p:"去心",r:"臣"},
+        {n:"元参",a:"15g",p:"酒洗",r:"臣"},{n:"五味子",a:"1.5g",p:"炒研",r:"佐"},
+        {n:"白术",a:"9g",p:"土炒",r:"佐"},{n:"石斛",a:"6g",p:"",r:"佐"}
+      ],
+      prep:"冷水浸泡30分钟，小火煎30分钟。每日一剂，分两次温服。",
+      course:"连服三十剂而骨热解，再服六十剂自受孕。峻药病去七分即止。",
+      contra:"脾虚便溏者慎用；无骨蒸夜热者不宜",
+      notes:"傅青主特别指出此方治骨髓热，故不用熟地（过于滋腻），改用地骨皮清骨中之热。骨蒸夜热+不孕是辨证关键，单纯阴虚不必用此方。",
+      modern:"适用于卵巢储备下降伴阴虚内热，FSH升高+雌激素低+夜间潮热，辅助生殖前调理"
+    },
+    {
+      id:"FQZ-023", name:"化水种子汤",
+      source:"傅青主女科·种子·便涩腹胀足浮肿不孕三十八",
+      pattern:"肾气不化，膀胱气化失司，湿渗胞宫",
+      indications:"小便艰涩，腹胀脚肿，不能受孕",
+      symptoms: { "不孕":1,"小便涩滞":1,"腹胀":1,"浮肿":1,"畏寒肢冷":1,"腰酸腰痛":2,"脉虚弱":1,"舌质淡":1 },
+      herbs:[
+        {n:"巴戟",a:"30g",p:"盐水浸",r:"君"},{n:"白术",a:"30g",p:"土炒",r:"君"},
+        {n:"茯苓",a:"15g",p:"",r:"臣"},{n:"人参",a:"9g",p:"",r:"臣"},
+        {n:"兔丝子",a:"15g",p:"酒炒",r:"臣"},{n:"芡实",a:"15g",p:"炒",r:"佐"},
+        {n:"车前子",a:"6g",p:"酒炒",r:"佐"},{n:"肉桂",a:"3g",p:"去粗研",r:"使"}
+      ],
+      prep:"冷水浸泡30分钟，小火煎30分钟，肉桂后下5分钟。每日一剂，分两次温服。",
+      course:"服二剂膀胱气化，四剂艰涩除，十剂浮肿消，再服六十剂可受胎",
+      contra:"湿热证禁用（小便黄赤、舌红苔黄者）；阴虚内热者禁用",
+      notes:"小便涩+腹胀+脚肿+不孕四症并见才是此方适应症。与温胞饮区别：温胞饮主下腹冰冷，此方主水湿内停、膀胱气化失司。",
+      modern:"适用于肾阳虚型不孕伴水肿，子宫内膜水肿，盆腔积液影响着床"
+    },
+    // ── 产后调理 ──────────────────────────────────────────────
+    {
+      id:"FQZ-024", name:"通乳丹",
+      source:"傅青主女科·产后·气血两虚乳汁不下七十六",
+      pattern:"气血两虚，无以化乳",
+      indications:"产后绝无点滴之乳，气血俱虚",
+      symptoms: { "产后乳汁不下":1,"疲倦乏力":3,"面色萎黄":1,"脉虚弱":1,"舌质淡":1 },
+      herbs:[
+        {n:"人参",a:"30g",p:"",r:"君"},{n:"生黄耆",a:"30g",p:"",r:"君"},
+        {n:"当归",a:"60g",p:"酒洗",r:"臣"},{n:"麦冬",a:"15g",p:"去心",r:"佐"},
+        {n:"木通",a:"1g",p:"",r:"使"},{n:"桔梗",a:"1g",p:"",r:"使"},
+        {n:"猪蹄",a:"2个",p:"去爪壳，七孔者",r:"引"}
+      ],
+      prep:"猪蹄先煮汤，用汤煎药，小火煎30分钟。每日一剂，分两次温服。",
+      course:"服二剂而乳如泉涌矣",
+      contra:"乳管堵塞（乳房胀痛有块）者不宜（改用通肝生乳汤）；感冒发热期间停服",
+      notes:"此方专治气血虚型缺乳，辨证要点：产后无乳+面色萎黄+疲倦+无乳房胀痛。若乳房胀满疼痛是郁结型，需用通肝生乳汤，两者不可混用。",
+      modern:"适用于产后气血不足性缺乳，剖宫产后乳汁分泌延迟，营养状态差的哺乳困难"
+    },
+    {
+      id:"FQZ-025", name:"通肝生乳汤",
+      source:"傅青主女科·产后·郁结乳汁不通七十七",
+      pattern:"肝气郁结，乳络不通",
+      indications:"产后两乳胀满疼痛，乳汁不通，因情绪刺激所致",
+      symptoms: { "产后乳汁不下":1,"乳房胀痛":1,"情绪郁结":3,"烦热内热":1,"脉弦":1 },
+      herbs:[
+        {n:"白芍",a:"15g",p:"醋炒",r:"君"},{n:"当归",a:"15g",p:"酒洗",r:"君"},
+        {n:"白术",a:"15g",p:"土炒",r:"臣"},{n:"麦冬",a:"15g",p:"去心，小米炒",r:"臣"},
+        {n:"柴胡",a:"3g",p:"",r:"君"},{n:"通草",a:"3g",p:"",r:"佐"},
+        {n:"远志",a:"3g",p:"",r:"佐"},{n:"熟地",a:"1g",p:"",r:"佐"},
+        {n:"甘草",a:"1g",p:"",r:"使"}
+      ],
+      prep:"冷水浸泡30分钟，小火煎25分钟。每日一剂，服一剂即通，不必再服。",
+      course:"服一剂即通，不必再服也",
+      contra:"气血虚型缺乳不宜（改用通乳丹）；孕期禁用",
+      notes:"辨证要点：乳房胀满疼痛+情绪刺激后加重=肝郁型。无胀痛只是无乳=气血虚型，用通乳丹。麦冬用小米炒，引入胃中化乳更速。",
+      modern:"适用于产后抑郁伴缺乳、情绪应激性乳汁减少，产后急性乳腺炎早期（乳络不通期）"
+    },
+    {
+      id:"FQZ-026", name:"散结定疼汤",
+      source:"傅青主女科·产后·产后少腹疼六十七",
+      pattern:"瘀血内结，少腹疼痛",
+      indications:"产后少腹疼痛，甚则结成一块，按之愈疼（恶露不畅）",
+      symptoms: { "产后少腹痛":1,"产后恶露不畅":1,"少腹有块按痛":1,"疲倦乏力":1,"脉虚弱":1 },
+      herbs:[
+        {n:"当归",a:"30g",p:"酒洗",r:"君"},{n:"川芎",a:"15g",p:"酒洗",r:"臣"},
+        {n:"丹皮",a:"6g",p:"",r:"佐"},{n:"益母草",a:"9g",p:"",r:"佐"},
+        {n:"黑芥穗",a:"6g",p:"",r:"佐"},{n:"乳香",a:"3g",p:"去油",r:"佐"},
+        {n:"山楂",a:"10粒",p:"炒黑",r:"佐"},{n:"桃仁",a:"7粒",p:"泡去皮尖炒研",r:"佐"}
+      ],
+      prep:"冷水浸泡30分钟，小火煎25分钟。每日一剂，温服。",
+      course:"服一剂而疼止而愈，不必再剂也",
+      contra:"虚性腹痛（按之即止）不宜（改用肠宁汤）；孕期禁用桃仁",
+      notes:"辨证关键：按之愈疼=实证瘀血；按之即止=虚证血虚。两种产后腹痛方向相反，必须分清。",
+      modern:"适用于产后宫缩痛（恶露不畅型）、产后子宫复旧不良、剖宫产后腹腔粘连早期"
+    },
+    {
+      id:"FQZ-027", name:"肠宁汤",
+      source:"傅青主女科·产后·产后少腹疼六十七",
+      pattern:"血虚失养，少腹虚痛",
+      indications:"产后少腹疼痛，按之即止，血虚所致",
+      symptoms: { "产后少腹痛":1,"疲倦乏力":3,"面色萎黄":1,"便溏腹泻":1,"腰酸腰痛":1,"脉虚弱":1,"舌质淡":1 },
+      herbs:[
+        {n:"当归",a:"30g",p:"酒洗",r:"君"},{n:"熟地",a:"30g",p:"九蒸",r:"君"},
+        {n:"人参",a:"9g",p:"",r:"臣"},{n:"麦冬",a:"9g",p:"去心",r:"臣"},
+        {n:"阿胶",a:"9g",p:"蛤粉炒，烊化",r:"臣"},{n:"山药",a:"9g",p:"炒",r:"佐"},
+        {n:"续断",a:"6g",p:"",r:"佐"},{n:"甘草",a:"3g",p:"",r:"使"},
+        {n:"肉桂",a:"0.6g",p:"去粗研",r:"使"}
+      ],
+      prep:"阿胶烊化冲入，其余水煎30分钟。每日一剂，分两次温服。",
+      course:"服一剂而疼轻，二剂而疼止，多服更宜",
+      contra:"瘀血实证腹痛不宜（改用散结定疼汤）",
+      notes:"与散结定疼汤是一对方：实证（按之愈疼）用散结定疼汤，虚证（按之即止）用肠宁汤。产后腹痛必须先分虚实。",
+      modern:"适用于产后气血两虚性腹痛、子宫复旧不良（虚证）、产后大便干燥兼腹痛"
+    },
+    {
+      id:"FQZ-028", name:"通乳丹·转气汤",
+      source:"傅青主女科·产后·产后四肢浮肿七十三",
+      pattern:"肝肾两虚，气血失调",
+      indications:"产后四肢浮肿，寒热往来，气喘咳嗽，胸膈不利，两胁疼痛",
+      symptoms: { "产后浮肿":1,"浮肿":1,"疲倦乏力":3,"腰酸腰痛":2,"情绪郁结":1,"烦热内热":1,"畏寒肢冷":1,"脉虚弱":1 },
+      herbs:[
+        {n:"人参",a:"9g",p:"",r:"君"},{n:"茯苓",a:"9g",p:"去皮",r:"臣"},
+        {n:"白术",a:"9g",p:"土炒",r:"臣"},{n:"当归",a:"15g",p:"酒洗",r:"臣"},
+        {n:"白芍",a:"15g",p:"酒炒炭",r:"臣"},{n:"熟地",a:"30g",p:"九蒸",r:"君"},
+        {n:"山萸",a:"9g",p:"蒸",r:"佐"},{n:"山药",a:"15g",p:"炒",r:"佐"},
+        {n:"芡实",a:"9g",p:"炒",r:"佐"},{n:"补骨脂",a:"3g",p:"盐水炒",r:"佐"},
+        {n:"柴胡",a:"1.5g",p:"",r:"使"}
+      ],
+      prep:"冷水浸泡30分钟，小火煎35分钟。每日一剂，分两次温服。",
+      course:"服三剂效，十剂痊",
+      contra:"实证水肿（小便黄、苔黄腻）不宜；产后初期恶露未净者先服生化汤",
+      notes:"此方治产后虚性浮肿，病机是肝肾气血两亏导致气逆，非水湿外邪。四肢浮肿+寒热往来+两胁疼痛+产后=此方证。",
+      modern:"适用于产后气血两虚性水肿、产后体虚低热反复、产后多汗乏力综合调理"
+    }
+  ]
+};
+
+// ============================================================
+// STATE
+// ============================================================
+const state = {};
+
+// ============================================================
+// BUILD UI
+// ============================================================
+function buildUI() {
+  const tabs = document.getElementById('catTabs');
+  const groups = document.getElementById('symptomGroups');
+  const cats = Object.keys(KB.symptom_taxonomy);
+
+  cats.forEach((cat, i) => {
+    // Tab
+    const tab = document.createElement('button');
+    tab.className = 'cat-tab' + (i===0?' active':'');
+    tab.textContent = cat;
+    tab.onclick = () => switchCat(cat);
+    tabs.appendChild(tab);
+
+    // Group
+    const group = document.createElement('div');
+    group.className = 'symptom-group' + (i===0?' visible':'');
+    group.id = 'group_' + cat;
+
+    const syms = KB.symptom_taxonomy[cat];
+    Object.entries(syms).forEach(([key, cfg]) => {
+      state[key] = 0;
+      const item = document.createElement('div');
+      item.className = 'symptom-item';
+
+      if(cfg.scale === 'bool') {
+        item.innerHTML = `
+          <div class="symptom-label">${key}</div>
+          <div class="toggle-wrap">
+            <button class="toggle-btn selected-no" onclick="setBool('${key}',0,this)" data-key="${key}" data-val="0">无</button>
+            <button class="toggle-btn" onclick="setBool('${key}',1,this)" data-key="${key}" data-val="1">有</button>
+          </div>`;
+      } else {
+        const max = cfg.scale === '0-10' ? 10 : 4;
+        const labelsStr = cfg.labels.map((l,i)=>`<span>${l}</span>`).join('');
+        item.innerHTML = `
+          <div class="symptom-label">
+            <span>${key}</span>
+            <span class="symptom-val zero" id="val_${key.replace(/[^a-zA-Z0-9]/g,'_')}">无</span>
+          </div>
+          <div class="slider-track">
+            <input type="range" min="0" max="${max}" value="0"
+              id="slider_${key.replace(/[^a-zA-Z0-9]/g,'_')}"
+              oninput="setSlider('${key}',this,${max})"
+              style="--pct:0%">
+          </div>
+          <div class="scale-labels">${labelsStr}</div>`;
+      }
+      group.appendChild(item);
+    });
+    groups.appendChild(group);
+  });
+}
+
+function switchCat(cat) {
+  document.querySelectorAll('.cat-tab').forEach(t => {
+    t.classList.toggle('active', t.textContent === cat);
+  });
+  document.querySelectorAll('.symptom-group').forEach(g => {
+    g.classList.toggle('visible', g.id === 'group_' + cat);
+  });
+}
+
+function setSlider(key, el, max) {
+  const v = parseInt(el.value);
+  state[key] = v;
+  const pct = (v/max*100).toFixed(0);
+  el.style.setProperty('--pct', pct+'%');
+  const cfg = findSymConfig(key);
+  const safeId = key.replace(/[^a-zA-Z0-9]/g,'_');
+  const valEl = document.getElementById('val_' + safeId);
+  if(valEl && cfg) {
+    valEl.textContent = cfg.labels[v] || v;
+    valEl.className = 'symptom-val' + (v===0?' zero':'');
+  }
+}
+
+function setBool(key, val, btn) {
+  state[key] = val;
+  const wrap = btn.closest('.toggle-wrap');
+  wrap.querySelectorAll('.toggle-btn').forEach(b => {
+    const bv = parseInt(b.getAttribute('data-val'));
+    b.className = 'toggle-btn ' + (bv===0 ? 'selected-no' : (parseInt(val)===1 ? 'selected-yes' : ''));
+  });
+  if(parseInt(val)===0) {
+    wrap.querySelectorAll('.toggle-btn')[0].className = 'toggle-btn selected-no';
+    wrap.querySelectorAll('.toggle-btn')[1].className = 'toggle-btn';
+  }
+}
+
+function findSymConfig(key) {
+  for(const cat of Object.values(KB.symptom_taxonomy)) {
+    if(cat[key]) return cat[key];
+  }
+  return null;
+}
+
+// ============================================================
+// MATCHING ALGORITHM
+// ============================================================
+function runMatch() {
+  // Check if any symptom is selected
+  const anySet = Object.values(state).some(v => v > 0);
+  if(!anySet) {
+    document.getElementById('resultsBody').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">⚠️</div>
+        <p>请先选择至少一个症状，再进行匹配。</p>
+      </div>`;
+    return;
+  }
+
+  const results = [];
+
+  KB.formulas.forEach(formula => {
+    let score = 0;
+    let maxPossible = 0;
+    const matchedSyms = [];
+    const strongMatches = [];
+
+    Object.entries(formula.symptoms).forEach(([key, fVal]) => {
+      const cfg = findSymConfig(key);
+      if(!cfg) return;
+      const w = cfg.weight;
+      const userVal = state[key] || 0;
+      const max = cfg.scale === '0-10' ? 10 : cfg.scale === '0-4' ? 4 : 1;
+
+      maxPossible += w * max;
+
+      if(userVal > 0 && fVal > 0) {
+        // Similarity: penalize mismatch
+        const similarity = 1 - Math.abs(userVal - fVal) / max;
+        const contribution = w * Math.min(userVal, fVal) * similarity;
+        score += contribution;
+
+        if(userVal >= fVal * 0.5) {
+          matchedSyms.push(key);
+          if(similarity > 0.7 && userVal >= fVal * 0.8) strongMatches.push(key);
+        }
+      }
+    });
+
+    // Normalize to 0-100
+    const normalizedScore = maxPossible > 0 ? Math.round((score / maxPossible) * 100) : 0;
+    if(normalizedScore > 0) {
+      results.push({ formula, score: normalizedScore, matchedSyms, strongMatches });
+    }
+  });
+
+  results.sort((a,b) => b.score - a.score);
+
+  renderResults(results);
+}
+
+function renderResults(results) {
+  const body = document.getElementById('resultsBody');
+  const title = document.getElementById('resultsTitle');
+
+  if(results.length === 0) {
+    body.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><p>未找到匹配的方剂，请检查症状选择是否准确。</p></div>`;
+    title.textContent = '匹配结果';
+    return;
+  }
+
+  const topScore = results[0].score;
+  title.textContent = `匹配结果（共 ${results.length} 首方剂）`;
+
+  body.innerHTML = results.slice(0,6).map((r, i) => {
+    const rank = i+1;
+    const rankClass = rank <= 2 ? `rank-${rank}` : rank === 3 ? 'rank-3' : 'rank-other';
+    const barWidth = Math.round(r.score / topScore * 100);
+
+    const herbsHtml = r.formula.herbs.map(h => `
+      <div class="herb-item herb-role-${h.r}">
+        <div class="herb-name">${h.n}</div>
+        <div class="herb-amount">${h.a}</div>
+        ${h.p ? `<div class="herb-processing">${h.p}</div>` : ''}
+      </div>`).join('');
+
+    const symTagsHtml = r.matchedSyms.map(s =>
+      `<span class="symptom-tag ${r.strongMatches.includes(s)?'strong':''}">${s}</span>`
+    ).join('');
+
+    return `
+    <div class="result-card ${rankClass}" id="card_${rank}">
+      <div class="card-header" onclick="toggleCard(${rank})">
+        <div class="rank-badge">${rank}</div>
+        <div class="card-title">
+          <h3>${r.formula.name}</h3>
+          <div class="pattern">${r.formula.pattern}</div>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-num">${r.score}</div>
+          <div class="score-label">匹配分</div>
+          <div class="score-bar"><div class="score-fill" style="width:${barWidth}%"></div></div>
+        </div>
+      </div>
+      <div class="card-body" id="body_${rank}">
+        ${r.matchedSyms.length > 0 ? `
+          <div class="section-title">匹配症状</div>
+          <div class="matched-symptoms">${symTagsHtml}</div>` : ''}
+
+        <div class="section-title">适应症状</div>
+        <p style="font-size:13px;color:var(--ink-light);margin-bottom:16px;line-height:1.7">${r.formula.indications}</p>
+
+        <div class="section-title">方剂组成</div>
+        <div class="herb-grid">${herbsHtml}</div>
+
+        <div class="section-title">煎制方法</div>
+        <div class="prep-box">
+          <strong>煎法：</strong>${r.formula.prep}<br>
+          <strong>疗程：</strong>${r.formula.course}
+        </div>
+
+        <div class="section-title">禁忌 · 注意</div>
+        <div class="note-box">
+          ⚠️ <strong>禁忌：</strong>${r.formula.contra}<br>
+          📝 <strong>注意：</strong>${r.formula.notes}
+        </div>
+
+        <div class="section-title">现代参考应用</div>
+        <div class="modern-tag">🏥 ${r.formula.modern}</div>
+
+        <div class="source-tag">📖 ${r.formula.source}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Auto-open top result
+  setTimeout(() => toggleCard(1), 100);
+}
+
+function toggleCard(rank) {
+  const body = document.getElementById('body_' + rank);
+  if(body) body.classList.toggle('open');
+}
+
+function resetAll() {
+  Object.keys(state).forEach(k => state[k] = 0);
+  // Reset sliders
+  document.querySelectorAll('input[type=range]').forEach(el => {
+    el.value = 0;
+    el.style.setProperty('--pct','0%');
+  });
+  // Reset val labels
+  document.querySelectorAll('[id^="val_"]').forEach(el => {
+    el.textContent = '无'; el.className = 'symptom-val zero';
+  });
+  // Reset toggles
+  document.querySelectorAll('.toggle-wrap').forEach(wrap => {
+    wrap.querySelectorAll('.toggle-btn')[0].className = 'toggle-btn selected-no';
+    wrap.querySelectorAll('.toggle-btn')[1].className = 'toggle-btn';
+  });
+  document.getElementById('resultsTitle').textContent = '匹配结果';
+  document.getElementById('resultsBody').innerHTML = `
+    <div class="empty-state">
+      <div class="empty-icon">📜</div>
+      <p>请在左侧选择症状<br>系统将按<strong>匹配度排序</strong>推荐最适合的方剂</p>
+    </div>`;
+}
+
+// Init
+buildUI();
+</script>
+
+<script>
+// ── VIDEO ──
+function loadVideo() {
+  const wrap = document.getElementById('videoWrap');
+  // Replace YOUR_VIDEO_ID with actual YouTube video ID
+  const videoId = 'YOUR_VIDEO_ID';
+  wrap.innerHTML = '<iframe src="https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+}
+
+// ── KEY VALIDATION ──
+const WORKER_URL = 'https://shanghan-api.oceanyc.workers.dev';
+
+async function validateKey() {
+  const key = document.getElementById('licenseKey').value.trim();
+  const msg = document.getElementById('keyMsg');
+
+  if (!key) {
+    msg.textContent = '请输入 License Key';
+    msg.className = 'key-msg error';
+    return;
+  }
+
+  msg.textContent = '验证中...';
+  msg.className = 'key-msg ok';
+
+  try {
+    const res = await fetch(`${WORKER_URL}/validate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key, product: 'fuqingzhu' })
+    });
+
+    if (res.ok) {
+      // Save key locally
+      localStorage.setItem('fqz_key', key);
+      unlockTool();
+    } else {
+      msg.textContent = 'Key 无效或已过期，请重新确认';
+      msg.className = 'key-msg error';
+    }
+  } catch (e) {
+    msg.textContent = '网络错误，请稍后重试';
+    msg.className = 'key-msg error';
+  }
+}
+
+function unlockTool() {
+  document.getElementById('landingSection').style.display = 'none';
+  document.getElementById('toolSection').style.display = 'block';
+  // Rebuild UI now that tool is visible
+  if (typeof buildUI === 'function') buildUI();
+}
+
+// ── AUTO-UNLOCK if key saved ──
+window.addEventListener('DOMContentLoaded', () => {
+  const savedKey = localStorage.getItem('fqz_key');
+  if (savedKey) {
+    validateKey_silent(savedKey);
+  }
+});
+
+async function validateKey_silent(key) {
+  try {
+    const res = await fetch(`${WORKER_URL}/validate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key, product: 'fuqingzhu' })
+    });
+    if (res.ok) unlockTool();
+  } catch(e) {}
+}
+</script>
+</body>
+</html>
