@@ -3,117 +3,423 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RootBro — AI Tools for Modern Work</title>
+<title>RootBro — Systems for Love, Truth, Healing, and Creation</title>
+<meta name="description" content="RootBro builds systems for relationships, music, Traditional Chinese Medicine, and experimental creator tools.">
+
 <link rel="stylesheet" href="/assets/style.css">
+
+<style>
+:root {
+    --bg: #080808;
+    --panel: rgba(15, 15, 15, 0.82);
+    --text: #f4efe4;
+    --muted: #b8ad9a;
+    --gold: #c8a45d;
+    --gold-soft: #e2c985;
+    --border: rgba(200, 164, 93, 0.22);
+    --dark-green: #1f3a32;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 20;
+    padding: 22px 6vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(0,0,0,.72), rgba(0,0,0,0));
+}
+
+.logo a {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 30px;
+    letter-spacing: 0.04em;
+    color: var(--gold-soft);
+}
+
+nav {
+    display: flex;
+    gap: 34px;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+nav a:hover {
+    color: var(--gold-soft);
+}
+
+.hero {
+    min-height: 100vh;
+    background:
+        linear-gradient(to bottom, rgba(0,0,0,.58), rgba(0,0,0,.25) 45%, rgba(0,0,0,.82)),
+        url("/assets/rootbro-home-hero.png") center center / cover no-repeat;
+    display: flex;
+    align-items: center;
+    padding: 120px 6vw 80px;
+}
+
+.hero-content {
+    max-width: 760px;
+    margin-top: -40px;
+}
+
+.hero-kicker {
+    color: var(--gold);
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    font-size: 13px;
+    margin-bottom: 22px;
+}
+
+.hero h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.95;
+    margin: 0 0 28px;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.hero p {
+    font-size: clamp(18px, 2vw, 24px);
+    line-height: 1.55;
+    color: var(--muted);
+    max-width: 660px;
+    margin-bottom: 34px;
+}
+
+.cta-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    border: 1px solid var(--border);
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-size: 13px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    transition: all .25s ease;
+}
+
+.btn.primary {
+    background: var(--gold);
+    color: #111;
+    border-color: var(--gold);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold-soft);
+}
+
+.section {
+    padding: 90px 6vw;
+}
+
+.section-title {
+    max-width: 900px;
+    margin-bottom: 38px;
+}
+
+.section-title h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(34px, 4vw, 58px);
+    margin: 0 0 14px;
+    font-weight: 500;
+}
+
+.section-title p {
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 28px;
+    min-height: 250px;
+    backdrop-filter: blur(14px);
+    transition: all .25s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(226, 201, 133, 0.55);
+}
+
+.card h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 28px;
+    margin: 0 0 14px;
+    color: var(--gold-soft);
+}
+
+.card p {
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.card a {
+    color: var(--gold-soft);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 24px;
+}
+
+.feature-card {
+    background: linear-gradient(135deg, rgba(27,27,27,.95), rgba(14,14,14,.86));
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 38px;
+}
+
+.feature-card h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 38px;
+    margin: 0 0 14px;
+    color: var(--text);
+}
+
+.feature-card p {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 17px;
+}
+
+.link-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 26px;
+}
+
+.about {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: radial-gradient(circle at center, rgba(200,164,93,.08), rgba(0,0,0,0) 58%);
+}
+
+footer {
+    padding: 42px 6vw;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--border);
+}
+
+footer a {
+    margin-left: 20px;
+    color: var(--muted);
+}
+
+footer a:hover {
+    color: var(--gold-soft);
+}
+
+@media (max-width: 980px) {
+    nav {
+        gap: 16px;
+        font-size: 11px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .featured-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    header {
+        align-items: flex-start;
+        gap: 14px;
+        flex-direction: column;
+        padding: 18px 6vw;
+    }
+
+    nav {
+        flex-wrap: wrap;
+    }
+
+    .hero {
+        align-items: flex-end;
+        padding-top: 180px;
+        background-position: center center;
+    }
+
+    .hero-content {
+        margin-top: 0;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        min-height: auto;
+    }
+
+    footer a {
+        margin-left: 0;
+        margin-right: 16px;
+    }
+}
+</style>
 </head>
+
 <body>
 
 <header>
     <div class="logo">
-        <a href="/"><img src="/assets/rootbro-logo.svg" height="32"></a>
+        <a href="/">RootBro</a>
     </div>
 
     <nav>
-        <a href="/ai-draft">AI Draft</a>
-        <a href="/doc-ai">Docs Assistant</a>
-        <a href="/ai-tools">AI Tools</a>
-        <a href="#" id="contactBtn">Contact</a>
+        <a href="/q45">Q45</a>
+        <a href="/music">Music</a>
+        <a href="/tcm">TCM</a>
+        <a href="/lab">Lab</a>
+        <a href="/about">About</a>
     </nav>
 </header>
 
-<div class="hero" style="background-image:url('https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg');">
-    <h1>AI Tools Built for Modern Workflows</h1>
-    <p>Fast, simple, and powerful tools that help you write better and work smarter.</p>
-</div>
+<main>
 
-<section class="section">
-    <h2>Our Products</h2>
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-kicker">RootBro Systems</div>
+        <h1>Systems for Love, Truth, Healing, and Creation.</h1>
+        <p>RootBro builds practical systems across relationships, cinematic music, Traditional Chinese Medicine, and experimental creator tools.</p>
 
-    <div class="products">
-
-        <div class="card">
-            <h3>AI Draft (Word Add-in)</h3>
-            <p>Rewrite, summarize, and generate content instantly inside Microsoft Word.</p>
-            <a href="/ai-draft">View Product →</a>
+        <div class="cta-row">
+            <a class="btn primary" href="/q45">Explore Q45</a>
+            <a class="btn" href="/music">Enter Music</a>
         </div>
-
-        <div class="card">
-            <h3>Docs AI Assistant</h3>
-            <p>AI-powered writing inside Google Docs. Clean, simple, seamless.</p>
-            <a href="docs-ai">
-                View Product →</a>
-        </div>
-
-        <div class="card">
-            <h3>AI Tools Hub</h3>
-            <p>A collection of free lightweight browser-based AI utilities.</p>
-            <a href="/ai-tools">Open Tools →</a>
-        </div>
-
-        <div class="card">
-            <h3>More Coming</h3>
-            <p>Video tools, language apps, TCM tools, and speech utilities.</p>
-            <a href="#">Stay Tuned →</a>
-        </div>
-
     </div>
 </section>
 
-<!-- CONTACT MODAL -->
-<div id="contactModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
+<section class="section">
+    <div class="section-title">
+        <h2>Featured Now</h2>
+        <p>Current flagship projects from the RootBro universe.</p>
+    </div>
 
-    <h2>Contact Us</h2>
-    <p style="color:#666;">We usually respond within 24 hours.</p>
+    <div class="featured-grid">
+        <div class="feature-card">
+            <h3>Q45 Relationship System</h3>
+            <p>Marriage Confusion: Revealing What Your Partner Isn’t Saying — a structured relationship clarity framework for people caught between staying, leaving, forgiving, and rebuilding.</p>
+            <div class="link-row">
+                <a class="btn primary" href="/q45">Explore Q45</a>
+                <a class="btn" href="https://www.amazon.com/dp/B0GCQ6CJ1D">Read on Kindle</a>
+                <a class="btn" href="https://play.google.com/store/audiobooks/details/Dr_RootBro_Marriage_Confusion_Revealing_What_Your?id=AQAAAEDqD1RPrM">Listen Audiobook</a>
+            </div>
+        </div>
 
-    <!-- Wait for your Formspree ID -->
-      
-    <form action="https://formspree.io/f/xgvjddkp" method="POST" class="contact-form">
+        <div class="feature-card">
+            <h3>Song SRT Generator</h3>
+            <p>Fast subtitle and SRT workflows built specifically for songs, lyrics, music videos, and creator publishing.</p>
+            <div class="link-row">
+                <a class="btn primary" href="/lab/song-srt-generator">Try Demo</a>
+                <a class="btn" href="/lab">RootBro Lab</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-        <label>Name</label>
-        <input type="text" name="name" required>
+<section class="section">
+    <div class="section-title">
+        <h2>Core Domains</h2>
+        <p>RootBro is organized around four connected pillars: emotional clarity, music, ancient systems, and practical tools.</p>
+    </div>
 
-        <label>Email</label>
-        <input type="email" name="email" required>
+    <div class="grid">
+        <div class="card">
+            <h3>Q45</h3>
+            <p>Relationship diagnostics, emotional intelligence, intimacy, trust, responsibility, boundaries, and decision clarity.</p>
+            <a href="/q45">Enter Q45 →</a>
+        </div>
 
-        <label>Message</label>
-        <textarea name="message" rows="5" required></textarea>
+        <div class="card">
+            <h3>Music</h3>
+            <p>Cinematic relationship songs for what people feel but do not say. Singles, lyrics, full MVs, and future albums.</p>
+            <a href="/music">Enter Music →</a>
+        </div>
 
-        <input type="text" name="_gotcha" style="display:none">
-        <input type="text" name="_gotcha" style="display:none">
-        <input type="hidden" name="_redirect" value="https://rootbro.com/thank-you">
+        <div class="card">
+            <h3>TCM</h3>
+            <p>Traditional Chinese Medicine explained through classical formulas, symptom logic, herbs, acupuncture, and practical frameworks.</p>
+            <a href="/tcm">Explore TCM →</a>
+        </div>
 
-        <button type="submit" class="button-primary">Send Message</button>
-    </form>
-  </div>
-</div>
+        <div class="card">
+            <h3>Lab</h3>
+            <p>Experimental systems, AI tools, subtitle workflows, writing utilities, and prototypes built to solve real problems.</p>
+            <a href="/lab">Visit Lab →</a>
+        </div>
+    </div>
+</section>
+
+<section class="section about">
+    <div class="section-title">
+        <h2>About RootBro</h2>
+        <p>RootBro explores systems that help people think clearer, feel deeper, heal better, and build smarter. The work moves across relationships, music, Chinese medicine, and creator tools — not as separate hobbies, but as different ways to turn complexity into clarity.</p>
+    </div>
+</section>
+
+</main>
 
 <footer>
-    <p>© 2025 RootBro. All rights reserved.</p>
-    
+    <div>© 2026 RootBro. All rights reserved.</div>
+    <div>
+        <a href="/q45">Q45</a>
+        <a href="/music">Music</a>
+        <a href="/tcm">TCM</a>
+        <a href="/lab">Lab</a>
+        <a href="/about">About</a>
+    </div>
 </footer>
-
-<script>
-// modal logic
-const modal = document.getElementById("contactModal");
-const btn = document.getElementById("contactBtn");
-const btn2 = document.getElementById("contactBtnFooter");
-const span = document.getElementsByClassName("close")[0];
-
-btn.onclick = openModal;
-btn2.onclick = openModal;
-
-function openModal(e){
-    e.preventDefault();
-    modal.style.display = "block";
-}
-
-span.onclick = () => modal.style.display = "none";
-window.onclick = (event) => {
-    if (event.target == modal) modal.style.display = "none";
-}
-</script>
 
 </body>
 </html>
