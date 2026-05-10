@@ -249,6 +249,46 @@ h1 em{
   font-size:34px;
   margin-bottom:10px;
 }
+.video-shell {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(circle at center, rgba(200,164,93,.08), transparent 40%),
+    var(--panel);
+  box-shadow:
+    0 0 0 1px rgba(200,164,93,.06),
+    0 18px 60px rgba(0,0,0,.45);
+}
+
+.video-shell iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.demo-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+@media(max-width: 640px) {
+  .demo-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .demo-actions .btn {
+    text-align: center;
+    width: 100%;
+  }
+}  
 
 .final-cta{
   text-align:center;
@@ -353,16 +393,26 @@ footer a:hover{color:var(--gold2)}
 <section class="section" id="demo">
   <div class="section-title">
     <div class="label">Demo</div>
-    <h2>From song audio to usable SRT.</h2>
-    <p>Launch the current demo on Cloudflare. The RootBro page stays as the brand landing page; the app remains a single live demo.</p>
+    <h2>See RootBro SRT in action.</h2>
+    <p>Watch the full workflow: from song upload to subtitle export. See how RootBro SRT reduces manual fixing and accelerates lyric video creation.</p>
   </div>
 
-  <a href="https://songsrt.pages.dev/app" class="demo-box">
-    <div>
-      <strong>Launch RootBro SRT Demo</strong>
-      <span>Open the working app →</span>
-    </div>
-  </a>
+  <div class="video-shell">
+    
+    <!-- Replace YOUR_VIDEO_ID with your real YouTube video -->
+    <iframe 
+      src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+      title="RootBro SRT Demo"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+
+  </div>
+
+  <div class="demo-actions">
+    <a class="btn primary" href="https://songsrt.pages.dev/app" target="_blank">Try App →</a>
+    <a class="btn" href="https://songsrt.pages.dev/" target="_blank">Landing Page</a>
+  </div>
 </section>
 
 <section class="section">
