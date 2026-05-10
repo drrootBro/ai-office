@@ -1,202 +1,411 @@
-<!-- /srt/index.html — ROOTBRO SRT LANDING PAGE -->
-<!-- Core strategy:
-1. Keep existing conversion-focused SongSRT logic
-2. Rebrand into RootBro ecosystem
-3. Match main RootBro homepage premium noir design
-4. Demo still points to Cloudflare app
-5. Preserve one CC demo backend only
--->
-
-<!-- GLOBAL REPLACEMENT GUIDE FOR YOUR CURRENT SRT LANDING PAGE -->
-
-<!-- ========================= -->
-<!-- 1. TITLE + META -->
-<!-- ========================= -->
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RootBro SRT — Built Captions for Songs</title>
-
 <meta name="description" content="RootBro SRT generates high-accuracy subtitles for songs, lyrics, and music videos. Built for creators who need better captions than generic auto-caption tools.">
 
-<!-- ========================= -->
-<!-- 2. NAVBAR -->
-<!-- Replace current LyricSync nav -->
-<!-- ========================= -->
-
-<nav>
-    <div class="nav-logo">
-        <a href="/" style="text-decoration:none;color:inherit;">
-            RootBro <span>SRT</span>
-        </a>
-    </div>
-
-    <div style="display:flex;gap:18px;align-items:center;">
-        <a href="/" style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--text2);text-decoration:none;">RootBro</a>
-        <a href="https://songsrt.pages.dev/app" class="nav-cta">Try Demo →</a>
-    </div>
-</nav>
-
-<!-- ========================= -->
-<!-- 3. HERO EYEBROW -->
-<!-- ========================= -->
-
-<div class="hero-eyebrow">
-    <span class="dot"></span>
-    RootBro Lab
-</div>
-
-<!-- ========================= -->
-<!-- 4. HERO HEADLINE -->
-<!-- ========================= -->
-
-<h1>
-    Built captions<br>
-    for your <em>songs.</em><br>
-    <span class="green">Not generic speech.</span>
-</h1>
-
-<!-- ========================= -->
-<!-- 5. HERO SUBTEXT -->
-<!-- ========================= -->
-
-<p class="hero-sub">
-    Generic auto-captions were built for speech — not music. RootBro SRT creates fast, high-accuracy subtitles for songs, lyric videos, and music creators who need cleaner captions with less fixing.
-</p>
-
-<!-- ========================= -->
-<!-- 6. HERO BUTTONS -->
-<!-- ========================= -->
-
-<div class="hero-actions">
-    <a href="https://songsrt.pages.dev/app" class="btn-primary">Launch Demo →</a>
-    <a href="#demo" class="btn-ghost">Watch Demo</a>
-</div>
-
-<p class="hero-note">RootBro Lab · Browser-based · No install</p>
-
-<!-- ========================= -->
-<!-- 7. SECTION TITLE -->
-<!-- Replace “CapCut gets your lyrics completely wrong” -->
-<!-- ========================= -->
-
-<h2 class="section-title">Auto captions were not built for songs.</h2>
-
-<p class="section-sub">
-Speech tools miss lyrics, break timing, and force creators to waste hours fixing subtitles by hand. RootBro SRT was built specifically for song workflows.
-</p>
-
-<!-- ========================= -->
-<!-- 8. DEMO SECTION -->
-<!-- ========================= -->
-
-<h2 class="section-title">See RootBro SRT in action.</h2>
-
-<p class="section-sub">
-From raw song audio to ready-to-use SRT in minutes.
-</p>
-
-<!-- ========================= -->
-<!-- 9. FEATURES SECTION -->
-<!-- ========================= -->
-
-<h2 class="section-title">Built for creators.<br>Designed for song workflows.</h2>
-
-<!-- ========================= -->
-<!-- 10. CTA SECTION -->
-<!-- ========================= -->
-
-<h2>Stop fixing subtitles.<br>Start creating.</h2>
-
-<p>Launch RootBro SRT and generate your first song subtitle file now.</p>
-
-<a href="https://songsrt.pages.dev/app" class="btn-primary">Launch Demo →</a>
-
-<!-- ========================= -->
-<!-- 11. FOOTER -->
-<!-- ========================= -->
-
-<footer>
-    <div>© 2026 RootBro SRT · RootBro Lab</div>
-
-    <div style="display:flex;gap:24px;">
-        <a href="/">RootBro</a>
-        <a href="https://songsrt.pages.dev/app">App</a>
-        <a href="#features">Features</a>
-        <a href="#demo">Demo</a>
-    </div>
-</footer>
-
-<!-- ========================= -->
-<!-- 12. COLOR SYSTEM UPGRADE -->
-<!-- Keep your current structure, but shift slightly toward RootBro -->
-<!-- ========================= -->
-
+<style>
 :root {
-    --ink: #080808;
-    --ink2: #1a1a1f;
-    --bg: #0a0a0f;
-    --card: #111114;
-    --card2: #16161b;
-
-    --accent: #c8a45d;     /* RootBro muted gold */
-    --accent2: #2d6a4f;    /* Dark green */
-    
-    --text: #f4efe4;
-    --text2: #b8ad9a;
-
-    --border: rgba(200,164,93,.14);
+  --bg:#080808;
+  --panel:rgba(15,15,15,.86);
+  --panel2:#111114;
+  --text:#f4efe4;
+  --muted:#b8ad9a;
+  --gold:#c8a45d;
+  --gold2:#e2c985;
+  --green:#2d6a4f;
+  --border:rgba(200,164,93,.22);
 }
 
-<!-- ========================= -->
-<!-- 13. LOGO BRAND SHIFT -->
-<!-- Current:
-LyricSync
--->
-<!-- Replace visual emphasis:
-RootBro SRT
--->
+*{box-sizing:border-box;margin:0;padding:0}
 
-<!-- ========================= -->
-<!-- 14. STRATEGIC COPY SHIFT -->
-<!-- Replace all “Perfect subtitles for Suno songs” -->
-<!-- With broader:
-Built captions for songs.
--->
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,Montserrat,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
 
-<!-- Reason:
-Avoid Suno lock-in
-Broader market
-More future-proof
--->
+a{text-decoration:none;color:inherit}
 
-<!-- ========================= -->
-<!-- 15. URL STRATEGY -->
-<!-- GitHub:
-rootbro.com/srt
--->
-<!-- Demo:
-songsrt.pages.dev/app
--->
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:20;
+  padding:22px 6vw;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:linear-gradient(to bottom,rgba(0,0,0,.8),rgba(0,0,0,0));
+}
 
-<!-- This preserves:
-- RootBro branding
-- Existing CC app backend
-- No duplicate infrastructure
--->
+.logo{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:28px;
+  color:var(--gold2);
+  letter-spacing:.04em;
+}
 
-<!-- ========================= -->
-<!-- FINAL POSITIONING -->
-<!-- ========================= -->
+.logo span{color:var(--text)}
 
-<!-- RootBro Homepage:
-Q45 / Music / TCM / Lab
+nav{
+  display:flex;
+  gap:26px;
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
 
-Lab:
-SRT
+nav a:hover{color:var(--gold2)}
 
-SRT:
-rootbro.com/srt
--->
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding:140px 6vw 90px;
+  background:
+    radial-gradient(circle at 70% 30%,rgba(200,164,93,.12),transparent 34%),
+    radial-gradient(circle at 20% 70%,rgba(45,106,79,.18),transparent 36%),
+    linear-gradient(to bottom,rgba(0,0,0,.45),rgba(0,0,0,.92)),
+    #080808;
+}
 
-<!-- One-line brand:
-RootBro SRT — Built captions for songs.
--->
+.hero-inner{
+  max-width:850px;
+}
+
+.kicker{
+  color:var(--gold);
+  font-size:13px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  margin-bottom:24px;
+}
+
+h1{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(48px,7vw,92px);
+  line-height:.98;
+  font-weight:500;
+  margin-bottom:30px;
+}
+
+h1 em{
+  color:var(--gold2);
+  font-style:normal;
+}
+
+.hero p{
+  max-width:680px;
+  color:var(--muted);
+  font-size:clamp(18px,2vw,23px);
+  line-height:1.6;
+  margin-bottom:36px;
+}
+
+.btn-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+}
+
+.btn{
+  display:inline-block;
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:15px 24px;
+  font-size:13px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  transition:.22s ease;
+}
+
+.btn.primary{
+  background:var(--gold);
+  border-color:var(--gold);
+  color:#111;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  border-color:var(--gold2);
+}
+
+.note{
+  margin-top:22px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.section{
+  padding:90px 6vw;
+}
+
+.section-title{
+  max-width:850px;
+  margin-bottom:42px;
+}
+
+.section-title .label{
+  color:var(--gold);
+  font-size:12px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+
+.section-title h2{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(34px,4.5vw,58px);
+  line-height:1.08;
+  font-weight:500;
+  margin-bottom:16px;
+}
+
+.section-title p{
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.65;
+}
+
+.compare{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:26px;
+  padding:30px;
+  backdrop-filter:blur(12px);
+}
+
+.card h3{
+  font-family:Georgia,"Times New Roman",serif;
+  color:var(--gold2);
+  font-size:28px;
+  margin-bottom:18px;
+}
+
+.srt{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  font-size:13px;
+  line-height:1.9;
+  color:var(--muted);
+}
+
+.bad{color:#d46a6a;text-decoration:line-through}
+.good{color:#95d0a7}
+.time{color:var(--gold)}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.feature{
+  min-height:230px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:28px;
+}
+
+.feature h3{
+  color:var(--gold2);
+  font-size:21px;
+  margin-bottom:12px;
+}
+
+.feature p{
+  color:var(--muted);
+  line-height:1.65;
+}
+
+.demo-box{
+  aspect-ratio:16/9;
+  border:1px solid var(--border);
+  border-radius:28px;
+  background:
+    radial-gradient(circle at center,rgba(200,164,93,.13),transparent 42%),
+    var(--panel2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:var(--muted);
+}
+
+.demo-box strong{
+  display:block;
+  color:var(--gold2);
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.final-cta{
+  text-align:center;
+  padding:110px 6vw 120px;
+  background:radial-gradient(circle at center,rgba(200,164,93,.1),transparent 48%);
+}
+
+.final-cta h2{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(38px,5vw,66px);
+  font-weight:500;
+  margin-bottom:18px;
+}
+
+.final-cta p{
+  color:var(--muted);
+  font-size:18px;
+  margin-bottom:34px;
+}
+
+footer{
+  border-top:1px solid var(--border);
+  padding:38px 6vw;
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+  color:var(--muted);
+  font-size:13px;
+}
+
+footer a{margin-left:20px;color:var(--muted)}
+footer a:hover{color:var(--gold2)}
+
+@media(max-width:850px){
+  .compare,.grid{grid-template-columns:1fr}
+  header{flex-direction:column;align-items:flex-start;gap:14px}
+  nav{flex-wrap:wrap;gap:16px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="/">RootBro <span>SRT</span></a>
+  <nav>
+    <a href="/">RootBro</a>
+    <a href="/music">Music</a>
+    <a href="/lab">Lab</a>
+    <a href="https://songsrt.pages.dev/app">Try Demo</a>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="kicker">RootBro Lab</div>
+    <h1>Built captions for <em>songs.</em><br>Not generic speech.</h1>
+    <p>Generic auto-captions were built for talking heads, not music. RootBro SRT helps creators generate cleaner subtitles for songs, lyric videos, and music-driven content with far less manual fixing.</p>
+    <div class="btn-row">
+      <a class="btn primary" href="https://songsrt.pages.dev/app">Launch Demo</a>
+      <a class="btn" href="#demo">See How It Works</a>
+    </div>
+    <div class="note">Browser-based workflow · SRT export · Built for music creators</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">
+    <div class="label">The Problem</div>
+    <h2>Auto captions were not built for songs.</h2>
+    <p>Music creates problems that speech-caption tools handle poorly: melody, stretched syllables, background instrumentation, mixed languages, and lyric timing.</p>
+  </div>
+
+  <div class="compare">
+    <div class="card">
+      <h3>Generic Auto-Caption</h3>
+      <div class="srt">
+        <div><span class="time">00:00:17,000</span></div>
+        <div class="bad">He said man need like a mountain</div>
+        <br>
+        <div><span class="time">00:01:03,333</span></div>
+        <div class="bad">outside shell bright inside wasted</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>RootBro SRT</h3>
+      <div class="srt">
+        <div><span class="time">00:00:17,000 → 00:00:22,000</span></div>
+        <div class="good">They said a man must stand like a mountain.</div>
+        <br>
+        <div><span class="time">00:01:03,333 → 00:01:08,000</span></div>
+        <div class="good">The brighter the shell, the emptier inside.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="demo">
+  <div class="section-title">
+    <div class="label">Demo</div>
+    <h2>From song audio to usable SRT.</h2>
+    <p>Launch the current demo on Cloudflare. The RootBro page stays as the brand landing page; the app remains a single live demo.</p>
+  </div>
+
+  <a href="https://songsrt.pages.dev/app" class="demo-box">
+    <div>
+      <strong>Launch RootBro SRT Demo</strong>
+      <span>Open the working app →</span>
+    </div>
+  </a>
+</section>
+
+<section class="section">
+  <div class="section-title">
+    <div class="label">Features</div>
+    <h2>Designed for song workflows.</h2>
+  </div>
+
+  <div class="grid">
+    <div class="feature">
+      <h3>Song-first captions</h3>
+      <p>Built around lyric timing, music phrasing, and creator video workflows instead of generic speech transcription.</p>
+    </div>
+
+    <div class="feature">
+      <h3>SRT export</h3>
+      <p>Generate standard subtitle files for CapCut, Premiere, DaVinci Resolve, YouTube, and music video editing.</p>
+    </div>
+
+    <div class="feature">
+      <h3>Less manual fixing</h3>
+      <p>Reduce the repetitive subtitle cleanup that makes lyric videos and short-form music clips slow to produce.</p>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <h2>Stop fixing song subtitles by hand.</h2>
+  <p>Use RootBro SRT and get back to creating.</p>
+  <a class="btn primary" href="https://songsrt.pages.dev/app">Launch Demo</a>
+</section>
+
+</main>
+
+<footer>
+  <div>© 2026 RootBro SRT · RootBro Lab</div>
+  <div>
+    <a href="/">RootBro</a>
+    <a href="/music">Music</a>
+    <a href="/lab">Lab</a>
+    <a href="https://songsrt.pages.dev/app">App</a>
+  </div>
+</footer>
+
+</body>
+</html>
