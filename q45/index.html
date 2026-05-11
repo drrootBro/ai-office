@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q45 — RootBro Relationship System</title>
+<meta name="description" content="Q45 is a structured relationship framework for diagnosing silence, intimacy loss, betrayal, boundaries, emotional drift, and long-term compatibility.">
+
+<style>
+:root{
+  --bg:#080808;
+  --panel:rgba(15,15,15,.86);
+  --text:#f4efe4;
+  --muted:#b8ad9a;
+  --gold:#c8a45d;
+  --gold2:#e2c985;
+  --green:#2d6a4f;
+  --border:rgba(200,164,93,.22);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:
+    radial-gradient(circle at 20% 0%,rgba(200,164,93,.08),transparent 32%),
+    radial-gradient(circle at 80% 100%,rgba(45,106,79,.12),transparent 34%),
+    linear-gradient(to bottom,#080808,#0b0b0c);
+  color:var(--text);
+  font-family:Inter,Montserrat,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+a{text-decoration:none;color:inherit}
+header{
+  position:fixed;top:0;width:100%;z-index:20;
+  padding:22px 6vw;display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(to bottom,rgba(0,0,0,.78),rgba(0,0,0,0));
+}
+.logo{font-family:Georgia,"Times New Roman",serif;font-size:30px;color:var(--gold2)}
+nav{display:flex;gap:28px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+nav a:hover{color:var(--gold2)}
+
+.hero{min-height:92vh;display:flex;align-items:center;padding:140px 6vw 90px}
+.hero-inner{max-width:920px}
+.kicker{color:var(--gold);font-size:13px;letter-spacing:.28em;text-transform:uppercase;margin-bottom:24px}
+h1{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(58px,8vw,112px);
+  line-height:.96;font-weight:500;margin-bottom:28px;
+}
+.hero p{color:var(--muted);font-size:clamp(18px,2vw,24px);line-height:1.65;max-width:760px;margin-bottom:36px}
+.btn-row{display:flex;gap:16px;flex-wrap:wrap}
+.btn{
+  border:1px solid var(--border);border-radius:999px;padding:14px 22px;
+  font-size:12px;letter-spacing:.13em;text-transform:uppercase;transition:.22s;
+}
+.btn.primary{background:var(--gold);color:#111;border-color:var(--gold)}
+.btn:hover{transform:translateY(-2px);border-color:var(--gold2)}
+
+.section{padding:90px 6vw}
+.section-title{max-width:900px;margin-bottom:42px}
+.section-title h2{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(36px,4.5vw,62px);
+  font-weight:500;margin-bottom:14px;
+}
+.section-title p{color:var(--muted);font-size:18px;line-height:1.7}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.panel{
+  background:var(--panel);border:1px solid var(--border);border-radius:30px;
+  padding:36px;box-shadow:0 18px 60px rgba(0,0,0,.35);
+}
+.panel h3{font-family:Georgia,"Times New Roman",serif;color:var(--gold2);font-size:34px;margin-bottom:16px;font-weight:500}
+.panel p{color:var(--muted);line-height:1.75;margin-bottom:18px}
+
+.domain-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.domain{
+  background:rgba(255,255,255,.035);border:1px solid var(--border);border-radius:22px;
+  padding:22px;min-height:150px;
+}
+.domain .num{color:var(--gold);font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px}
+.domain h3{font-size:18px;color:var(--gold2);margin-bottom:8px}
+.domain p{color:var(--muted);font-size:14px;line-height:1.55}
+
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.scenario{
+  background:var(--panel);border:1px solid var(--border);border-radius:26px;
+  padding:28px;min-height:230px;transition:.22s;
+}
+.scenario:hover{transform:translateY(-4px);border-color:rgba(226,201,133,.46)}
+.scenario .q{color:var(--gold);font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px}
+.scenario h3{font-family:Georgia,"Times New Roman",serif;font-size:26px;color:var(--text);font-weight:500;line-height:1.25;margin-bottom:12px}
+.scenario p{color:var(--muted);line-height:1.6}
+
+.format-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.format{
+  background:linear-gradient(145deg,rgba(200,164,93,.08),rgba(255,255,255,.018)),var(--panel);
+  border:1px solid var(--border);border-radius:28px;padding:32px;
+}
+.format h3{font-family:Georgia,"Times New Roman",serif;font-size:32px;color:var(--gold2);font-weight:500;margin-bottom:12px}
+.format p{color:var(--muted);line-height:1.65;margin-bottom:22px}
+
+.quote-section{
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:radial-gradient(circle at center,rgba(200,164,93,.07),transparent 52%);
+}
+.quote{
+  max-width:980px;font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(34px,4.8vw,66px);line-height:1.22;font-weight:500;margin-bottom:24px;
+}
+.quote-sub{max-width:760px;color:var(--muted);font-size:18px;line-height:1.75}
+
+.cta{text-align:center;padding:110px 6vw 120px;background:radial-gradient(circle at center,rgba(200,164,93,.1),transparent 48%)}
+.cta h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(40px,5vw,70px);font-weight:500;margin-bottom:18px}
+.cta p{color:var(--muted);font-size:18px;margin-bottom:34px}
+
+footer{
+  border-top:1px solid var(--border);padding:38px 6vw;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;color:var(--muted);font-size:13px;
+}
+footer a{margin-left:20px;color:var(--muted)}
+footer a:hover{color:var(--gold2)}
+
+@media(max-width:980px){
+  .two-col,.domain-grid,.scenario-grid,.format-grid{grid-template-columns:1fr}
+  header{flex-direction:column;align-items:flex-start;gap:14px;position:static}
+  nav{flex-wrap:wrap;gap:16px}
+  .hero{padding-top:70px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="/">RootBro</a>
+  <nav>
+    <a href="/q45">Q45</a>
+    <a href="/music">Music</a>
+    <a href="/tcm">TCM</a>
+    <a href="/lab">Lab</a>
+    <a href="/srt">SRT</a>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="kicker">RootBro Relationship System</div>
+    <h1>Q45<br>Love is a system, not a feeling.</h1>
+    <p>A structured framework for diagnosing silence, intimacy loss, betrayal, emotional drift, boundaries, and long-term compatibility.</p>
+    <div class="btn-row">
+      <a class="btn primary" href="/q45/demo">Try Scenario Demo</a>
+      <a class="btn" href="https://play.google.com/store/audiobooks/details/Dr_RootBro_Marriage_Confusion_Revealing_What_Your?id=AQAAAEDqD1RPrM">Listen Audiobook</a>
+      <a class="btn" href="https://www.amazon.com/dp/B0GCQ6CJ1D">Read Kindle</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">
+    <h2>Most relationships do not collapse in one moment.</h2>
+    <p>They erode through patterns people misread: silence, resentment, intimacy drift, hidden imbalance, unclear boundaries, and delayed accountability.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>What Q45 does</h3>
+      <p>Q45 turns relationship confusion into structured pattern recognition. Instead of asking “Do they love me?”, it asks what is actually breaking: alignment, desire, trust, responsibility, communication, boundaries, or long-term viability.</p>
+    </div>
+
+    <div class="panel">
+      <h3>What it is not</h3>
+      <p>It is not romantic comfort talk. It is not random advice. It is a practical diagnostic framework for people who need clarity before making serious emotional decisions.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">
+    <h2>The 14 diagnostic domains.</h2>
+    <p>Q45 covers 45 relationship questions across the major structural failure points in modern relationships.</p>
+  </div>
+
+  <div class="domain-grid">
+    <div class="domain"><div class="num">01</div><h3>Core Alignment</h3><p>Conversation, values, resonance, future plans.</p></div>
+    <div class="domain"><div class="num">02</div><h3>Physical Intimacy</h3><p>Desire loss, mismatch, avoidance, betrayal.</p></div>
+    <div class="domain"><div class="num">03</div><h3>Mental Load</h3><p>Responsibility, effort, money, family treatment.</p></div>
+    <div class="domain"><div class="num">04</div><h3>Three Pillars</h3><p>Connection, sex, commitment, and imbalance.</p></div>
+    <div class="domain"><div class="num">05</div><h3>Save or Walk Away</h3><p>Repairability, change, reunion, exit signals.</p></div>
+    <div class="domain"><div class="num">06</div><h3>Gender Insights</h3><p>Cheating, presence, admiration, emotional need.</p></div>
+    <div class="domain"><div class="num">07</div><h3>Modern Red Flags</h3><p>Social media, exes, hidden social worlds.</p></div>
+    <div class="domain"><div class="num">08</div><h3>Life Transitions</h3><p>Baby, moving in, job stress, neglect.</p></div>
+    <div class="domain"><div class="num">09</div><h3>Communication</h3><p>Hard conversations, dissatisfaction, dismissal.</p></div>
+    <div class="domain"><div class="num">10</div><h3>Boundaries</h3><p>Control, phone checking, whereabouts, autonomy.</p></div>
+    <div class="domain"><div class="num">11</div><h3>Money & Values</h3><p>Financial conflict and marriage viability.</p></div>
+    <div class="domain"><div class="num">12</div><h3>Family Systems</h3><p>Parents, enmeshment, marriage boundaries.</p></div>
+    <div class="domain"><div class="num">13</div><h3>Attachment Depth</h3><p>Avoidance, emotional depth, effort imbalance.</p></div>
+    <div class="domain"><div class="num">14</div><h3>Controversial Topics</h3><p>Open relationships, risk, reversibility, contract breach.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">
+    <h2>Start with the situations that feel familiar.</h2>
+    <p>The interactive demo lets you choose a scenario and hear a 60-second coaching preview.</p>
+  </div>
+
+  <div class="scenario-grid">
+    <div class="scenario"><div class="q">Q1</div><h3>“We don’t fight. We just don’t talk anymore.”</h3><p>When silence becomes more frightening than conflict.</p></div>
+    <div class="scenario"><div class="q">Q7</div><h3>“I still love them… I just don’t want them physically anymore.”</h3><p>When attraction disappears while the relationship still functions.</p></div>
+    <div class="scenario"><div class="q">Q10</div><h3>“They cheated… and somehow it became my fault.”</h3><p>When betrayal gets reframed as your responsibility.</p></div>
+    <div class="scenario"><div class="q">Q31</div><h3>“They laugh with others… but I’m called insecure.”</h3><p>When social boundaries become unclear.</p></div>
+    <div class="scenario"><div class="q">Q44</div><h3>“I feel like I’m carrying this relationship alone.”</h3><p>When effort imbalance becomes chronic.</p></div>
+    <div class="scenario"><div class="q">Q45</div><h3>“They proposed an open relationship.”</h3><p>When freedom, risk, and irreversibility collide.</p></div>
+  </div>
+
+  <div class="btn-row" style="margin-top:32px;">
+    <a class="btn primary" href="/q45/demo">Explore Scenario Demo</a>
+  </div>
+</section>
+
+<section class="section quote-section">
+  <div class="quote">You do not need more random advice. You need pattern recognition.</div>
+  <div class="quote-sub">Q45 is built for people asking whether the problem is normal stress, emotional drift, structural incompatibility, or a signal that the relationship has crossed a line.</div>
+</section>
+
+<section class="section">
+  <div class="section-title">
+    <h2>Choose your entry point.</h2>
+    <p>Start lightly with scenario previews, or go deeper through the audiobook and Kindle edition.</p>
+  </div>
+
+  <div class="format-grid">
+    <div class="format">
+      <h3>Interactive Demo</h3>
+      <p>Select a situation and review a calm diagnosis card with a short audio preview.</p>
+      <a class="btn primary" href="/q45/demo">Try Demo</a>
+    </div>
+
+    <div class="format">
+      <h3>Audiobook</h3>
+      <p>Listen to the complete Q45 framework in a structured long-form format.</p>
+      <a class="btn" href="https://play.google.com/store/audiobooks/details/Dr_RootBro_Marriage_Confusion_Revealing_What_Your?id=AQAAAEDqD1RPrM">Listen Audiobook</a>
+    </div>
+
+    <div class="format">
+      <h3>Kindle</h3>
+      <p>Read the full written version of Marriage Confusion and work through the 45 questions.</p>
+      <a class="btn" href="https://www.amazon.com/dp/B0GCQ6CJ1D">Read Kindle</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>If something feels off, start with structure.</h2>
+  <p>Choose one situation. Read the diagnosis. Hear the preview. Then decide what deserves deeper attention.</p>
+  <a class="btn primary" href="/q45/demo">Try Scenario Demo</a>
+</section>
+
+</main>
+
+<footer>
+  <div>© 2026 RootBro Q45. All rights reserved.</div>
+  <div>
+    <a href="/">RootBro</a>
+    <a href="/music">Music</a>
+    <a href="/tcm">TCM</a>
+    <a href="/lab">Lab</a>
+    <a href="/srt">SRT</a>
+  </div>
+</footer>
+
+</body>
+</html>
