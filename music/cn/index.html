@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RootBro Music — 中文目录</title>
+  <meta name="description" content="RootBro Music 中文歌曲目录：危险的爱情。" />
+
+  <style>
+    :root {
+      --bg: #080808;
+      --panel: rgba(18, 17, 14, 0.92);
+      --panel2: rgba(32, 28, 20, 0.82);
+      --text: #f4efe4;
+      --muted: #b9ad9c;
+      --gold: #d8b45f;
+      --line: rgba(216, 180, 95, 0.22);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(216,180,95,.08), transparent 35%),
+        linear-gradient(180deg, #050505, #0a0a0a);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 28px 60px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      margin-bottom: 36px;
+    }
+
+    .brand {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 34px;
+      color: var(--gold);
+      letter-spacing: -0.04em;
+      text-decoration: none;
+    }
+
+    nav {
+      display: flex;
+      gap: 26px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+    }
+
+    .album-card {
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      padding: 64px 64px 58px;
+      background:
+        linear-gradient(145deg, var(--panel2), var(--panel)),
+        radial-gradient(circle at top right, rgba(216,180,95,.08), transparent 35%);
+      box-shadow: 0 24px 80px rgba(0,0,0,.45);
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      letter-spacing: .44em;
+      font-size: 15px;
+      margin-bottom: 42px;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+      font-size: clamp(58px, 9vw, 104px);
+      line-height: .98;
+      margin: 0 0 34px;
+      letter-spacing: -0.055em;
+      font-weight: 500;
+    }
+
+    .desc {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 27px;
+      line-height: 1.75;
+      margin-bottom: 54px;
+    }
+
+    .track-list {
+      border-top: 1px solid var(--line);
+    }
+
+    .track {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 22px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 24px;
+      line-height: 1.35;
+    }
+
+    .track em {
+      font-style: normal;
+      color: rgba(185,173,156,.72);
+      white-space: nowrap;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 34px;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: .18em;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 700px) {
+      .wrap { padding: 24px 22px 48px; }
+
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 28px;
+      }
+
+      nav { gap: 18px; }
+
+      nav a {
+        font-size: 13px;
+        letter-spacing: .24em;
+      }
+
+      .album-card {
+        padding: 42px 30px 38px;
+        border-radius: 30px;
+      }
+
+      .eyebrow {
+        font-size: 13px;
+        letter-spacing: .34em;
+        margin-bottom: 34px;
+      }
+
+      h1 {
+        font-size: 58px;
+      }
+
+      .desc {
+        font-size: 22px;
+        line-height: 1.7;
+      }
+
+      .track {
+        font-size: 19px;
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <header>
+      <a class="brand" href="/">RootBro</a>
+      <nav aria-label="Main navigation">
+        <a href="/q45/">Q45</a>
+        <a href="/music/">Music</a>
+        <a href="/tcm/">TCM</a>
+        <a href="/lab/">Lab</a>
+        <a href="/srt/">SRT</a>
+      </nav>
+    </header>
+
+    <section class="album-card">
+      <div class="eyebrow">专辑 A · 中文目录</div>
+
+      <h1>危险的爱情</h1>
+
+      <p class="desc">
+        关于吸引、背叛、忠诚、边界，以及那些在信任崩塌前早已存在的裂缝。
+      </p>
+
+      <div class="track-list">
+        <div class="track"><span>01 · 不纵容</span><em>待发布</em></div>
+        <div class="track"><span>02 · 蚕食</span><em>待发布</em></div>
+        <div class="track"><span>03 · 偏心</span><em>待发布</em></div>
+        <div class="track"><span>04 · 鬼魂</span><em>待发布</em></div>
+        <div class="track"><span>05 · 假装</span><em>待发布</em></div>
+        <div class="track"><span>06 · 止损</span><em>待发布</em></div>
+        <div class="track"><span>07 · 纸老虎</span><em>待发布</em></div>
+        <div class="track"><span>08 · 美人计</span><em>待发布</em></div>
+      </div>
+
+      <a class="back" href="/music/">Back to Music</a>
+    </section>
+  </main>
+</body>
+</html>
