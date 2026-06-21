@@ -5,12 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>MedEar Spanish — Medical Communication Assistant</title>
-
-<meta name="description"
-content="MedEar Spanish helps Spanish-speaking patients and English-speaking clinicians communicate more clearly during healthcare visits.">
+<meta name="description" content="MedEar Spanish helps Spanish-speaking patients and English-speaking clinicians communicate more clearly during healthcare visits.">
 
 <style>
-
 :root{
     --bg:#080808;
     --panel:rgba(15,15,15,.86);
@@ -28,7 +25,9 @@ content="MedEar Spanish helps Spanish-speaking patients and English-speaking cli
 }
 
 body{
-    background:#080808;
+    background:
+        radial-gradient(circle at 20% 0%,rgba(200,164,93,.08),transparent 30%),
+        linear-gradient(to bottom,#080808,#0b0b0c);
     color:var(--text);
     font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
@@ -38,13 +37,46 @@ a{
     color:inherit;
 }
 
+header{
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:20;
+    padding:22px 6vw;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:linear-gradient(to bottom,rgba(0,0,0,.82),rgba(0,0,0,0));
+}
+
+.logo{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:30px;
+    color:var(--gold2);
+    letter-spacing:.04em;
+}
+
+nav{
+    display:flex;
+    gap:30px;
+    font-size:12px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+    flex-wrap:wrap;
+}
+
+nav a:hover{
+    color:var(--gold2);
+}
+
 .container{
     width:min(1100px,92%);
     margin:auto;
 }
 
 .hero{
-    padding:120px 0 80px;
+    padding:170px 0 80px;
 }
 
 .kicker{
@@ -56,7 +88,7 @@ a{
 }
 
 h1{
-    font-family:Georgia,serif;
+    font-family:Georgia,"Times New Roman",serif;
     font-size:clamp(52px,8vw,92px);
     line-height:.95;
     font-weight:500;
@@ -84,6 +116,7 @@ h1{
     font-size:12px;
     letter-spacing:.12em;
     text-transform:uppercase;
+    transition:.22s;
 }
 
 .btn.primary{
@@ -92,12 +125,17 @@ h1{
     border-color:var(--gold);
 }
 
+.btn:hover{
+    transform:translateY(-2px);
+    border-color:var(--gold2);
+}
+
 .section{
     padding:80px 0;
 }
 
 .section h2{
-    font-family:Georgia,serif;
+    font-family:Georgia,"Times New Roman",serif;
     font-size:46px;
     margin-bottom:18px;
     font-weight:500;
@@ -151,16 +189,14 @@ h1{
     border-radius:24px;
     overflow:hidden;
     border:1px solid var(--border);
+    background:#000;
 }
 
 .video iframe{
     width:100%;
     aspect-ratio:16/9;
     border:none;
-}
-
-.usecase{
-    margin-top:30px;
+    display:block;
 }
 
 .dialog{
@@ -176,146 +212,182 @@ h1{
 }
 
 footer{
-    padding:40px 0;
     border-top:1px solid var(--border);
+    padding:40px 0;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:20px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+footer a{
+    margin-left:18px;
     color:var(--muted);
 }
 
+footer a:hover{
+    color:var(--gold2);
+}
+
 @media(max-width:900px){
+    .steps{
+        grid-template-columns:1fr;
+    }
 
-.steps{
-    grid-template-columns:1fr;
+    .hero p{
+        font-size:19px;
+    }
 }
 
-.hero p{
-    font-size:19px;
-}
+@media(max-width:760px){
+    header{
+        position:absolute;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:14px;
+        padding:18px 6vw;
+    }
 
-}
+    nav{
+        gap:16px;
+    }
 
+    .hero{
+        padding:190px 0 64px;
+    }
+
+    footer a{
+        margin-left:0;
+        margin-right:16px;
+    }
+}
 </style>
 </head>
 
 <body>
 
+<header>
+    <a class="logo" href="/">RootBro</a>
+
+    <nav>
+        <a href="/q45">Q45</a>
+        <a href="/music">Music</a>
+        <a href="/tcm">TCM</a>
+        <a href="/lab">Lab</a>
+        <a href="/srt">SRT</a>
+    </nav>
+</header>
+
 <div class="container">
 
 <section class="hero">
+    <div class="kicker">Live Product</div>
 
-<div class="kicker">
-Live Product
-</div>
+    <h1>MedEar Spanish</h1>
 
-<h1>MedEar Spanish</h1>
+    <p>
+        AI-powered medical communication assistant designed to help Spanish-speaking patients and English-speaking clinicians communicate more clearly during healthcare visits.
+    </p>
 
-<p>
-AI-powered medical communication assistant designed to help Spanish-speaking patients and English-speaking clinicians communicate more clearly during healthcare visits.
-</p>
+    <div class="btn-row">
+        <a class="btn primary"
+           href="https://apps.apple.com/us/app/medear-spanish/id6776947808"
+           target="_blank">
+            Download for iPhone
+        </a>
 
-<div class="btn-row">
+        <a class="btn" href="#demo">
+            Watch Demo
+        </a>
 
-<a class="btn primary"
-href="https://apps.apple.com/us/app/medear-spanish/id6776947808"
-target="_blank">
-App Store
-</a>
-
-<a class="btn"
-href="#">
-Google Play (Coming Soon)
-</a>
-
-</div>
-
+        <a class="btn" href="/lab">
+            Back to Lab
+        </a>
+    </div>
 </section>
 
 <section class="section">
+    <h2>How it works</h2>
 
-<h2>How it works</h2>
+    <div class="steps">
+        <div class="step">
+            <div class="step-number">Step 01</div>
+            <h3>Choose a Role</h3>
+            <p>Select Patient or Clinician.</p>
+        </div>
 
-<div class="steps">
+        <div class="step">
+            <div class="step-number">Step 02</div>
+            <h3>Speak Naturally</h3>
+            <p>Talk normally in your preferred language.</p>
+        </div>
 
-<div class="step">
-<div class="step-number">Step 01</div>
-<h3>Choose a Role</h3>
-<p>Select Patient or Clinician.</p>
-</div>
+        <div class="step">
+            <div class="step-number">Step 03</div>
+            <h3>See Translation</h3>
+            <p>MedEar displays the translated message instantly.</p>
+        </div>
 
-<div class="step">
-<div class="step-number">Step 02</div>
-<h3>Speak Naturally</h3>
-<p>Talk normally in your preferred language.</p>
-</div>
+        <div class="step">
+            <div class="step-number">Step 04</div>
+            <h3>Continue Conversation</h3>
+            <p>Reduce misunderstandings and communicate more clearly.</p>
+        </div>
+    </div>
+</section>
 
-<div class="step">
-<div class="step-number">Step 03</div>
-<h3>See Translation</h3>
-<p>MedEar displays the translated message instantly.</p>
-</div>
+<section class="section" id="demo">
+    <h2>Demo Video</h2>
 
-<div class="step">
-<div class="step-number">Step 04</div>
-<h3>Continue Conversation</h3>
-<p>Reduce misunderstandings and communicate more clearly.</p>
-</div>
+    <div class="card">
+        <p>
+            A simple demonstration showing how MedEar can assist communication during a healthcare visit.
+        </p>
 
-</div>
-
+        <div class="video">
+            <iframe
+                src="https://www.youtube.com/embed/VIDEO_ID"
+                title="MedEar Spanish Demo"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
 </section>
 
 <section class="section">
+    <h2>Example Use Case</h2>
 
-<h2>Demo Video</h2>
+    <div class="dialog">
+        <p>
+            <strong>Clinician:</strong><br>
+            Where does it hurt?
+        </p>
 
-<div class="card">
+        <p>
+            <strong>Patient:</strong><br>
+            Me duele el pecho desde esta mañana.
+        </p>
 
-<p>
-A simple demonstration showing how MedEar can assist communication during a healthcare visit.
-</p>
-
-<div class="video">
-
-<!-- 替换成你的 YouTube 视频ID -->
-
-<iframe
-src="https://www.youtube.com/embed/VIDEO_ID">
-</iframe>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="section">
-
-<h2>Example Use Case</h2>
-
-<div class="dialog">
-
-<p>
-<strong>Clinician:</strong><br>
-Where does it hurt?
-</p>
-
-<p>
-<strong>Patient:</strong><br>
-Me duele el pecho desde esta mañana.
-</p>
-
-<p>
-<strong>Translation:</strong><br>
-My chest has been hurting since this morning.
-</p>
-
-</div>
-
+        <p>
+            <strong>Translation:</strong><br>
+            My chest has been hurting since this morning.
+        </p>
+    </div>
 </section>
 
 <footer>
+    <div>© 2026 RootBro. All rights reserved.</div>
 
-MedEar Spanish · RootBro Lab
-
+    <div>
+        <a href="/">RootBro</a>
+        <a href="/music">Music</a>
+        <a href="/q45">Q45</a>
+        <a href="/tcm">Body</a>
+        <a href="/lab">Lab</a>
+        <a href="/srt">SRT</a>
+    </div>
 </footer>
 
 </div>
