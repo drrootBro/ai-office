@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -7,23 +6,18 @@
 <title>RootBro — Relationships, Recovery, Music, and Tools</title>
 <meta name="description" content="RootBro builds systems for relationship clarity, body recovery, cinematic music, and practical creator tools.">
 
-<link rel="stylesheet" href="/assets/style.css">
-
 <style>
 :root {
     --bg: #080808;
-    --panel: rgba(15, 15, 15, 0.82);
+    --panel: rgba(15, 15, 15, 0.84);
     --text: #f4efe4;
     --muted: #b8ad9a;
     --gold: #c8a45d;
     --gold-soft: #e2c985;
     --border: rgba(200, 164, 93, 0.22);
-    --dark-green: #1f3a32;
 }
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -46,7 +40,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(to bottom, rgba(0,0,0,.72), rgba(0,0,0,0));
+    background: linear-gradient(to bottom, rgba(0,0,0,.82), rgba(0,0,0,0));
 }
 
 .logo a {
@@ -58,11 +52,12 @@ header {
 
 nav {
     display: flex;
-    gap: 34px;
-    font-size: 13px;
-    letter-spacing: 0.18em;
+    gap: 28px;
+    font-size: 12px;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--muted);
+    flex-wrap: wrap;
 }
 
 nav a:hover {
@@ -72,16 +67,15 @@ nav a:hover {
 .hero {
     min-height: 100vh;
     background:
-        linear-gradient(to bottom, rgba(0,0,0,.58), rgba(0,0,0,.25) 45%, rgba(0,0,0,.82)),
+        linear-gradient(to bottom, rgba(0,0,0,.62), rgba(0,0,0,.30) 42%, rgba(0,0,0,.88)),
         url("/assets/rootbro-home-hero.png") center center / cover no-repeat;
     display: flex;
     align-items: center;
-    padding: 120px 6vw 80px;
+    padding: 150px 6vw 90px;
 }
 
 .hero-content {
-    max-width: 780px;
-    margin-top: -40px;
+    max-width: 860px;
 }
 
 .hero-kicker {
@@ -94,35 +88,39 @@ nav a:hover {
 
 .hero h1 {
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(48px, 7vw, 96px);
-    line-height: 0.95;
+    font-size: clamp(42px, 6.4vw, 86px);
+    line-height: 1.02;
     margin: 0 0 28px;
     color: var(--text);
     font-weight: 500;
+    max-width: 840px;
 }
 
 .hero p {
-    font-size: clamp(18px, 2vw, 24px);
+    font-size: clamp(18px, 2vw, 23px);
     line-height: 1.55;
     color: var(--muted);
-    max-width: 690px;
-    margin-bottom: 34px;
+    max-width: 640px;
+    margin: 0 0 34px;
 }
 
 .cta-row {
     display: flex;
-    gap: 16px;
+    gap: 14px;
     flex-wrap: wrap;
 }
 
 .btn {
     border: 1px solid var(--border);
-    padding: 14px 22px;
+    padding: 13px 20px;
     border-radius: 999px;
-    font-size: 13px;
-    letter-spacing: 0.13em;
+    font-size: 12px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     transition: all .25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn.primary {
@@ -137,7 +135,7 @@ nav a:hover {
 }
 
 .section {
-    padding: 90px 6vw;
+    padding: 88px 6vw;
 }
 
 .section-title {
@@ -156,11 +154,12 @@ nav a:hover {
     color: var(--muted);
     font-size: 18px;
     line-height: 1.6;
+    margin: 0;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 22px;
 }
 
@@ -189,7 +188,7 @@ nav a:hover {
 .card p {
     color: var(--muted);
     line-height: 1.6;
-    margin-bottom: 24px;
+    margin: 0 0 24px;
 }
 
 .card a {
@@ -201,7 +200,7 @@ nav a:hover {
 
 .featured-grid {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 24px;
 }
 
@@ -210,11 +209,12 @@ nav a:hover {
     border: 1px solid var(--border);
     border-radius: 28px;
     padding: 38px;
+    min-width: 0;
 }
 
 .feature-card h3 {
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 38px;
+    font-size: 36px;
     margin: 0 0 14px;
     color: var(--text);
 }
@@ -223,13 +223,27 @@ nav a:hover {
     color: var(--muted);
     line-height: 1.7;
     font-size: 17px;
+    margin: 0;
+}
+
+.release-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 30px;
+    color: var(--gold-soft);
+    margin: 10px 0 18px !important;
 }
 
 .link-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: 12px;
     margin-top: 26px;
+}
+
+.link-row .btn {
+    padding: 12px 17px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
 }
 
 .about {
@@ -237,12 +251,6 @@ nav a:hover {
     border-bottom: 1px solid var(--border);
     background: radial-gradient(circle at center, rgba(200,164,93,.08), rgba(0,0,0,0) 58%);
 }
-.release-title{
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 30px;
-    color: var(--gold-soft);
-    margin: 12px 0 18px;
-}    
 
 footer {
     padding: 42px 6vw;
@@ -264,13 +272,25 @@ footer a:hover {
 }
 
 @media (max-width: 980px) {
+    header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+
     nav {
         gap: 16px;
         font-size: 11px;
     }
 
+    .hero {
+        min-height: auto;
+        padding-top: 170px;
+        padding-bottom: 88px;
+    }
+
     .grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .featured-grid {
@@ -280,24 +300,51 @@ footer a:hover {
 
 @media (max-width: 640px) {
     header {
-        align-items: flex-start;
-        gap: 14px;
-        flex-direction: column;
+        position: absolute;
         padding: 18px 6vw;
     }
 
+    .logo a {
+        font-size: 28px;
+    }
+
     nav {
-        flex-wrap: wrap;
+        gap: 14px 18px;
     }
 
     .hero {
+        min-height: 92vh;
         align-items: flex-end;
-        padding-top: 180px;
+        padding-top: 190px;
+        padding-bottom: 58px;
         background-position: center center;
     }
 
-    .hero-content {
-        margin-top: 0;
+    .hero-kicker {
+        font-size: 11px;
+        letter-spacing: 0.22em;
+    }
+
+    .hero h1 {
+        font-size: clamp(40px, 12vw, 58px);
+        line-height: 1.03;
+        margin-bottom: 22px;
+    }
+
+    .hero p {
+        font-size: 18px;
+        line-height: 1.55;
+        margin-bottom: 28px;
+    }
+
+    .btn {
+        padding: 12px 16px;
+        font-size: 11px;
+        letter-spacing: 0.09em;
+    }
+
+    .section {
+        padding: 68px 6vw;
     }
 
     .grid {
@@ -308,13 +355,24 @@ footer a:hover {
         min-height: auto;
     }
 
+    .feature-card {
+        padding: 30px 24px;
+    }
+
+    .feature-card h3 {
+        font-size: 31px;
+    }
+
+    .release-title {
+        font-size: 26px;
+    }
+
     footer a {
         margin-left: 0;
         margin-right: 16px;
     }
 }
 </style>
-
 </head>
 
 <body>
@@ -324,13 +382,12 @@ footer a:hover {
         <a href="/">RootBro</a>
     </div>
 
-<nav>
-    <a href="/q45">Q45 Relationships</a>
-    <a href="/music">Music</a>
-    <a href="/tcm">Body</a>
-    <a href="/lab">Tools</a>
-</nav>
-
+    <nav>
+        <a href="/q45">Q45 Relationships</a>
+        <a href="/music">Music</a>
+        <a href="/tcm">Body</a>
+        <a href="/lab">Tools</a>
+    </nav>
 </header>
 
 <main>
@@ -341,14 +398,13 @@ footer a:hover {
         <h1>Clarity for Relationships. Relief for the Body. Stories for the Heart.</h1>
         <p>RootBro builds practical systems for relationship clarity, body recovery, cinematic music, and creator tools.</p>
 
-    <div class="cta-row">
-        <a class="btn primary" href="/q45">Q45 Relationships</a>
-        <a class="btn" href="/music">Enter Music</a>
-        <a class="btn" href="/tcm">Body & Recovery</a>
-        <a class="btn" href="/lab">Tools</a>
+        <div class="cta-row">
+            <a class="btn primary" href="/q45">Q45 Relationships</a>
+            <a class="btn" href="/music">Enter Music</a>
+            <a class="btn" href="/tcm">Body & Recovery</a>
+            <a class="btn" href="/lab">Tools</a>
+        </div>
     </div>
-</div>
-
 </section>
 
 <section class="section">
@@ -357,30 +413,26 @@ footer a:hover {
         <p>Current flagship projects from the RootBro ecosystem.</p>
     </div>
 
-<div class="featured-grid">
-    <div class="feature-card">
-        <h3>Latest Release</h3>
-        <p class="release-title">
-        The Exception
-        </p>
-        <p>A cinematic RootBro single about the person who does not make you lose your principles — but quietly becomes the exception to them.</p>
-        <div class="link-row">
-            <a class="btn primary" href="/music">View Music</a>
-            
+    <div class="featured-grid">
+        <div class="feature-card">
+            <h3>Latest Release</h3>
+            <p class="release-title">The Exception</p>
+            <p>A cinematic RootBro single about the person who does not make you lose your principles — but quietly becomes the exception to them.</p>
+            <div class="link-row">
+                <a class="btn primary" href="/music">View Music</a>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h3>Q45 Relationship System</h3>
+            <p>Marriage Confusion: Revealing What Your Partner Isn’t Saying — a structured relationship clarity framework for people caught between staying, leaving, forgiving, and rebuilding.</p>
+            <div class="link-row">
+                <a class="btn primary" href="/q45">Explore Q45</a>
+                <a class="btn" href="https://www.amazon.com/dp/B0GCQ6CJ1D">Kindle</a>
+                <a class="btn" href="https://play.google.com/store/audiobooks/details/Dr_RootBro_Marriage_Confusion_Revealing_What_Your?id=AQAAAEDqD1RPrM">Audiobook</a>
+            </div>
         </div>
     </div>
-
-    <div class="feature-card">
-        <h3>Q45 Relationship System</h3>
-        <p>Marriage Confusion: Revealing What Your Partner Isn’t Saying — a structured relationship clarity framework for people caught between staying, leaving, forgiving, and rebuilding.</p>
-        <div class="link-row">
-            <a class="btn primary" href="/q45">Explore Q45</a>
-            <a class="btn" href="https://www.amazon.com/dp/B0GCQ6CJ1D">Read on Kindle</a>
-            <a class="btn" href="https://play.google.com/store/audiobooks/details/Dr_RootBro_Marriage_Confusion_Revealing_What_Your?id=AQAAAEDqD1RPrM">Listen Audiobook</a>
-        </div>
-    </div>
-</div>
-
 </section>
 
 <section class="section">
@@ -389,32 +441,31 @@ footer a:hover {
         <p>RootBro is organized around four connected pillars: emotional clarity, body recovery, human-nature music, and practical tools.</p>
     </div>
 
-<div class="grid">
-    <div class="card">
-        <h3>Relationships</h3>
-        <p>Q45 relationship diagnostics, emotional intelligence, intimacy, trust, responsibility, boundaries, and decision clarity.</p>
-        <a href="/q45">Enter Q45 →</a>
-    </div>
+    <div class="grid">
+        <div class="card">
+            <h3>Relationships</h3>
+            <p>Q45 relationship diagnostics, emotional intelligence, intimacy, trust, responsibility, boundaries, and decision clarity.</p>
+            <a href="/q45">Enter Q45 →</a>
+        </div>
 
-    <div class="card">
-        <h3>Music</h3>
-        <p>Cinematic relationship songs for what people feel but do not say. Singles, lyrics, full MVs, and future albums.</p>
-        <a href="/music">Enter Music →</a>
-    </div>
+        <div class="card">
+            <h3>Music</h3>
+            <p>Cinematic relationship songs for what people feel but do not say. Singles, lyrics, full videos, and future albums.</p>
+            <a href="/music">Enter Music →</a>
+        </div>
 
-    <div class="card">
-        <h3>Body & Recovery</h3>
-        <p>Symptom-first recovery systems for pain, sleep, stress, and body signals — with Traditional Chinese Medicine as one foundation.</p>
-        <a href="/tcm">Explore Recovery →</a>
-    </div>
+        <div class="card">
+            <h3>Body & Recovery</h3>
+            <p>Symptom-first recovery systems for pain, sleep, stress, and body signals — with Traditional Chinese Medicine as one foundation.</p>
+            <a href="/tcm">Explore Recovery →</a>
+        </div>
 
-    <div class="card">
-        <h3>Tools</h3>
-        <p>Experimental systems, AI tools, subtitle workflows, writing utilities, medical communication helpers, and prototypes built to solve real problems.</p>
-        <a href="/lab">Visit Lab →</a>
+        <div class="card">
+            <h3>Tools</h3>
+            <p>Experimental systems, AI tools, subtitle workflows, writing utilities, medical communication helpers, and prototypes built to solve real problems.</p>
+            <a href="/lab">Visit Lab →</a>
+        </div>
     </div>
-</div>
-
 </section>
 
 <section class="section about">
