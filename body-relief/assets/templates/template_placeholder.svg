@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Template placeholder">
+  <rect width="1024" height="1024" fill="#FCFCFC"/>
+  <rect x="96" y="96" width="832" height="832" rx="28" fill="#FFFFFF" stroke="#D8CFCA" stroke-width="6" stroke-dasharray="24 18"/>
+  <circle cx="512" cy="420" r="72" fill="#F7F7F5" stroke="#C62828" stroke-width="6"/>
+  <path d="M360 590h304M408 660h208" stroke="#555555" stroke-width="26" stroke-linecap="round"/>
+  <text x="512" y="770" text-anchor="middle" font-family="Arial, sans-serif" font-size="48" font-weight="700" fill="#555555">Upload template image</text>
+</svg>
