@@ -131,8 +131,8 @@
     if (act === 'checkout') modal.hidden = false;
     else if (act === 'close') modal.hidden = true;
     else if (act === 'demo-unlock') unlock();
-    else if (act === 'print') window.print();
-    else if (act === 'printcard') { document.body.classList.add('print-card'); window.print(); }
+    else if (act === 'pdf') downloadPdf(b, false);
+    else if (act === 'pdfcard') downloadPdf(b, true);
     else if (act === 'sharecard') shareCard();
     else if (act === 'copylink') {
       var url = location.href;
@@ -140,7 +140,44 @@
         function () { b.textContent = 'Link copied'; }, function () { prompt('Copy this link:', url); });
     }
   });
-  window.addEventListener('afterprint', function () { document.body.classList.remove('print-card'); });
+
+  // ---- PDF download (drawn in the browser; the library loads only when someone asks for a PDF).
+  // Anyone who wants paper prints the PDF.
+  var pdfLib = null;
+  function loadPdfLib() {
+    if (window.html2pdf) return Promise.resolve();
+    if (!pdfLib) pdfLib = new Promise(function (res, rej) {
+      var s = document.createElement('script'); s.src = 'vendor/html2pdf.bundle.min.js';
+      s.onload = res; s.onerror = function () { pdfLib = null; rej(new Error('pdf library')); };
+      document.head.appendChild(s);
+    });
+    return pdfLib;
+  }
+  function downloadPdf(btn, cardOnly) {
+    if (!current || btn.disabled) return;
+    var label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Preparing PDF…';
+    var gua = current.results.map(function (r) { return r.gua.gua.toLowerCase(); }).join('-');
+    var el = cardOnly ? document.querySelector('#card .checkcard') : out;
+    document.body.classList.add('pdf-mode');
+    // html2canvas sizes an inline SVG from its width/height attributes, so pin each one to its laid-out size.
+    var pinned = [].slice.call(el.querySelectorAll('svg')).map(function (svg) {
+      var r = svg.getBoundingClientRect(), w = svg.getAttribute('width'), h = svg.getAttribute('height');
+      svg.setAttribute('width', Math.round(r.width)); svg.setAttribute('height', Math.round(r.height));
+      return function () { w === null ? svg.removeAttribute('width') : svg.setAttribute('width', w); h === null ? svg.removeAttribute('height') : svg.setAttribute('height', h); };
+    });
+    function done() { pinned.forEach(function (f) { f(); }); document.body.classList.remove('pdf-mode'); btn.disabled = false; btn.textContent = label; }
+    loadPdfLib().then(function () {
+      return window.html2pdf().set({
+        margin: [10, 10, 12, 10],
+        filename: (cardOnly ? 'check-off-card-' : 'bedroom-report-') + gua + '.pdf',
+        image: { type: 'jpeg', quality: 0.92 },
+        html2canvas: { scale: 2, backgroundColor: '#ffffff', scrollX: 0, scrollY: 0 },
+        jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' },
+        pagebreak: { mode: ['css', 'legacy'], avoid: ['h2', '.item', 'tr', 'svg', '.scale', '.callout', '.checkcard', '.report-hero', 'li'] }
+      }).from(el).save();
+    }).then(done, function () { done(); alert('Sorry, the PDF could not be made on this device. Please try again, or use your browser\'s Share or Print menu.'); });
+  }
   modal.addEventListener('click', function (e) { if (e.target === modal) modal.hidden = true; });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') modal.hidden = true; });
 
