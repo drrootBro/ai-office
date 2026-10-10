@@ -230,6 +230,30 @@ td.num { font-variant-numeric: tabular-nums; color: var(--muted); width: 2em; }
 .report-hero .fav-list { margin-bottom: 4px; }
 .report-hero { border-top: 0; padding-top: 4px; }
 .report-hero .card { border-width: 2px; }
+/* ---- free-tier preview of the paid report (upsell) ---- */
+.preview { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 20px; align-items: center; margin: 8px 0 18px; }
+.pv-main { margin: 0; text-align: center; }
+.pv-main svg { width: 100%; max-width: 300px; height: auto; }
+.pv-main figcaption { font-size: 14px; color: var(--muted); }
+.pv-compass .sec { fill: var(--c); stroke: var(--s-edge); stroke-width: 2; }
+.pv-compass .lock path { stroke: var(--ci); stroke-width: 2; } .pv-compass .lock rect { fill: var(--ci); }
+.pv-compass .sec-dir { font: 700 15px Georgia, serif; text-anchor: middle; fill: var(--ink); }
+.pv-compass .sec-name { font: 600 9.5px system-ui, sans-serif; text-anchor: middle; fill: var(--ci); }
+.pv-compass .hub { fill: var(--surface); stroke: var(--line); }
+.pv-compass .hub-tri { font: 34px serif; fill: var(--accent); text-anchor: middle; }
+.pv-compass .hub-gua { font: 700 20px Georgia, serif; fill: var(--ink); text-anchor: middle; }
+.pv-compass .hub-grp { font: 12px system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
+.pv-side { display: grid; gap: 12px; }
+.pv-card { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--bg); }
+.pv-title { font: 600 12px system-ui, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.pv-line { margin: 0 0 8px; font-weight: 600; }
+.pv-bars { display: grid; gap: 7px; filter: blur(1.5px); }
+.pv-bars i { display: block; height: 9px; border-radius: 5px; background: var(--line); }
+.pv-checks { list-style: none; padding: 0; margin: 0; display: grid; gap: 7px; filter: blur(1.2px); }
+.pv-checks li { display: flex; gap: 8px; align-items: center; }
+.pv-checks li::before { content: ""; width: 14px; height: 14px; border: 2px solid var(--muted); border-radius: 3px; flex: none; }
+.pv-checks li::after { content: ""; height: 9px; border-radius: 5px; background: var(--line); flex: 1; }
+@media (max-width: 640px) { .preview { grid-template-columns: 1fr; } .pv-main svg { max-width: 260px; } }
 @media print { .r1,.r2,.r3,.r4,.r5,.r6,.r7,.r8,.scale li i,.badge,.fav-tile { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
 @media print {
   body { background: #fff; color: #000; font-size: 12pt; }
