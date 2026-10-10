@@ -35,15 +35,13 @@
     var sex = (form.querySelector('input[name=sex]:checked') || {}).value || 'skip';
     return {
       nickname: form.nickname.value.trim(),
-      year: ySel.value, month: mSel.value, day: dSel.value, sex: sex,
-      house: { bedrooms: form.bedrooms.value, livingRooms: form.livingRooms.value, area: form.area.value, facing: form.facing.value }
+      year: ySel.value, month: mSel.value, day: dSel.value, sex: sex
     };
   }
   function writeForm(i) {
     form.nickname.value = i.nickname || '';
     ySel.value = i.year || ''; mSel.value = i.month || ''; fillDays(); dSel.value = i.day || '';
     var r = form.querySelector('input[name=sex][value="' + (i.sex || 'skip') + '"]'); if (r) r.checked = true;
-    if (i.house) ['bedrooms', 'livingRooms', 'area', 'facing'].forEach(function (k) { form[k].value = i.house[k] || ''; });
   }
   function validate(i) {
     var y = Number(i.year);
