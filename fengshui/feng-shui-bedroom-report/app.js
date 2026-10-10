@@ -77,7 +77,25 @@
     if (scroll) out.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  form.addEventListener('submit', function (e) { e.preventDefault(); show(readForm(), true); });
+  // ?buy=1 (from the landing page's $9 card): enter birth details once, go straight to checkout,
+  // and come back (?paid=1) to the full report built from the saved input.
+  var buyMode = new URLSearchParams(location.search).get('buy') === '1' && !isPaid();
+  if (buyMode) {
+    form.querySelector('button[type=submit]').textContent = 'Continue to payment — $9';
+    var note = form.querySelector('.fine'); if (note) note.textContent = 'Enter your details first. After paying you come straight back to your full report.';
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var input = readForm();
+    if (!buyMode) return show(input, true);
+    var msg = validate(input);
+    errEl.hidden = !msg; errEl.textContent = msg;
+    if (msg) return;
+    store(KEY_INPUT, JSON.stringify(input));
+    var link = cfg.PAYMENT_LINK || cfg.STRIPE_PAYMENT_LINK;
+    if (link) { location.href = link; return; }
+    if (cfg.DEMO_UNLOCK_WHEN_NO_LINK) { store(KEY_PAID, '1'); buyMode = false; show(input, true); }
+  });
 
   // ---- checkout
   var pay = document.getElementById('pay');
