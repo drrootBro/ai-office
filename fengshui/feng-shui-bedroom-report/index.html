@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feng Shui Bedroom Layout Report | Ancient Spatial Science</title>
+<meta name="description" content="Free feng shui bedroom report: find your Eight Mansions (Ba Zhai) Gua from your birth date, your four favorable directions, and a bedroom checklist with honest evidence notes.">
+<link rel="canonical" href="https://rootbro.com/fengshui/feng-shui-bedroom-report/">
+<meta property="og:title" content="Feng Shui Bedroom Layout Report | Ancient Spatial Science">
+<meta property="og:description" content="Find your Gua and your best bedroom directions in a few clicks. Free, no sign-up.">
+<link rel="icon" href="compass.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap brandrow">
+    <img src="compass.svg" width="36" height="36" alt="Feng shui bagua compass logo">
+    <span class="brand">Ancient Spatial Science</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <h1>Your Feng Shui Bedroom Report</h1>
+    <p class="sub">Ancient Spatial Science · Eight Mansions (Ba Zhai) directions for your bedroom, with every step shown and honest evidence notes.</p>
+  </div>
+
+  <form id="form" class="card no-print" novalidate>
+    <div class="fields">
+      <label>Nickname <span class="opt">optional</span>
+        <input name="nickname" maxlength="40" placeholder="friend" autocomplete="off">
+        <small>No real name needed. We use this only to greet you.</small>
+      </label>
+      <label>Birth year <span class="req">required</span>
+        <select name="year" required></select>
+      </label>
+      <div class="pair">
+        <label>Birth month <span class="opt">optional</span>
+          <select name="month"><option value="">—</option></select>
+        </label>
+        <label>Day <span class="opt">optional</span>
+          <select name="day"><option value="">—</option></select>
+        </label>
+      </div>
+      <small class="hint">Month and day let us apply the Lichun (Start of Spring) year boundary. If you skip them, we calculate by year and say so in the report.</small>
+      <fieldset>
+        <legend>Sex</legend>
+        <div class="seg">
+          <label><input type="radio" name="sex" value="male"> Male</label>
+          <label><input type="radio" name="sex" value="female"> Female</label>
+          <label><input type="radio" name="sex" value="skip" checked> Skip</label>
+        </div>
+        <small>The traditional formula differs by sex. Skip shows both versions.</small>
+      </fieldset>
+
+      <details class="home">
+        <summary>About your home <span class="opt">optional</span></summary>
+        <p class="hint">Saved for a future version. These answers are not used in this report.</p>
+        <div class="pair">
+          <label>Bedrooms
+            <select name="bedrooms"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select>
+          </label>
+          <label>Living rooms
+            <select name="livingRooms"><option value="">—</option><option>0</option><option>1</option><option>2</option><option>3+</option></select>
+          </label>
+        </div>
+        <div class="pair">
+          <label>Size
+            <select name="area"><option value="">—</option><option>Under 500 sq ft</option><option>500–1,000 sq ft</option><option>1,000–1,500 sq ft</option><option>1,500–2,500 sq ft</option><option>Over 2,500 sq ft</option></select>
+          </label>
+          <label>Front door faces
+            <select name="facing"><option value="">—</option><option>N</option><option>NE</option><option>E</option><option>SE</option><option>S</option><option>SW</option><option>W</option><option>NW</option><option>Not sure</option></select>
+          </label>
+        </div>
+      </details>
+    </div>
+    <p class="error" id="error" role="alert" hidden></p>
+    <button class="btn primary big" type="submit">Show my report</button>
+    <p class="fine">Free. No sign-up. Everything is calculated in your browser.</p>
+  </form>
+
+  <article id="report" aria-live="polite"></article>
+</main>
+
+<div id="checkout" class="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+    <h2 id="checkout-title">Full bedroom report</h2>
+    <ul>
+      <li>Your complete eight-direction map, with a personal compass chart</li>
+      <li>A guide to what each of the eight labels means</li>
+      <li>All 8 checklist items read against your own directions</li>
+      <li>A printable check-off card and a share card</li>
+    </ul>
+    <p class="price">$9</p>
+    <p class="terms-line"><strong>One-time $9. No subscription. No hidden charges.</strong></p>
+    <p class="fine">Secure checkout by Lemon Squeezy. After paying, tap the button on the confirmation screen to come back here with your full report unlocked.</p>
+    <div class="row">
+      <a class="btn primary" id="pay" href="#" rel="noopener">Pay $9</a>
+      <button class="btn" data-action="demo-unlock" id="demo-unlock" hidden>Demo unlock (test mode)</button>
+      <button class="btn ghost" data-action="close">Not now</button>
+    </div>
+    <p class="fine" id="pay-missing" hidden>Payment link not configured yet (test mode).</p>
+  </div>
+</div>
+
+<footer class="site no-print">
+  <div class="wrap">
+    <p>Ancient Spatial Science · Traditional rules, shown openly. For reference only; not verified by modern science.</p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="lichun.js"></script>
+<script src="lny.js"></script>
+<script src="engine.js"></script>
+<script src="render.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
