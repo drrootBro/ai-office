@@ -236,9 +236,7 @@ td.num { font-variant-numeric: tabular-nums; color: var(--muted); width: 2em; }
 .pv-main svg { width: 100%; max-width: 300px; height: auto; }
 .pv-main figcaption { font-size: 14px; color: var(--muted); }
 .pv-compass .sec { fill: var(--c); stroke: var(--s-edge); stroke-width: 2; }
-.pv-compass .sec.locked { fill: url(#pv-hatch); }
-.pv-compass .h-bg { fill: var(--unf); } .pv-compass .h-ln { stroke: var(--line); stroke-width: 4; }
-.pv-compass .lock path { stroke: var(--muted); stroke-width: 2; } .pv-compass .lock rect { fill: var(--muted); }
+.pv-compass .lock path { stroke: var(--ci); stroke-width: 2; } .pv-compass .lock rect { fill: var(--ci); }
 .pv-compass .sec-dir { font: 700 15px Georgia, serif; text-anchor: middle; fill: var(--ink); }
 .pv-compass .sec-name { font: 600 9.5px system-ui, sans-serif; text-anchor: middle; fill: var(--ci); }
 .pv-compass .hub { fill: var(--surface); stroke: var(--line); }
