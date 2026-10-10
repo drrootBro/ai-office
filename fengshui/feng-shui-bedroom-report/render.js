@@ -386,9 +386,50 @@
 
   // ---------- Upgrade (free) / tools (paid) ----------
 
-  function upsellSection() {
-    return '<section id="upgrade" class="upsell no-print"><h2>Go further with the full report</h2>' +
-      '<p>Everything above is yours to keep. The full report adds:</p><ul>' +
+  // Free-tier preview of the paid compass: the four best sectors in their real colors, the other four
+  // locked and unlabeled (free never names or colors the less suitable directions).
+  function previewSvg(r) {
+    var cx = 180, cy = 180, R = 150, rr = 92, out = [];
+    var m = {};
+    r.directions.forEach(function (d) { m[d.dir] = d; });
+    ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'].forEach(function (dir, k) {
+      var d = m[dir], good = d.kind === 'favorable';
+      function pt(rad, deg) { var a = (deg - 90) * Math.PI / 180; return (cx + rad * Math.cos(a)).toFixed(1) + ',' + (cy + rad * Math.sin(a)).toFixed(1); }
+      var c = k * 45, a = (c - 90) * Math.PI / 180;
+      out.push('<polygon class="sec ' + (good ? 'r' + d.rank : 'locked') + '" points="' + [pt(R, c - 22.5), pt(R, c + 22.5), pt(rr, c + 22.5), pt(rr, c - 22.5)].join(' ') + '"/>');
+      out.push('<text class="sec-dir" x="' + (cx + 166 * Math.cos(a)).toFixed(1) + '" y="' + (cy + 166 * Math.sin(a) + 5).toFixed(1) + '">' + dir + '</text>');
+      var tx = cx + 121 * Math.cos(a), ty = cy + 121 * Math.sin(a);
+      if (good) {
+        var words = d.short.split(' ');
+        out.push('<text class="sec-name r' + d.rank + '" x="' + tx.toFixed(1) + '" y="' + (ty + (words.length > 1 ? -2 : 4)).toFixed(1) + '">' + words.map(function (w, i) {
+          return '<tspan x="' + tx.toFixed(1) + '" dy="' + (i ? 11 : 0) + '">' + esc(w) + '</tspan>';
+        }).join('') + '</text>');
+      } else {
+        out.push('<g class="lock" transform="translate(' + (tx - 7).toFixed(1) + ' ' + (ty - 9).toFixed(1) + ')"><path d="M3 8 V5 a4 4 0 0 1 8 0 V8" fill="none"/><rect x="0" y="8" width="14" height="10" rx="2"/></g>');
+      }
+    });
+    return '<svg class="pv-compass" viewBox="0 0 360 360" role="img" aria-label="Preview of your feng shui bedroom compass from the full report: four best directions shown, the other four locked">' +
+      '<defs><pattern id="pv-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" class="h-bg"/><line x1="0" y1="0" x2="0" y2="8" class="h-ln"/></pattern></defs>' +
+      out.join('') + '<circle class="hub" cx="180" cy="180" r="80"/>' +
+      '<text class="hub-tri" x="180" y="166">' + TRIGRAM[r.gua.gua] + '</text>' +
+      '<text class="hub-gua" x="180" y="198">' + esc(r.gua.gua) + ' ' + esc(r.gua.zh) + '</text>' +
+      '<text class="hub-grp" x="180" y="220">' + r.gua.group + ' group</text></svg>';
+  }
+
+  function previewBlock(model) {
+    var r = model.results[0], f = favorable(r);
+    var bars = function (n) { var o = ''; for (var i = 0; i < n; i++) o += '<i style="width:' + [92, 78, 85, 64, 88, 70][i % 6] + '%"></i>'; return o; };
+    return '<div class="preview" aria-label="Preview of the full report">' +
+      '<figure class="pv-main">' + previewSvg(r) + '<figcaption><strong>Your bedroom compass.</strong> All eight directions, color-coded with a key. Four unlock with the full report.</figcaption></figure>' +
+      '<div class="pv-side">' +
+        '<div class="pv-card"><p class="pv-title">Your bedroom, item by item</p><p class="pv-line">1. Headboard: point it ' + esc(lc(f[0].dirName)) + '…</p><div class="pv-bars">' + bars(5) + '</div></div>' +
+        '<div class="pv-card"><p class="pv-title">Printable check-off card</p><ul class="pv-checks"><li></li><li></li><li></li><li></li></ul></div>' +
+      '</div></div>';
+  }
+
+  function upsellSection(model) {
+    return '<section id="upgrade" class="upsell no-print"><h2>Go further with the full report</h2>' + previewBlock(model) +
+      '<p>Everything in your free report is yours to keep. The full report adds:</p><ul>' +
       '<li>Your complete eight-direction map, with a personal compass chart</li>' +
       '<li>A guide to what each of the eight labels means</li>' +
       '<li>All 8 checklist items read against your own directions</li>' +
@@ -412,7 +453,7 @@
     if (!paid) {
       return head + favorableSection(model) + guaSection(model) + groupsSection(model) + howSection(model) +
         checklistSection(model) + evidenceSection(model) + findSection() +
-        glossarySection(false) + disclosureSection() + upsellSection();
+        glossarySection(false) + disclosureSection() + upsellSection(model);
     }
     return head + fullDirectionsSection(model) + legendSection(model) + guaSection(model) + groupsSection(model) + howSection(model) +
       checklistSection(model) + applicationSection(model) + evidenceSection(model) + findSection() + multiBedroomSection() + cardSection(model) +
