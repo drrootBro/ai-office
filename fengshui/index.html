@@ -41,6 +41,9 @@
   .tier h3 { margin-top: 0; font-size: 22px; }
   .tier .price-s { font-size: 30px; font-weight: 700; margin: 0 0 8px; }
   .tier ul { padding-left: 20px; margin: 0 0 16px; display: grid; gap: 6px; }
+  .tier .preview { grid-template-columns: 1fr; gap: 12px; margin: 4px 0 16px; }
+  .tier .pv-main svg { max-width: 260px; }
+  .tier ul.pv-checks { padding: 0; margin: 0; gap: 7px; }
   .tier.full { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
   .faq details { border-bottom: 1px solid var(--line); padding: 14px 0; }
   .faq summary { cursor: pointer; font-weight: 600; font-size: 18px; }
@@ -127,6 +130,7 @@
         <div class="card tier full">
           <h3>Full report</h3>
           <p class="price-s">$9</p>
+          <div id="tier-preview"></div>
           <ul>
             <li>Everything in the free report</li>
             <li>Your personal bedroom compass, all eight directions color-coded with a key</li>
@@ -165,6 +169,16 @@
     </div>
   </section>
 </main>
+<script src="feng-shui-bedroom-report/engine.js"></script>
+<script src="feng-shui-bedroom-report/render.js"></script>
+<script>
+  // Same preview as the free report's upgrade box, for the example on this page (male, born 1962).
+  (function () {
+    var el = document.getElementById('tier-preview');
+    if (!el || !window.Engine || !window.Render) return;
+    el.innerHTML = window.Render.previewBlock(window.Engine.buildReport({ year: 1962, sex: 'male' }));
+  })();
+</script>
 
 <footer class="site">
   <div class="wrap">
