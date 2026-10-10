@@ -5,7 +5,7 @@
 //   Free  = text hero (bed line + four best directions, no diagram), Gua + calculation, method, generic checklist,
 //           shared education diagrams, glossary, disclosure.
 //   Paid  = hero (bed line + personal compass + color key) + full eight-direction table, eight-label legend,
-//           bedroom application, check-off card, share card, print.
+//           bedroom application, check-off card, share card, PDF download.
 // Paid content is only ever concatenated when opts.paid is true; it is never rendered-and-hidden.
 // Visual principle: draw what helps people judge for themselves; never draw a decision for them.
 (function (root) {
@@ -362,11 +362,11 @@
       return '<li><label><input type="checkbox"> <span><strong>' + esc(c.title) + '</strong><small>' + esc(c.evidence) + ' · ' + esc(c.action) + '</small></span></label></li>';
     }).join('');
     return '<section id="card" class="full"><h2>Your check-off card</h2>' +
-      '<p class="no-print">Print it, walk around the room, tick each item.</p>' +
+      '<p class="no-print">Download it as a PDF, keep it on your phone or print it, and tick each item as you walk around the room.</p>' +
       '<div class="checkcard"><div class="cc-head"><span class="brand">Ancient Spatial Science</span><span>Bedroom check-off card · ' + esc(model.nickname) + '</span></div>' +
       '<div class="cc-body"><div class="cc-wheels">' + wheels + '<p class="fine">Diagram only, not measured directions in your room.</p></div><ol class="cc-list">' + items + '</ol></div>' +
       '<p class="cc-foot">' + esc(COPY.reference) + '</p></div>' +
-      '<div class="row no-print"><button class="btn primary" data-action="printcard">Print check-off card</button></div></section>';
+      '<div class="row no-print"><button class="btn primary" data-action="pdfcard">Download check-off card (PDF)</button></div></section>';
   }
 
   // ---------- Shared: glossary, disclosure ----------
@@ -440,8 +440,8 @@
 
   function toolsSection() {
     return '<section id="tools" class="no-print"><h2>Keep your report</h2><div class="row">' +
-      '<button class="btn primary" data-action="printcard">Print check-off card</button>' +
-      '<button class="btn" data-action="print">Print / Save full report as PDF</button>' +
+      '<button class="btn primary" data-action="pdf">Download full report (PDF)</button>' +
+      '<button class="btn" data-action="pdfcard">Download check-off card (PDF)</button>' +
       '<button class="btn" data-action="sharecard">Download share card</button>' +
       '<button class="btn" data-action="copylink">Copy report link</button></div></section>';
   }

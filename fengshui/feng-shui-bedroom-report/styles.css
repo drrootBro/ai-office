@@ -264,3 +264,16 @@ td.num { font-variant-numeric: tabular-nums; color: var(--muted); width: 2em; }
   body.print-card #card > h2 { display: none; }
   .checkcard { border-color: #000; }
 }
+
+/* PDF download: same rules as print, applied while the page is captured */
+body.pdf-mode #report { width: 700px; max-width: none; background: #fff; }
+body.pdf-mode .no-print, body.pdf-mode .modal { display: none !important; }
+body.pdf-mode .checkcard { border-color: #000; }
+body.pdf-mode #report #card { break-before: page; }
+/* PDF is always laid out like the desktop page, even when made on a phone */
+body.pdf-mode .grid2, body.pdf-mode .groups { grid-template-columns: 1fr 1fr; }
+body.pdf-mode .find-grid { grid-template-columns: minmax(0, 300px) 1fr; }
+body.pdf-mode .cc-body { grid-template-columns: 240px 1fr; }
+body.pdf-mode .cc-wheels { max-width: none; }
+body.pdf-mode .lg-row { grid-template-columns: 1.3fr 1.2fr 1fr 1fr; }
+body.pdf-mode .item dl, body.pdf-mode dl.terms { grid-template-columns: max-content 1fr; }
