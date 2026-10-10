@@ -352,6 +352,35 @@
       grid(model, blocks) + '<p class="callout">' + esc(COPY.comfort) + '</p></section>';
   }
 
+  // ---------- Paid: home match from the front door (Ba Zhai house Gua) ----------
+
+  var DIRS8 = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  var DIRWORD = { N: 'north', NE: 'northeast', E: 'east', SE: 'southeast', S: 'south', SW: 'southwest', W: 'west', NW: 'northwest' };
+
+  function homeSection(model) {
+    var h = model.house;
+    var cur = h ? h.facing : '';
+    var opts = '<option value="">Choose…</option>' + DIRS8.map(function (d) {
+      return '<option value="' + d + '"' + (d === cur ? ' selected' : '') + '>' + cap(DIRWORD[d]) + '</option>';
+    }).join('');
+    var body;
+    if (!h) {
+      body = '<p class="fine">Stand in your doorway facing out, and read your phone compass. That is the way your front door faces.</p>';
+    } else {
+      body = '<p class="lead-line">Your front door faces ' + DIRWORD[h.facing] + ', so your home sits ' + DIRWORD[h.sits] + '. That makes it a <strong>' + esc(h.gua) + ' house</strong> (' + h.group + ' group).</p>' +
+        model.results.map(function (r) {
+          var who = model.results.length > 1 ? cap(r.sex) + ' formula: ' : '';
+          return '<p>' + who + 'You are ' + esc(r.gua.gua) + ' (' + r.gua.group + ' group). ' + (r.home.match
+            ? '<strong>Same group.</strong> Tradition counts this as a good match between you and your home.'
+            : '<strong>Different groups.</strong> This is common. Tradition handles it inside the home: point your headboard and desk your best directions, as this report already does.') + '</p>';
+        }).join('');
+    }
+    return '<section id="home" class="full"><h2>You and your home</h2>' +
+      '<label class="door-pick no-print">Which way does your front door face? <select id="door-facing">' + opts + '</select></label>' + body +
+      '<dl class="tags"><dt>Traditional basis</dt><dd>Ba Zhai house Gua, named by the direction the home sits toward</dd><dt>Evidence status</dt><dd>Traditional theory</dd><dt>Action</dt><dd>None needed; your bed and desk directions above already apply.</dd></dl>' +
+      '<p class="fine">We treat the front door as the side your home faces. Some schools use the side that faces the street instead; if yours differ, try both.</p></section>';
+  }
+
   // ---------- Paid: printable check-off card ----------
 
   function cardSection(model) {
@@ -432,6 +461,7 @@
       '<li>Your complete eight-direction map, with a personal compass chart</li>' +
       '<li>A guide to what each of the eight labels means</li>' +
       '<li>All 8 checklist items read against your own directions</li>' +
+      '<li>Whether your home matches you, from the way your front door faces</li>' +
       '<li>A printable check-off card to carry around your room</li>' +
       '<li>A share card with your Gua and favorable directions</li></ul>' +
       '<button class="btn primary" data-action="checkout">Get the full report — $9</button>' +
@@ -455,7 +485,7 @@
         glossarySection(false) + disclosureSection() + upsellSection(model);
     }
     return head + fullDirectionsSection(model) + legendSection(model) + guaSection(model) + groupsSection(model) + howSection(model) +
-      checklistSection(model) + applicationSection(model) + evidenceSection(model) + findSection() + multiBedroomSection() + cardSection(model) +
+      checklistSection(model) + applicationSection(model) + homeSection(model) + evidenceSection(model) + findSection() + multiBedroomSection() + cardSection(model) +
       glossarySection(true) + disclosureSection() + toolsSection();
   }
 

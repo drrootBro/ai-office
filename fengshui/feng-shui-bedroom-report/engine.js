@@ -4,7 +4,8 @@
 //   computeGua(year, sex)               -> {gua, zh, expr, raw, group, remainder, calc}      sex: 'male' | 'female'
 //   directions(gua)                     -> [{key, name, zh, rank, kind, dir}] in spec column order
 //   buildReport(input)                  -> report model consumed by render.js
-//     input: {nickname?, year, month?, day?, sex: 'male'|'female'|'skip', house?: {...}}
+//     input: {nickname?, year, month?, day?, sex: 'male'|'female'|'skip', house?: {facing?}}
+//   houseGua(facing)                    -> {facing, sits, gua, zh, group} | null   (added 2026-10-10, paid only)
 (function (root) {
   'use strict';
 
@@ -158,7 +159,8 @@
     var results = sexes.map(function (sex) {
       var g = computeGua(ey.year, sex);
       var dirs = directions(g.gua);
-      return { sex: sex, gua: g, directions: dirs, application: application(dirs) };
+      var h = houseGua(input.house && input.house.facing);
+      return { sex: sex, gua: g, directions: dirs, application: application(dirs), home: h ? { house: h, match: h.group === g.group } : null };
     });
     return {
       nickname: nickname,
@@ -166,13 +168,23 @@
       yearInfo: ey,
       results: results,
       checklist: CHECKLIST,
-      house: input.house || null // v0: collected, not used for any statement.
+      house: houseGua(input.house && input.house.facing) // front door only; room counts are for the family version.
     };
   }
 
   var GROUPS = { East: ['Kan', 'Zhen', 'Xun', 'Li'], West: ['Qian', 'Kun', 'Gen', 'Dui'] };
 
-  var api = { GROUPS: GROUPS, GUA_ZH: GUA_ZH, effectiveYear: effectiveYear, computeGua: computeGua, directions: directions, buildReport: buildReport, CHECKLIST: CHECKLIST, TABLE: TABLE };
+  // Ba Zhai house Gua (宅卦): a home is named by the direction it sits toward, the opposite of the way it faces.
+  // We take the front door as the facing side. Sitting direction -> trigram is the standard Later Heaven placement.
+  var OPPOSITE = { N: 'S', NE: 'SW', E: 'W', SE: 'NW', S: 'N', SW: 'NE', W: 'E', NW: 'SE' };
+  var SITTING_GUA = { N: 'Kan', NE: 'Gen', E: 'Zhen', SE: 'Xun', S: 'Li', SW: 'Kun', W: 'Dui', NW: 'Qian' };
+  function houseGua(facing) {
+    if (!OPPOSITE[facing]) return null;
+    var sits = OPPOSITE[facing], g = SITTING_GUA[sits];
+    return { facing: facing, sits: sits, gua: g, zh: GUA_ZH[g], group: EAST.indexOf(g) >= 0 ? 'East' : 'West' };
+  }
+
+  var api = { GROUPS: GROUPS, GUA_ZH: GUA_ZH, effectiveYear: effectiveYear, computeGua: computeGua, directions: directions, buildReport: buildReport, houseGua: houseGua, DIR_NAMES: DIR_NAMES, CHECKLIST: CHECKLIST, TABLE: TABLE };
   root.Engine = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -36,14 +36,13 @@
     return {
       nickname: form.nickname.value.trim(),
       year: ySel.value, month: mSel.value, day: dSel.value, sex: sex,
-      house: { bedrooms: form.bedrooms.value, livingRooms: form.livingRooms.value, area: form.area.value, facing: form.facing.value }
+      house: lastInput && lastInput.house ? lastInput.house : null // front door is picked inside the paid report
     };
   }
   function writeForm(i) {
     form.nickname.value = i.nickname || '';
     ySel.value = i.year || ''; mSel.value = i.month || ''; fillDays(); dSel.value = i.day || '';
     var r = form.querySelector('input[name=sex][value="' + (i.sex || 'skip') + '"]'); if (r) r.checked = true;
-    if (i.house) ['bedrooms', 'livingRooms', 'area', 'facing'].forEach(function (k) { form[k].value = i.house[k] || ''; });
   }
   function validate(i) {
     var y = Number(i.year);
@@ -57,14 +56,23 @@
   function toQuery(i) {
     var p = new URLSearchParams();
     p.set('y', i.year); if (i.month && i.day) { p.set('m', i.month); p.set('d', i.day); }
-    p.set('s', i.sex[0]); if (i.nickname) p.set('n', i.nickname);
+    p.set('s', i.sex[0]); if (i.nickname) p.set('n', i.nickname); if (i.house && i.house.facing) p.set('f', i.house.facing);
     return p.toString();
   }
   function fromQuery(qs) {
     var p = new URLSearchParams(qs);
     if (!p.get('y')) return null;
-    return { year: p.get('y'), month: p.get('m') || '', day: p.get('d') || '', sex: { m: 'male', f: 'female', s: 'skip' }[p.get('s')] || 'skip', nickname: p.get('n') || '' };
+    return { year: p.get('y'), month: p.get('m') || '', day: p.get('d') || '', sex: { m: 'male', f: 'female', s: 'skip' }[p.get('s')] || 'skip', nickname: p.get('n') || '', house: p.get('f') ? { facing: p.get('f') } : null };
   }
+
+  var lastInput = null;
+  document.addEventListener('change', function (e) {
+    if (e.target.id !== 'door-facing' || !lastInput) return;
+    var y = window.scrollY, i = JSON.parse(JSON.stringify(lastInput));
+    i.house = e.target.value ? { facing: e.target.value } : null;
+    show(i, false); window.scrollTo(0, y);
+    var sel = document.getElementById('door-facing'); if (sel) sel.focus();
+  });
 
   function isPaid() { return load(KEY_PAID) === '1'; }
 
@@ -72,6 +80,7 @@
     var msg = validate(input);
     errEl.hidden = !msg; errEl.textContent = msg;
     if (msg) return;
+    lastInput = input;
     current = window.Engine.buildReport(input);
     out.innerHTML = window.Render.report(current, { paid: isPaid() });
     store(KEY_INPUT, JSON.stringify(input));
