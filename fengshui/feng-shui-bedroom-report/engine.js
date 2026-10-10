@@ -4,7 +4,7 @@
 //   computeGua(year, sex)               -> {gua, zh, expr, raw, group, remainder, calc}      sex: 'male' | 'female'
 //   directions(gua)                     -> [{key, name, zh, rank, kind, dir}] in spec column order
 //   buildReport(input)                  -> report model consumed by render.js
-//     input: {nickname?, year, month?, day?, sex: 'male'|'female'|'skip', house?: {...}}
+//     input: {nickname?, year, month?, day?, sex: 'male'|'female'|'skip'}   (home questions moved to the v1 family version)
 (function (root) {
   'use strict';
 
@@ -165,8 +165,7 @@
       input: { year: Number(input.year), month: input.month ? Number(input.month) : null, day: input.day ? Number(input.day) : null, sex: input.sex },
       yearInfo: ey,
       results: results,
-      checklist: CHECKLIST,
-      house: input.house || null // v0: collected, not used for any statement.
+      checklist: CHECKLIST
     };
   }
 
