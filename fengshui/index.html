@@ -20,7 +20,11 @@
   .hero-l > div { min-width: 0; }
   .hero-l h1 { font-size: clamp(34px, 6vw, 56px); text-wrap: balance; }
   .hero-l .sub { font-size: 19px; max-width: 34em; margin: 14px 0 24px; }
-  .hero-l img { width: 100%; max-width: 480px; height: auto; justify-self: center; }
+  .hero-fig { margin: 0; justify-self: center; max-width: 480px; width: 100%; }
+  .hero-l img { width: 100%; max-width: 480px; height: auto; display: block; }
+  .hero-fig figcaption { font: 13px/1.4 system-ui, sans-serif; color: var(--muted); text-align: center; margin-top: 6px; }
+  .key { display: flex; max-width: 280px; margin: 0 auto 6px; border-radius: 4px; overflow: hidden; }
+  .key i { flex: 1; height: 10px; background: var(--c); }
   .cta-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
   .cta-row .btn, .final .btn { width: auto; margin: 0; }
   .trust { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 18px; font: 14px system-ui, sans-serif; color: var(--muted); }
@@ -37,6 +41,9 @@
   .tier h3 { margin-top: 0; font-size: 22px; }
   .tier .price-s { font-size: 30px; font-weight: 700; margin: 0 0 8px; }
   .tier ul { padding-left: 20px; margin: 0 0 16px; display: grid; gap: 6px; }
+  .tier .preview { grid-template-columns: 1fr; gap: 12px; margin: 4px 0 16px; }
+  .tier .pv-main svg { max-width: 260px; }
+  .tier ul.pv-checks { padding: 0; margin: 0; gap: 7px; }
   .tier.full { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
   .faq details { border-bottom: 1px solid var(--line); padding: 14px 0; }
   .faq summary { cursor: pointer; font-weight: 600; font-size: 18px; }
@@ -46,7 +53,7 @@
   @media (max-width: 760px) {
     .hero-l, .sample, .tiers, .steps { grid-template-columns: 1fr; }
     .hero-l { padding-top: 28px; gap: 24px; }
-    .hero-l img { max-width: 340px; order: -1; }
+    .hero-fig { max-width: 340px; order: -1; }
   }
 </style>
 </head>
@@ -70,7 +77,10 @@
       </div>
       <div class="trust"><span>Free, no sign-up</span><span>Takes under a minute</span><span>Calculated in your browser</span></div>
     </div>
-    <img src="landing-hero.svg" width="480" height="480" alt="Feng shui bedroom layout on an Eight Mansions compass, best directions shaded in warm gold">
+    <figure class="hero-fig">
+      <img src="landing-hero.svg" width="480" height="480" alt="Feng shui bedroom layout on an Eight Mansions compass, eight directions color-coded from gold to dark red">
+      <figcaption><span class="key" aria-hidden="true"><i class="r1"></i><i class="r2"></i><i class="r3"></i><i class="r4"></i><i class="r5"></i><i class="r6"></i><i class="r7"></i><i class="r8"></i></span>Gold is your best direction, dark red your least suitable. Example: male, born 1962.</figcaption>
+    </figure>
   </div>
 
   <section class="band">
@@ -120,6 +130,7 @@
         <div class="card tier full">
           <h3>Full report</h3>
           <p class="price-s">$9</p>
+          <div id="tier-preview"></div>
           <ul>
             <li>Everything in the free report</li>
             <li>Your personal bedroom compass, all eight directions color-coded with a key</li>
@@ -158,6 +169,16 @@
     </div>
   </section>
 </main>
+<script src="feng-shui-bedroom-report/engine.js"></script>
+<script src="feng-shui-bedroom-report/render.js"></script>
+<script>
+  // Same preview as the free report's upgrade box, for the example on this page (male, born 1962).
+  (function () {
+    var el = document.getElementById('tier-preview');
+    if (!el || !window.Engine || !window.Render) return;
+    el.innerHTML = window.Render.previewBlock(window.Engine.buildReport({ year: 1962, sex: 'male' }));
+  })();
+</script>
 
 <footer class="site">
   <div class="wrap">

@@ -459,7 +459,7 @@
       glossarySection(true) + disclosureSection() + toolsSection();
   }
 
-  var api = { report: report, COPY: COPY, esc: esc };
+  var api = { report: report, previewBlock: previewBlock, COPY: COPY, esc: esc };
   root.Render = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);
