@@ -65,6 +65,10 @@
   }
 
   function isPaid() { return load(KEY_PAID) === '1'; }
+  // Details saved from an earlier visit on this device (returning visitors never retype them).
+  function savedInput() {
+    try { var i = JSON.parse(load(KEY_INPUT) || 'null'); return i && !validate(i) ? i : null; } catch (e) { return null; }
+  }
 
   function show(input, scroll) {
     var msg = validate(input);
@@ -83,6 +87,11 @@
   if (buyMode) {
     form.querySelector('button[type=submit]').textContent = 'Continue to payment — $9';
     var note = form.querySelector('.fine'); if (note) note.textContent = 'Enter your details first. After paying you come straight back to your full report.';
+    var prev = savedInput();
+    if (prev) {
+      writeForm(prev);
+      if (note) note.textContent = 'We kept your details from your last visit. Check them and continue. After paying you come straight back to your full report.';
+    }
   }
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -180,5 +189,6 @@
   } else {
     var qi = fromQuery(location.search);
     if (qi) { writeForm(qi); show(qi, false); }
+    else if (!buyMode && savedInput()) { var back = savedInput(); writeForm(back); show(back, false); }
   }
 })();
