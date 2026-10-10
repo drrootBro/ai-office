@@ -76,6 +76,7 @@
     if (msg) return;
     current = window.Engine.buildReport(input);
     out.innerHTML = window.Render.report(current, { paid: isPaid() });
+    window.Track('view_report', { tier: isPaid() ? 'full' : 'free' });
     store(KEY_INPUT, JSON.stringify(input));
     history.replaceState(null, '', location.pathname + '?' + toQuery(input));
     if (scroll) out.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -102,6 +103,7 @@
     if (msg) return;
     store(KEY_INPUT, JSON.stringify(input));
     var link = cfg.PAYMENT_LINK || cfg.STRIPE_PAYMENT_LINK;
+    window.Track('begin_checkout', { source: 'landing_buy', value: 9, currency: 'USD' });
     if (link) { location.href = link; return; }
     if (cfg.DEMO_UNLOCK_WHEN_NO_LINK) { store(KEY_PAID, '1'); buyMode = false; show(input, true); }
   });
@@ -116,7 +118,10 @@
     document.getElementById('pay-missing').hidden = false;
     document.getElementById('demo-unlock').hidden = !cfg.DEMO_UNLOCK_WHEN_NO_LINK;
   }
-  pay.addEventListener('click', function () { if (current) store(KEY_INPUT, JSON.stringify(readForm())); });
+  pay.addEventListener('click', function () {
+    if (current) store(KEY_INPUT, JSON.stringify(readForm()));
+    window.Track('begin_checkout', { source: 'report_upsell', value: 9, currency: 'USD' });
+  });
 
   function unlock() {
     store(KEY_PAID, '1');
@@ -128,12 +133,12 @@
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-action]'); if (!b) return;
     var act = b.getAttribute('data-action');
-    if (act === 'checkout') modal.hidden = false;
+    if (act === 'checkout') { modal.hidden = false; window.Track('open_checkout'); }
     else if (act === 'close') modal.hidden = true;
     else if (act === 'demo-unlock') unlock();
-    else if (act === 'pdf') downloadPdf(b, false);
-    else if (act === 'pdfcard') downloadPdf(b, true);
-    else if (act === 'sharecard') shareCard();
+    else if (act === 'pdf') { downloadPdf(b, false); window.Track('download_pdf', { kind: 'report' }); }
+    else if (act === 'pdfcard') { downloadPdf(b, true); window.Track('download_pdf', { kind: 'card' }); }
+    else if (act === 'sharecard') { shareCard(); window.Track('share_card'); }
     else if (act === 'copylink') {
       var url = location.href;
       (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(
@@ -218,6 +223,8 @@
   // ---- boot: checkout return link (?paid=1) or shared report link (?y=...)
   var params = new URLSearchParams(location.search);
   if (params.get('paid') === '1') {
+    // Return from checkout. Client-side only, so this also counts anyone who types ?paid=1.
+    if (!isPaid()) window.Track('purchase', { value: 9, currency: 'USD', items: [{ item_name: 'Full report' }] });
     store(KEY_PAID, '1');
     var saved = load(KEY_INPUT);
     if (saved) { var si = JSON.parse(saved); writeForm(si); show(si, false);
