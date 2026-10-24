@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rootbro.com/sitemap.xml
+Sitemap: https://rootbro.com/fengshui/sitemap.xml
